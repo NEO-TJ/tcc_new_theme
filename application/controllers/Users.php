@@ -38,12 +38,13 @@ class Users extends MY_Controller {
             $this->session->unset_userdata('error_msg');
         }
         if($this->input->post('loginSubmit')){
-            $this->form_validation->set_rules('email', 'email', 'required|valid_email');
+            $this->form_validation->set_rules('username', 'Username or Email', 'required');
             $this->form_validation->set_rules('password', 'password', 'required');
             if ($this->form_validation->run() == true) {
                 $con['returnType'] = 'single';
                 $con['conditions'] = array(
-                    'email'=>$this->input->post('email'),
+                    'name'=>$this->input->post('username'),
+                    'email'=>$this->input->post('username'), // For Where Or Statement
                     'password' => md5($this->input->post('password')),
                     'status' => '1'
                 );

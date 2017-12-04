@@ -136,7 +136,7 @@ margin-top: 10px;
 
 
                             <div class="col-md-12">
-                                <input id="email" type="email" class="form-control" name="email" placeholder="Email" required>
+                                <input id="username" type="text" class="form-control" name="username" placeholder="Username or Email" required>
                                 <?php echo form_error('email','<span class="help-block">','</span>'); ?>
                               
                             </div>
