@@ -18,7 +18,7 @@
 										<div class="panel-body">
 										<!-- Upload Form -->
 											<div class="form_data">
-												<form method="post" action="<?php echo site_url('eventImage/uploadImage')?>" enctype="multipart/form-data">
+												<form method="post" action="<?php echo site_url('eventImageAdmin/uploadImage')?>" enctype="multipart/form-data">
 													<input type="hidden" name="iccCardId" value="<?php echo $iccCardId ?>">
 													<input type="file" multiple="multiple" name="imageFile[]">
 													<input type="submit" value="Upload image" name="submit">
