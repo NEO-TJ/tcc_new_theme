@@ -6,7 +6,7 @@
 		<tr>
 			<td class="text-center"><?php echo $numRecordStart++ ?></td>
 			<td class="text-left">
-				<a title="ดูอัลบัมภาพ" href="<?php echo(base_url('eventImageGallery/index/' . $row['id'])) ?>">
+				<a title="ดูอัลบัมภาพ" href="<?php echo(base_url('eventImageGallery/gallery/' . $row['id'])) ?>">
 					<?php echo $row['ชื่อโครงการ'] ?>
 				</a>
 			</td>

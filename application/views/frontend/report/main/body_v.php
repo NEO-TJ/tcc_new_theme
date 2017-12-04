@@ -1,12 +1,12 @@
+<?php echo css_asset("report/style.css"); ?>
 <div class="container">
-<div class="row">
+	<div class="row">
 
-		<!-- ************************************************ Div Dashboard Report -->
-		<?php //echo form_open(base_url("report/detailReport"), array("id" => "formMainReport")); ?>
+		<!-- ************************************************ Div Main Report -->
 		<div class="col-xs-12 col-md-12 col-lg-12 panel-group" id="collapseMainReportParent">
-		<!-- ************************************** Panel Dashboard Report -->
+		<!-- ************************************** Panel Main Report -->
 			<div class="panel panel-primary">
-			<!-- ************************* Panel Dashboard Report - Heading -->
+			<!-- ************************* Panel Main Report - Heading -->
 				<div class="panel-heading">
 					<h4 class="panel-title">
 						<a data-toggle="collapse" 
@@ -18,16 +18,16 @@
 						</a>
 					</h4>
 				</div>
-			<!-- ************************* End Panel Dashboard Report - Heading -->
-						
+			<!-- ************************* End Panel Main Report - Heading -->
+
 				<div class="panel-collapse collapse in" id="collapseMainReport">
-				<!-- ************************* Panel Dashboard Report - Body -->
+				<!-- ************************* Panel Main Report - Body -->
 					<div class="panel-body">
 						<div class="row">
-					<!-- Filter Section -->
+						<!-- Filter Section -->
 							<div class="col-xs-12 col-md-12 col-lg-12">
 								<div class="row">
-								<!-- Dashboard Limit ranking Sub Section -->
+								<!-- Main Limit ranking Sub Section -->
 									<div class="col-xs-6 col-md-6 col-lg-6 margin-input">
 										<label class="radio-inline">
 											<input type="radio" class="input-require" checked
@@ -89,9 +89,9 @@
 								<!-- End Button Section -->
 								</div>
 							</div>
-					<!-- End Filter Section -->
+						<!-- End Filter Section -->
 							<hr>
-					<!-- Body Content -->
+						<!-- Body Content -->
 							<div class="col-xs-12 col-md-12 col-lg-12">                            
 								<div class="row">
 
@@ -267,17 +267,16 @@
 
 								</div>
 							</div>
-					<!-- End Body Content -->
+						<!-- End Body Content -->
 						</div>
 					</div>
-				<!-- ************************* End Panel Dashboard Report - Body -->
+				<!-- ************************* End Panel Main Report - Body -->
 				</div>
 
 			</div>
-		<!-- ************************************** Panel Dashboard Report -->
+		<!-- ************************************** Panel Main Report -->
 		</div>
-		<?php //echo form_close(); ?><!-- Close formMainReport -->
-		<!-- ************************************************ End Div Dashboard Report -->
+		<!-- ************************************************ End Div Main Report -->
 
-</div>
+	</div>
 </div>

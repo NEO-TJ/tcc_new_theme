@@ -1,20 +1,24 @@
 <section role="main" class="content-body">
-<div class="row">
+	<div class="row">
     <div class="row">
         <div class="col-xs-12">
 
-					<!-- Body content -->
+				<!-- Body content -->
 					<div class="container">
 						<div class="row">
 							<div class="col-xs-12 col-md-12 col-lg-12">
 								<div class="panel-group">
 									<div class="panel panel-primary">
+									<!-- Panel Header -->
 										<div class="panel-heading text-center">
 											<h3>
 												ภาพกิจกรรมโครงการ : 
 												<div><?php echo isset($dsIccCard[0]["Project_Name"]) ? $dsIccCard[0]["Project_Name"] : "" ?></div>
 											</h3>
 										</div>
+									<!-- End Panel Header -->
+
+									<!-- Panel Body -->
 										<div class="panel-body">
 										<!-- Upload Form -->
 											<div class="form_data">
@@ -53,14 +57,15 @@
 											<?php } ?>
 										<!-- End Uploaded Image -->
 										</div>
+									<!-- End Panel Body -->
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- End Body content -->
+				<!-- End Body content -->
 
 			</div>
     </div>
-</div>
+	</div>
 </section>

@@ -15,11 +15,14 @@ function __construct() {
 
 
 // Method start.
-	// ---------------------------------------------------------------------------------------- For display
-	function index() {
-		// Get iccCardId.
-		$iccCardId = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+	public function index() {
+		$this->listView();
+	}
+// End Method start.
 
+
+// Routing function.
+	private function listView() {
 		// Prepare data of view.
 		$this->data = $this->GetDataForListView();
 
@@ -29,15 +32,24 @@ function __construct() {
 		$this->extendedJs = 'frontend/eventImageGallery/list/extendedJs_v';
 		$this->renderWithTemplate();
 	}
-// End Method start.
+	public function gallery() {
+		// Get iccCardId.
+		$iccCardId = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
+		// Prepare data of view.
+		$this->data = $this->GetDataForGalleryView($iccCardId);
 
-// Routing function.
+		// Prepare Template.
+		$this->extendedCss = 'frontend/eventImageGallery/gallery/extendedCss_v';
+		$this->body = 'frontend/eventImageGallery/gallery/body_v';
+		$this->extendedJs = 'frontend/eventImageGallery/gallery/extendedJs_v';
+		$this->renderWithTemplate();
+	}
 // End Routing function.
 
 
 // AJAX function.
-	// ---------------------------------------------------------------------------------------- Get Data for list view.
+	// ---------------------------------------------------------------------------------------- Get Data for list view and pagination.
 	public function ajaxGetIccCardList() {
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$rDataFilter = $this->input->post('rDataFilter');
@@ -55,7 +67,8 @@ function __construct() {
 			echo json_encode($dsData);
 		}
 	}
-  // ---------------------------------------------------------------------------------------- Save data to DB 
+// End AJAX function.
+
 
 
 // Private function.
@@ -113,14 +126,11 @@ function __construct() {
 		return $rDsData;
 	}
 
-	private function GetDataForDetailView($iccCardId=null) {
-		// Get Event image Form Post Method.
+	private function GetDataForGalleryView($iccCardId=null) {
 		$this->load->model("eventImage_m");
-
-		$data['dsImage'] = $this->eventImage_m->GetDsEventImage(null, $iccCardId);
+		$data['dsImage'] = $this->eventImage_m->GetDsEventImage($iccCardId);
 
 		$dsIccCard = $this->eventImage_m->GetDsIccCard($iccCardId);
-		$data['iccCardId'] = $iccCardId;
 		$data['dsIccCard'] = $dsIccCard;
 
 		return $data;

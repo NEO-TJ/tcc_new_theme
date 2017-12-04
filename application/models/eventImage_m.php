@@ -9,26 +9,26 @@ class EventImage_m extends CI_Model {
 
 // ******************************************************************************************** Method
 	// ---------------------------------------------------------------------------------------- Get Dataset Image info.
-	public function GetDsEventImage($id=null, $fkIccCardId=null) {
+	public function GetDsEventImage($fkIccCardId=null, $imageId=null) {
 		$this->load->model("dataclass/eventImage_d");
 		$this->load->model("db_m");
 
 		$sqlStr = "SELECT " . $this->eventImage_d->colId
-				. ", " .$this->eventImage_d->colImageUrl
-				. ", " .$this->eventImage_d->colPriority
-				. ", " .$this->eventImage_d->colCaption
-				. " FROM " . $this->eventImage_d->tableName . " e"
-				. " WHERE e." . $this->eventImage_d->colActive . "=1"
-				. ( (($id !== NULL) || ($id > 0)) 
-					? " AND " . $this->eventImage_d->colId . "=" . $id : "")
-				. ( (($fkIccCardId !== NULL) || ($fkIccCardId > 0)) 
-					? " AND " . $this->eventImage_d->colFkIccCard . "=" . $fkIccCardId : "")
-				. " ORDER BY " . $this->eventImage_d->colPriority;
+			. ", " .$this->eventImage_d->colImageUrl
+			. ", " .$this->eventImage_d->colPriority
+			. ", " .$this->eventImage_d->colCaption
+			. " FROM " . $this->eventImage_d->tableName . " e"
+			. " WHERE e." . $this->eventImage_d->colActive . "=1"
+			. ( (isset($fkIccCardId) && ($fkIccCardId > 0)) 
+			? " AND " . $this->eventImage_d->colFkIccCard . "=" . $fkIccCardId : "")
+			. ( (isset($imageId) && ($imageId > 0)) 
+			? " AND " . $this->eventImage_d->colId . "=" . $imageId : "")
+			. " ORDER BY " . $this->eventImage_d->colPriority;
 		// Execute sql.
 		$this->load->model('db_m');
 		$dataSet = $this->db_m->GetRow($sqlStr);
 
-    	return $dataSet;
+		return $dataSet;
 	}
 	// ---------------------------------------------------------------------------------------- Get Image info.
 	public function GetDsIccCard($id=null) {

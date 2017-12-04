@@ -186,12 +186,12 @@ $s++;
 						<ul class="none">
 							<li>
 								<p class="tn">
-									<a href="#">
+									<a href="<?php echo base_url('/eventImageGallery'); ?>">
 										<img src="<?php echo base_url('assets/images/background/image-link4.png'); ?>">
 									</a>
 								</p>
 								<p>
-									<a href="#">
+									<a href="<?php echo base_url('/eventImageGallery'); ?>">
 										<img src="<?php echo base_url('assets/images/background/caption-link4.png'); ?>" class="title-pro">
 									</a>
 								</p>

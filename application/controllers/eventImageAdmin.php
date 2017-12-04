@@ -12,13 +12,18 @@ class EventImageAdmin extends MY_Controller {
 
 
 // Method start.
-	// ---------------------------------------------------------------------------------------- For display
-	function index() {
+	public function index() {
+		$this->overallThumpnailImage();
+	}	
+// End Method start.
+
+
+// Routing function.
+	private function overallThumpnailImage() {
 		if(!($this->is_logged())) {exit(0);}
 
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$iccCardId = $this->input->post('iccCardId');
-			//$iccCardId = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
 			// Prepare data of view.
 			$this->data = $this->GetDataForRenderMainPage($iccCardId);
@@ -26,11 +31,8 @@ class EventImageAdmin extends MY_Controller {
 			// Prepare Template.
 			$this->RenderPage();
 		}
-	}	
-// End Method start.
+	}
 
-
-// Routing function.
 	public function uploadImage() {
 		if(!($this->is_logged())) {exit(0);}
 		
@@ -55,10 +57,8 @@ class EventImageAdmin extends MY_Controller {
 
 // Private function.
 	private function GetDataForRenderMainPage($iccCardId=null) {
-		// Get Event image Form Post Method.
 		$this->load->model("eventImage_m");
-
-		$data['dsImage'] = $this->eventImage_m->GetDsEventImage(null, $iccCardId);
+		$data['dsImage'] = $this->eventImage_m->GetDsEventImage($iccCardId);
 
 		$dsIccCard = $this->eventImage_m->GetDsIccCard($iccCardId);
 		$data['iccCardId'] = $iccCardId;

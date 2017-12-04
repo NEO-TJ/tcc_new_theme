@@ -82,7 +82,7 @@
                     <li><a href="<?php echo base_url('report'); ?>"> ข้อมูลขยะ</a></li>
                     <li><a href="<?php echo base_url('PublicRelations/content_list/'); ?>"> ข่าวสาร</a></li>
                     <li><a href="<?php echo base_url('mapPlace'); ?>"> แผนที่</a></li>
-                    <li><a href="<?php echo base_url('eventImageGallery/index/0'); ?>"> รวมภาพกิจกรรม</a></li>
+                    <li><a href="<?php echo base_url('eventImageGallery'); ?>"> รวมภาพกิจกรรม</a></li>
                     <li><a href="#"> เกี่ยวกับเรา </a></li>
 
                     <li class="dropdown">
