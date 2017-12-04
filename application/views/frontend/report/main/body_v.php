@@ -1,5 +1,5 @@
 <?php echo css_asset("report/style.css"); ?>
-<div class="container">
+<div class="container" style="margin-top:20px">
 	<div class="row">
 
 		<!-- ************************************************ Div Main Report -->

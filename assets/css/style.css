@@ -1,0 +1,128 @@
+body, body, h1, h2, h3, h4, h5, h6 {
+    font-family: 'Prompt', sans-serif;
+}
+a:focus, a:hover {
+    text-decoration: none !important;
+}
+.fa-btn {
+    margin-right: 6px;
+}
+.site-title{
+    padding-left: 0px!important;  font-size: 20px;
+    margin-top:-18px;
+}
+.nav > li.li-site-description {
+    position:relative;
+    left: 0px;
+    top: -12px;
+    float: none;
+    height: 0px;
+}
+.site-description {
+    padding-left: 0px!important; 
+    font-size:13px;
+    color: #ccc!important; 
+}
+.site-sm-title, .site-sm-title:hover {
+    color:#fff;
+}
+.site-sm-description {
+    font-size:13px;
+    color: #ccc!important; 
+}
+
+@media screen and (min-width: 768px) {
+    .nav-custom-site {
+        margin-top:-10px
+    }
+}
+@media screen and (max-width: 768px) {
+    .nav-custom-site {
+        margin-top:0px;
+    }
+}
+.text-gray {
+    color: #ccc;
+}
+
+ul.service-style li a
+{
+    color: #ccc;
+}
+
+.social-icon{
+	display:block;
+	overflow:hidden;
+	position:absolute;
+	height:32px;
+	right:0;
+	top:0px;
+}
+.social-icon a{
+	width: 32px;
+	height: 32px;
+	line-height: 32px;
+	text-align: center;
+	display: inline-block;
+	overflow: hidden;
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	text-indent: -999em;
+	background-size:18px;
+}
+@media screen and (max-width: 640px){
+	.social-icon a{
+		width: 28px;
+		height: 28px;
+		line-height: 28px;
+		background-size:13px;
+	}
+	.social-icon a{
+		clear:both;
+		width: 28px;
+		height: 28px;
+		line-height: 28px;
+		background-size:13px;
+	}
+	
+}
+.social-01{
+	background:#45619d url(../images/logo/ic-social-01.svg) no-repeat center center;
+}
+
+.social-02{
+	background:#55acee url(../images/logo/ic-social-02.svg) no-repeat center center;
+
+}
+
+.social-03{
+	background:#cc181e url(../images/logo/ic-social-03.svg) no-repeat center center;
+}
+
+.social-04{
+	background:#ce6f2d url(../images/logo/ic-social-04.svg) no-repeat center center;
+
+}
+
+.social-05{
+	background:#4cb234 url(../images/logo/ic-social-05.svg) no-repeat center center;
+}
+
+li > a.go-related-website-link, li > a.go-related-website-link:hover
+{
+    padding:4px 8px;
+    margin-right:5px;
+    margin-top:10px;
+    border-radius: 25px;
+}
+
+li > a.go-related-website-link.green, li > a.go-related-website-link.green:hover
+{
+    background:#4cb234;
+}
+
+li > a.go-related-website-link.red, li > a.go-related-website-link.red:hover
+{
+    background:#cc181e;
+}
