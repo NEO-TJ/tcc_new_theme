@@ -6,6 +6,6 @@
     $this->load->view('template/sharedJs_v');
     // My Java Script.
     echo js_asset('iccCard/iccCardList.js');
-    echo js_asset('iccCard/iccCardfilterRelation.js');
+    echo js_asset('iccCard/iccCardFilterRelation.js');
     echo js_asset('iccCard/iccCardStatus.js');
 ?>

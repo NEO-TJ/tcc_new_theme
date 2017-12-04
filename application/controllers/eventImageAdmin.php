@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class EventImage extends MY_Controller {
+class EventImageAdmin extends MY_Controller {
 
 // Constructor.
 	function __construct() {
@@ -38,7 +38,7 @@ class EventImage extends MY_Controller {
 			$iccCardId = $this->input->post('iccCardId');
 
 			$this->uploadImageAndCreateThumpnail($iccCardId);
-			redirect(base_url('eventImage/dpm/' . $iccCardId));
+			redirect(base_url('eventImageAdmin/dpm/' . $iccCardId));
 		}
 	}
 
@@ -47,7 +47,7 @@ class EventImage extends MY_Controller {
 
 		$data['iccCardId'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-		$this->load->view("backend/eventImage/dummyPostMethod_v", $data);
+		$this->load->view("backend/eventImageAdmin/dummyPostMethod_v", $data);
 	}
 // End Routing function.
 
@@ -141,10 +141,10 @@ class EventImage extends MY_Controller {
 
 	private function RenderPage() {
 		// Prepare Template.
-		$this->extendedCss = 'backend/eventImage/extendedCss_v';
-		$this->body = 'backend/eventImage/body_v';
-		$this->footer = 'backend/eventImage/footer_v';
-		$this->extendedJs = 'backend/eventImage/extendedJs_v';
+		$this->extendedCss = 'backend/eventImageAdmin/extendedCss_v';
+		$this->body = 'backend/eventImageAdmin/body_v';
+		$this->footer = 'backend/eventImageAdmin/footer_v';
+		$this->extendedJs = 'backend/eventImageAdmin/extendedJs_v';
 		$this->renderWithTemplate();
 	}
 // End Private function.

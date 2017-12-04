@@ -1,13 +1,7 @@
 // -------------------------------------------------------------------------------------------- Daterange filter.
 $('#daterange').on('apply.daterangepicker', function(ev, picker) { ChangeDaterange(picker); });
 // -------------------------------------------------------------------------------------------- Province filter
-$('select#provinceCode').on('change', function(e) {
-    if($('select#projectName').length > 0) {
-        changeProvinceWithDateRange(e);
-    } else {
-        changeProvinceToAmphur(e);
-    }
-});
+$('select#provinceCode').on('change', function(e) { changeProvinceWithDateRange(e); });
 
 
 // ******************************************************************************************** Method
@@ -35,11 +29,8 @@ function ChangeDaterange(picker) {
         },
         complete: function() {},
         success: function(result) {
-            setSelectElementOfProvince(result.dsProvince, $('select#provinceCode'));            
-            setSelectElementOfAmphur(result.dsAmphur, $('select#amphurCode'));
-            ( ($('select#projectName').length > 0) 
-                ? setSelectElementOfProjectName(result.dsProjectName, $('select#projectName')) 
-                : null );
+            setSelectElementOfProvince(result.dsProvince, $('select#provinceCode'));
+            setSelectElementOfProjectName(result.dsProjectName, $('select#projectName'));
         }
     });
 }
@@ -69,30 +60,7 @@ function changeProvinceWithDateRange(e) {
         },
         complete: function() {},
         success: function(result) {
-            setSelectElementOfAmphur(result.dsAmphur, $('select#amphurCode'));
             setSelectElementOfProjectName(result.dsProjectName, $('select#projectName'));
-        }
-    });
-}
-function changeProvinceToAmphur(e) {
-    let baseUrl = window.location.origin + "/" + window.location.pathname.split('/')[1] + "/";
-    let provinceCode = $('select#provinceCode :selected').val();
-
-    let data = { 'provinceCode'  : provinceCode };
-
-    // Filter with province code by ajax.
-    $.ajax({
-        url: baseUrl + 'iccCard/ajaxGetAmphurByProvince',
-        type: 'post',
-        data: data,
-        dataType: 'json',
-        beforeSend: function() {},
-        error: function(xhr, textStatus) {
-            swal("Error", textStatus + xhr.responseText, "error");
-        },
-        complete: function() {},
-        success: function(result) {
-            setSelectElementOfAmphur(result.dsAmphur, $('select#amphurCode'));
         }
     });
 }
@@ -107,13 +75,6 @@ function setSelectElementOfProvince(dataSet, $selector) {
     $selector.append('<option value="0">เลือกทั้งหมด</option>');
     for (var i = 0; i < dataSet.length; i++) {
         $selector.append('<option value="' + dataSet[i].ProvinceCode + '">' + dataSet[i].ProvinceName + '</option>');
-    }
-}
-function setSelectElementOfAmphur(dataSet, $selector) {
-    $selector.empty();
-    $selector.append('<option value="0">เลือกทั้งหมด</option>');
-    for (var i = 0; i < dataSet.length; i++) {
-        $selector.append('<option value="' + dataSet[i].AmphurCode + '">' + dataSet[i].AmphurName + '</option>');
     }
 }
 function setSelectElementOfProjectName(dataSet, $selector) {

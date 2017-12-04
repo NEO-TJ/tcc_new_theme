@@ -12,7 +12,7 @@ class Report_m extends CI_Model {
 
 // Public function.
 ///////////////////////////////////////////////// Dashboard report
-	public function GetDashboardReportData($rankingLimit=10, $strDateStart=null, $strDateEnd=null
+	public function GetMainReportData($rankingLimit=10, $strDateStart=null, $strDateEnd=null
 											, $provinceCode=null, $iccCardId=null) {
 		$sqlStrWhere = $this->CreateSqlWhere($strDateStart, $strDateEnd, $provinceCode, $iccCardId);
 
@@ -28,7 +28,7 @@ class Report_m extends CI_Model {
 		return $result;
 	}
         
-            public function GetOverviewReportData($strDateStart=null, $strDateEnd=null, $provinceCode=null, $amphurCode=null) {
+	public function GetOverviewReportData($strDateStart=null, $strDateEnd=null, $provinceCode=null, $amphurCode=null) {
 		$sqlStrWhere = $this->CreateSqlWhere($strDateStart, $strDateEnd, $provinceCode, $amphurCode);
 
 		$result["marineDebrisTableRpt"] = $this->GetMarineDebrisTableRptData($sqlStrWhere);
@@ -39,7 +39,7 @@ class Report_m extends CI_Model {
         
         
         
-        private function GetMarineDebrisTableRptData($sqlStrWhere) {
+	private function GetMarineDebrisTableRptData($sqlStrWhere) {
 		$this->load->model('dataclass/iccCard_d');
 		$this->load->model('dataclass/garbageTransaction_d');
 		$this->load->model('dataclass/garbage_d');
@@ -279,7 +279,7 @@ class Report_m extends CI_Model {
 		
 		return $result;
 	}
-    private function GetDsProvince($id=null) {
+	private function GetDsProvince($id=null) {
 		$this->load->model("dataclass/province_d");
 		$this->load->model("db_m");
 
@@ -287,7 +287,7 @@ class Report_m extends CI_Model {
 		$this->db_m->sequenceColumn = $this->province_d->colProvinceName;
 		$dataSet = $this->db_m->GetRowById(null, null);
     
-    	return $dataSet;
+		return $dataSet;
 	}
 	// Public function.
     public function GetDsProject($provinceCode=null) {

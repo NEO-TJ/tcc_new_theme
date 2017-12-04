@@ -3,7 +3,6 @@
 $(document).ready(function() {
     initDaterange();
     initPageLoad();
-    CreateDashboardReport();
 });
 
 // -------------------------------------------------------------------------------------------- Init DatetimePicker.
@@ -40,10 +39,9 @@ function initDaterange() {
     cb(start, end);
 }
 
-// -------------------------------------------------------------------------------------------- Force AJAX.
-$('#genReport').on('click', function(e) { CreateDashboardReport(); });
-// -------------------------------------------------------------------------------------------- Select input
-$('select#provinceCode').on('change', function(e) { ChangeProvince(e); });
+// ____________________________________________________________________________________________ Force AJAX.
+// -------------------------------------------------------------------------------------------- Click Render main report
+$('button#genReport').on('click', function(e) { filterThenRenderMainReport(); });
 // ******************************************************************************************** End Event.
 
 
@@ -51,14 +49,14 @@ $('select#provinceCode').on('change', function(e) { ChangeProvince(e); });
 
 
 // ******************************************************************************************** AJAX.
-function CreateDashboardReport() {
+function filterThenRenderMainReport() {
     picker = $('#daterange').data('daterangepicker');
     let baseUrl = window.location.origin + "/" + window.location.pathname.split('/')[1] + "/";
     let rankingLimit = $("input[name='rankingLimit']:checked").val();
     let strDateStart = picker.startDate.format('YYYY-MM-DD');
     let strDateEnd = picker.endDate.format('YYYY-MM-DD');
     let provinceCode = $('select#provinceCode :selected').val();
-    let iccCardId = $('select#iccCardId :selected').val();
+    let iccCardId = $('select#projectName :selected').val();
 
     let data = {
         'rankingLimit'  : rankingLimit,
@@ -70,7 +68,7 @@ function CreateDashboardReport() {
 
     // Get dashboard report by ajax.
     $.ajax({
-        url: baseUrl + 'report/ajaxGetDashboardReportData',
+        url: baseUrl + 'report/ajaxGetMainReportData',
         type: 'post',
         data: data,
         dataType: 'json',
@@ -86,30 +84,6 @@ function CreateDashboardReport() {
         }
     });
 }
-
-// ____________________________________________________________________________________________ Province
-function ChangeProvince(e) {
-    let baseUrl = window.location.origin + "/" + window.location.pathname.split('/')[1] + "/";
-    let provinceCode = $('select#provinceCode :selected').val();
-
-    let data = { 'provinceCode': provinceCode };
-
-    // Get project name filtered with province code by ajax.
-    $.ajax({
-        url: baseUrl + 'report/ajaxGetProjectFiltered',
-        type: 'post',
-        data: data,
-        dataType: 'json',
-        beforeSend: function() {},
-        error: function(xhr, textStatus) {
-            swal("Error", textStatus + xhr.responseText, "error");
-        },
-        complete: function() {},
-        success: function(result) {
-            setSelectElementOfProject(result, $('select#iccCardId'));
-        }
-    });
-}
 // ******************************************************************************************** End AJAX.
 
 
@@ -117,6 +91,15 @@ function ChangeProvince(e) {
 
 
 // ******************************************************************************************** Method.
+// ____________________________________________________________________________________________ Initial Page load.
+function initPageLoad() {
+    changeProvinceWithDateRange();
+    filterThenRenderMainReport();
+}
+// ____________________________________________________________________________________________ End Initial Page load.
+
+
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Render.
 // ____________________________________________________________________________________________ Map.
 function renderMarkerMapPlace(data) {
     //Removing already Added Markers//////////
@@ -426,27 +409,5 @@ function genSummary(summaryTopTenMarineDebrisQty, summaryMarineDebrisQty) {
 }
 // ----------- End Generate Table Row.
 // ____________________________________________________________________________________________ End Table.
+// &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& End Render.
 // ******************************************************************************************** End Method.
-
-
-
-
-
-// -------------------------------------------------------------------------------------------- Tool.
-// ____________________________________________________________________________________________ Set Select Elecment 
-function setSelectElementOfProject(dataSet, $selector) {
-    $selector.empty();
-    $selector.append('<option value="0">ทุกโครงการ...</option>');
-    for (var i = 0; i < dataSet.length; i++) {
-        $selector.append('<option value="' + dataSet[i].id + '">' + dataSet[i].Project_Name + '</option>');
-    }
-}
-
-
-
-// ____________________________________________________________________________________________ Initial Page load.
-function initPageLoad() {
-    $('select#provinceCode').trigger('change');
-}
-// ____________________________________________________________________________________________ End Initial Page load.
-// -------------------------------------------------------------------------------------------- End Tool.

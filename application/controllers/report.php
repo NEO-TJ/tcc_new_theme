@@ -17,7 +17,7 @@ class Report extends MY_Controller {
 
 // Method start.
     public function index() {
-		$this->dashboardReport();
+		$this->mainReport();
 	}
 // End Method start.
 
@@ -25,16 +25,16 @@ class Report extends MY_Controller {
 
 // Routing function.
     // ------------------------------------- For display ovarview report.
-	private function dashboardReport() {
+	private function mainReport() {
 		// Prepare data of view.
-		$this->data = $this->GetInitialDashboardReportData();
+		$this->data = $this->GetInitialMainReportData();
 		
 
 		// Prepare Template.
-		$this->extendedCss = 'frontend/report/dashboard/extendedCss_v';
-		$this->body = 'frontend/report/dashboard/body_v';
-		$this->extendedJs = 'frontend/report/dashboard/extendedJs_v';
-		$this->footer = 'frontend/report/dashboard/footer_v';
+		$this->extendedCss = 'frontend/report/main/extendedCss_v';
+		$this->body = 'frontend/report/main/body_v';
+		$this->extendedJs = 'frontend/report/main/extendedJs_v';
+		$this->footer = 'frontend/report/main/footer_v';
 		$this->renderWithTemplate();
 	}
 // End Routing function.
@@ -42,22 +42,22 @@ class Report extends MY_Controller {
 
 ///////////////////////////////////////////////// AJAX function.
 // Dashboard Report.
-	public function ajaxGetDashboardReportData() {
-    	if ($this->input->server('REQUEST_METHOD') === 'POST') {
+	public function ajaxGetMainReportData() {
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$rankingLimit = $this->input->post('rankingLimit');
 			$strDateStart = $this->input->post('strDateStart');
-    		$strDateEnd = $this->input->post('strDateEnd');
+			$strDateEnd = $this->input->post('strDateEnd');
 			$provinceCode = $this->input->post('provinceCode');
 			$provinceCode = ( ($provinceCode > 0 ) ? $provinceCode : null);
 			$iccCardId = $this->input->post('iccCardId');
 			$iccCardId = ((($iccCardId == "0" ) || ($iccCardId == 0 )) ? null : $iccCardId);
 
 			$this->load->model("report_m");
-			$result = $this->report_m->GetDashboardReportData(
-				$rankingLimit, $strDateStart, $strDateEnd, $provinceCode, $iccCardId);
+			$result = $this->report_m->GetMainReportData(
+			$rankingLimit, $strDateStart, $strDateEnd, $provinceCode, $iccCardId);
 
-    		echo json_encode($result);
-    	}
+			echo json_encode($result);
+		}
 	}
 // End Dashboard Report.
 
@@ -80,7 +80,7 @@ class Report extends MY_Controller {
 
 // Private function.
     // ---------------------------------------------- Dashboard Report ----------------------------------
-	private function GetInitialDashboardReportData() {
+	private function GetInitialMainReportData() {
 		$this->load->model("report_m");
 		$data = $this->report_m->GetDataForComboBox();
 		$data["map"] = $this->CreateMap()["map"];

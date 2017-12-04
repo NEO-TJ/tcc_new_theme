@@ -8,5 +8,5 @@
     // My Java Script.
     echo js_asset('eventImage/galleryPlugin.js');
     echo js_asset('eventImage/galleryList.js');
-    echo js_asset('iccCard/iccCardfilterRelation.js');
+    echo js_asset('iccCard/iccCardFilterRelation.js');
     ?>

@@ -8,5 +8,6 @@
     $this->load->view('template/sharedJs_v');
     // My Java Script.
     echo $map['js'];
-    echo js_asset('report/dashboardReport.js');
+    echo js_asset('report/reportMain.js');
+    echo js_asset('report/reportFilterRelation.js');
 ?>

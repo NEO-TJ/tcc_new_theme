@@ -1,11 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Gallery extends MY_Controller {
+class EventImageGallery extends MY_Controller {
+// Property.
+	private $paginationLimit = 15;
+	private $eventImage;
+// End Property.
 
 // Constructor.
-	function __construct() {
-		parent::__construct();
-	}
+function __construct() {
+	parent::__construct();
+}
 // End Constructor.
 
 
@@ -13,8 +17,8 @@ class Gallery extends MY_Controller {
 // Method start.
 	// ---------------------------------------------------------------------------------------- For display
 	function index() {
+		// Get iccCardId.
 		$iccCardId = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-		if(!($this->is_logged())) {exit(0);}
 
 		// Prepare data of view.
 		$this->data = $this->GetDataForListView();
@@ -31,6 +35,27 @@ class Gallery extends MY_Controller {
 // Routing function.
 // End Routing function.
 
+
+// AJAX function.
+	// ---------------------------------------------------------------------------------------- Get Data for list view.
+	public function ajaxGetIccCardList() {
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$rDataFilter = $this->input->post('rDataFilter');
+			$pageCode = $this->input->post('pageCode');
+
+			$this->load->model('iccCard_m');
+			$dataRender = $this->iccCard_m->GetDataForComboBoxAjaxListView();
+			$dataPagination = $this->setPagination($rDataFilter, $pageCode);
+			$dataRender["dsIccCardList"] = $dataPagination["dsIccCardList"];
+			$dataRender["numRecordStart"] = $pageCode;
+
+			$dsData["htmlTableBody"] = $this->load->view("frontend/eventImageGallery/list/bodyTableBody_v", $dataRender, TRUE);
+			$dsData["paginationLinks"] = $dataPagination["paginationLinks"];
+
+			echo json_encode($dsData);
+		}
+	}
+  // ---------------------------------------------------------------------------------------- Save data to DB 
 
 
 // Private function.

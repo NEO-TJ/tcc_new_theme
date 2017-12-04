@@ -2,7 +2,7 @@
 // -------------------------------------------------------------------------------------------- Page Load.
 $(document).ready(function() {
     initDaterange();
-    initialPage();
+    initPageLoad();
 });
 // -------------------------------------------------------------------------------------------- Init DatetimePicker.
 function initDaterange() {
@@ -51,15 +51,15 @@ $(document).on("click", "a#editIccCard", function(e){
 
     $('form#formChoose').submit();
 });
-$(document).on("click", "a#eventImage", function(e){
-    let baseUrl = window.location.origin + "/" + window.location.pathname.split('/')[1] + "/";
+$(document).on("click", "a#eventImageAdmin", function(e){
     e.preventDefault();
+    let baseUrl = window.location.origin + "/" + window.location.pathname.split('/')[1] + "/";
 
     let tr = $(e.target).closest('tr');
     let iccCardId = tr.find('td input#iccCardId').val();
     $('input[name=iccCardId]').val(iccCardId);
     
-    $('form#formChoose').attr('action', baseUrl + "eventImage").submit();
+    $('form#formChoose').attr('action', baseUrl + "eventImageAdmin").submit();
 });
 // -------------------------------------------------------------------------------------------- Search.
 $('button#search').on('click', function(e) { filterThenRenderIccCardList(0); });
@@ -154,7 +154,8 @@ function getConfirmInfo(e) {
 // -------------------------------------------------------------------------------------------- End Tool.
 
 // ____________________________________________________________________________________________ Initial Page load.
-function initialPage() {
+function initPageLoad() {
+    changeProvinceWithDateRange();
     filterThenRenderIccCardList();
 }
 // ____________________________________________________________________________________________ End Initial Page load.

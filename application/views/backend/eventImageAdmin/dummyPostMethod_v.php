@@ -12,7 +12,7 @@
 	</head>
 
 	<body>
-		<?php echo form_open(base_url("eventImage"), array("id" => "formRedirectPostMethod")); ?>
+		<?php echo form_open(base_url("eventImageAdmin"), array("id" => "formRedirectPostMethod")); ?>
 		<input type="hidden" name="iccCardId" value="<?php echo $iccCardId ?>" />
 		<?php echo form_close(); ?><!-- Close form redirect post method -->
 

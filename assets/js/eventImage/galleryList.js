@@ -2,7 +2,7 @@
 // -------------------------------------------------------------------------------------------- Page Load.
 $(document).ready(function() {
     initDaterange();
-    initialPage();
+    initPageLoad();
 });
 // -------------------------------------------------------------------------------------------- Init DatetimePicker.
 function initDaterange() {
@@ -87,7 +87,7 @@ function filterThenRenderIccCardList(pageCode) {
 
     // Get ICC Card List by ajax.
     $.ajax({
-        url: baseUrl + 'eventImage/ajaxGetIccCardList',
+        url: baseUrl + 'gallery/ajaxGetIccCardList',
         type: 'post',
         data: data,
         dataType: 'json',
@@ -105,8 +105,10 @@ function filterThenRenderIccCardList(pageCode) {
 // -------------------------------------------------------------------------------------------- End AJAX.
 
 
+
 // ____________________________________________________________________________________________ Initial Page load.
-function initialPage() {
+function initPageLoad() {
+    changeProvinceWithDateRange();
     filterThenRenderIccCardList();
 }
 // ____________________________________________________________________________________________ End Initial Page load.

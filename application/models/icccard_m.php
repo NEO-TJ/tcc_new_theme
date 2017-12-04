@@ -658,8 +658,8 @@ class IccCard_m extends CI_Model {
 
 // -------------------------------------------------------------------------------------------- Get DB to combobox
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ICC Card Child
-    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cleanup_Type table
-    private function GetDsCleanupType($id=null) {
+	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cleanup_Type table
+  private function GetDsCleanupType($id=null) {
 		$this->load->model("dataclass/cleanupType_d");
 		$this->load->model("db_m");
 
@@ -669,7 +669,7 @@ class IccCard_m extends CI_Model {
     
     	return $dataSet;
 	}
-    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Icc Card Status table
+	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Icc Card Status table
 	private function GetDsIccCardStatus($id=null) {
 		$this->load->model("dataclass/iccCardStatus_d");
 		$this->load->model("db_m");
@@ -681,7 +681,7 @@ class IccCard_m extends CI_Model {
     	return $dataSet;
 	}		
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Department (Org)Table
-    private function GetDsOrg($id=null) {
+	private function GetDsOrg($id=null) {
 		$this->load->model("dataclass/org_d");
 		$this->load->model("db_m");
 
@@ -690,21 +690,21 @@ class IccCard_m extends CI_Model {
 		$strSelect = $this->org_d->colId . ', ' . $this->org_d->colDepartment;
 		$dataSet = $this->db_m->GetRowById($id, null, $strSelect);
     
-    	return $dataSet;
-    }
-    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Distance Unit table
-    private function GetDsDistanceUnit($id=null) {
+		return $dataSet;
+	}
+	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Distance Unit table
+	private function GetDsDistanceUnit($id=null) {
 		$this->load->model("dataclass/distanceUnit_d");
 		$this->load->model("db_m");
 
 		$this->db_m->tableName = $this->distanceUnit_d->tableName;
 		$this->db_m->sequenceColumn = $this->distanceUnit_d->colName;
 		$dataSet = $this->db_m->GetRowById($id, null);
-    
-    	return $dataSet;
-    }
-    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Weight Unit table
-    private function GetDsWeightUnit($id=null) {
+
+		return $dataSet;
+	}
+	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Weight Unit table
+	private function GetDsWeightUnit($id=null) {
 		$this->load->model("dataclass/weightUnit_d");
 		$this->load->model("db_m");
 
@@ -712,11 +712,11 @@ class IccCard_m extends CI_Model {
 		$this->db_m->sequenceColumn = $this->weightUnit_d->colName;
 		$dataSet = $this->db_m->GetRowById($id, null);
     
-    	return $dataSet;
+		return $dataSet;
 	}
 	
-    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Animal Status table
-    private function GetDsAnimalStatus($id=null) {
+	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Animal Status table
+	private function GetDsAnimalStatus($id=null) {
 		$this->load->model("dataclass/animalStatus_d");
 		$this->load->model("db_m");
 
@@ -724,11 +724,11 @@ class IccCard_m extends CI_Model {
 		$this->db_m->sequenceColumn = $this->animalStatus_d->colName;
 		$dataSet = $this->db_m->GetRowById($id, null);
     
-    	return $dataSet;
-    }
+		return $dataSet;
+	}
 
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Garbage Type Table
-    private function GetDsGarbageType($id=null) {
+	private function GetDsGarbageType($id=null) {
 		$this->load->model("dataclass/garbageType_d");
 		$this->load->model("db_m");
 
@@ -736,9 +736,9 @@ class IccCard_m extends CI_Model {
 		$this->db_m->sequenceColumn = $this->garbageType_d->colName;
 		$strSelect = $this->garbageType_d->colId . ', ' . $this->garbageType_d->colName;
 		$dataSet = $this->db_m->GetRowById(null, null, $strSelect);
-    
-    	return $dataSet;
-    }
+
+		return $dataSet;
+	}
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ End ICC Card Child
 
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Place data
@@ -751,7 +751,7 @@ class IccCard_m extends CI_Model {
 		$this->db_m->sequenceColumn = $this->province_d->colProvinceName;
 		$dataSet = $this->db_m->GetRowById(null, null);
     
-    	return $dataSet;
+		return $dataSet;
 	}
 	private function GetDsProvinceByDaterange($sqlWhere=null) {
 		$this->load->model('dataclass/iccCard_d');
@@ -772,7 +772,7 @@ class IccCard_m extends CI_Model {
 		$this->load->model('db_m');
 		$result = $this->db_m->GetRow($sqlStr);
 
-    	return $result;
+    return $result;
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Amphur Table
 	private function GetDsAmphur($amphurCode=null) {
@@ -784,10 +784,10 @@ class IccCard_m extends CI_Model {
 		$this->db_m->colId = $this->amphur_d->colAmphurCode;
 		$strSelect = $this->amphur_d->colAmphurCode . ", " . $this->amphur_d->colAmphurName;
 		$dataSet = $this->db_m->GetRowById($amphurCode, null, $strSelect);
-    
-    	return $dataSet;
-    }
-    private function GetDsAmphurByProvinceCode($fkProvinceCode=null) {
+
+    return $dataSet;
+  }
+  private function GetDsAmphurByProvinceCode($fkProvinceCode=null) {
 		$this->load->model("dataclass/amphur_d");
 		$this->load->model("db_m");
 
@@ -799,15 +799,15 @@ class IccCard_m extends CI_Model {
 
 		$dataSet = $this->db_m->GetRowById($fkProvinceCode, null, $strSelect);
 
-    	return $dataSet;
-    }
+    return $dataSet;
+  }
 	private function GetDsAmphurByDaterange($sqlWhere=null) {
 		$this->load->model('dataclass/iccCard_d');
 		$this->load->model("dataclass/amphur_d");
 		$this->load->model("db_m");
 
 		// Create sql string.
-		$sqlStr = "SELECT DISTINCT c." . $this->iccCard_d->colFkAmphurCode
+		$sqlStr = "SELECT DISTINCT a." . $this->amphur_d->colAmphurCode
 				. ", a." . $this->amphur_d->colAmphurName
 				. " FROM " . $this->iccCard_d->tableName . " AS c"
 				. " LEFT JOIN " . $this->amphur_d->tableName . " AS a"
@@ -820,7 +820,7 @@ class IccCard_m extends CI_Model {
 		$this->load->model('db_m');
 		$result = $this->db_m->GetRow($sqlStr);
 
-    	return $result;
+		return $result;
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Project Name (ICC_Card)Table
   private function GetDsProjectName($id=null) {
@@ -832,9 +832,9 @@ class IccCard_m extends CI_Model {
 		$strSelect = $this->iccCard_d->colId . ", " . $this->iccCard_d->colProjectName;
 		$rWhere = array($this->iccCard_d->colActive => "1");
 		$dataSet = $this->db_m->GetRowById($id, $rWhere, $strSelect);
-    
-    	return $dataSet;
-    }
+
+		return $dataSet;
+	}
   private function GetDsProjectNameByProvinceCode($fkProvinceCode=null) {
 		$this->load->model("dataclass/iccCard_d");
 		$this->load->model("db_m");
@@ -845,11 +845,11 @@ class IccCard_m extends CI_Model {
 		$strSelect = $this->iccCard_d->colId . ", " . $this->iccCard_d->colProjectName;
 		$rWhere = array($this->iccCard_d->colActive => "1");
 		$fkProvinceCode = ( ($fkProvinceCode < 1) ? null : $fkProvinceCode);
-		
+
 		$dataSet = $this->db_m->GetRowById($fkProvinceCode, $rWhere, $strSelect);
-    
-    	return $dataSet;
-    }
+
+		return $dataSet;
+	}
 	private function GetDsProjectNameByDaterange($sqlWhere=null) {
 		$this->load->model('dataclass/iccCard_d');
 		$this->load->model("db_m");
@@ -865,7 +865,7 @@ class IccCard_m extends CI_Model {
 		$this->load->model('db_m');
 		$result = $this->db_m->GetRow($sqlStr);
 
-    	return $result;
+		return $result;
 	}
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ End Place data
 // -------------------------------------------------------------------------------------------- End Get DB to combobox
@@ -885,7 +885,7 @@ class IccCard_m extends CI_Model {
 			$rIccCardStatus[$row['id']] = $row['Name'];
 		}
 
-    	return $rIccCardStatus;
+		return $rIccCardStatus;
 	}		
 // -------------------------------------------------------------------------------------------- End Get For Advance Combobox
 
@@ -964,22 +964,22 @@ class IccCard_m extends CI_Model {
 		// Create sql string where.
 		$sqlWhere = " WHERE c." . $this->iccCard_d->colActive . "=1";
 		if($rFilter !== NULL) {
-			$sqlWhere .= (($rFilter['provinceCode'] !== NULL) && ($rFilter['provinceCode'] > 0)
+			$sqlWhere .= (isset($rFilter['provinceCode']) && ($rFilter['provinceCode'] > 0)
 					? " AND c." . $this->iccCard_d->colFkProvinceCode . "=" . $rFilter['provinceCode']
 					: NULL );
-			$sqlWhere .= (($rFilter['amphurCode'] !== NULL) && ($rFilter['amphurCode'] > 0)
+			$sqlWhere .= (isset($rFilter['amphurCode']) && ($rFilter['amphurCode'] > 0)
 					? " AND c." . $this->iccCard_d->colFkAmphurCode . "=" . $rFilter['amphurCode']
 					: NULL );
-			$sqlWhere .= (($rFilter['iccCardId'] !== NULL) && ($rFilter['iccCardId'] != '0')
+			$sqlWhere .= (isset($rFilter['iccCardId']) && ($rFilter['iccCardId'] != '0')
 					? " AND c." . $this->iccCard_d->colId . "=" . $rFilter['iccCardId']
 					: NULL );
-			$sqlWhere .= (($rFilter['orgId'] !== NULL) && ($rFilter['orgId'] > 0)
+			$sqlWhere .= (isset($rFilter['orgId']) && ($rFilter['orgId'] > 0)
 					? " AND c." . $this->iccCard_d->colFkOrg . "=" . $rFilter['orgId']
 					: NULL );
-			$sqlWhere .= (($rFilter['garbageTypeId'] !== NULL) && ($rFilter['garbageTypeId'] > 0)
+			$sqlWhere .= (isset($rFilter['garbageTypeId']) && ($rFilter['garbageTypeId'] > 0)
 					? " AND g." . $this->garbage_d->colFkGarbageType . "=" . $rFilter['garbageTypeId']
 					: NULL );
-			$sqlWhere .= (($rFilter['iccCardStatusCode'] !== NULL) && ($rFilter['iccCardStatusCode'] > 0)
+			$sqlWhere .= (isset($rFilter['iccCardStatusCode']) && ($rFilter['iccCardStatusCode'] > 0)
 					? " AND c." . $this->iccCard_d->colFkIccCardStatus . "=" . $rFilter['iccCardStatusCode']
 					: NULL );
 			$sqlWhere .= " AND c." . $this->iccCard_d->colEventDate;
