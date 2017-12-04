@@ -47,30 +47,29 @@
 									id="amphurCode">
 										<option value="0" selected>เลือกทั้งหมด...</option>
 										<?php 
-											foreach($dsProject as $row) {
-												echo '<option value=' . $row['id'] .'>'
-												. $row['Amphur_Name'] . '</option>';
+											foreach($dsAmphur as $row) {
+												echo '<option value=' . $row['AmphurCode'] .'>'
+												. $row['AmphurName'] . '</option>';
 											}
 										?>
 									</select>
 								</div>
 							<!-- Project Name Sub Section -->
 								<div class="col-xs-1 col-md-1 col-lg-1 text-left margin-input">
-									<div>จังหวัด : </div>
+									<div>โครงการ : </div>
 								</div>
 								<div class="col-xs-4 col-md-4 col-lg-4 margin-input">
 									<select class="form-control input-require" 
 									id="projectName">
 										<option value="0" selected>เลือกทั้งหมด...</option>
 										<?php 
-											foreach($dsProject as $row) {
+											foreach($dsProjectName as $row) {
 												echo '<option value=' . $row['id'] .'>'
 												. $row['Project_Name'] . '</option>';
 											}
 										?>
 									</select>
 								</div>
-
 							<!-- Button Section -->
 								<div class="col-xs-1 col-md-1 col-lg-1 margin-input">
 									<button id="search" class="bg-success">OK</button>

@@ -1,8 +1,8 @@
 <?php 
     // Plugin.
-    echo my_js_asset("plugins/prettyPhoto/js/jquery.prettyPhoto.js");
     echo my_js_asset("plugins/bootstrap-daterangepicker-master/js/moment.min.js");
     echo my_js_asset("plugins/bootstrap-daterangepicker-master/js/daterangepicker.js");
+    echo my_js_asset("plugins/prettyPhoto/js/jquery.prettyPhoto.js");
     // Shared Java Script.
     
     // My Java Script.

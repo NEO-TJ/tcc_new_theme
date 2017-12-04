@@ -87,7 +87,7 @@ function filterThenRenderIccCardList(pageCode) {
 
     // Get ICC Card List by ajax.
     $.ajax({
-        url: baseUrl + 'gallery/ajaxGetIccCardList',
+        url: baseUrl + 'eventImageGallery/ajaxGetIccCardList',
         type: 'post',
         data: data,
         dataType: 'json',
