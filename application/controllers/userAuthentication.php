@@ -113,8 +113,8 @@ class UserAuthentication extends MY_Controller {
 
 
 // Private function.
-    // -------------------------------------------- Set input display mode -----------------------------
-    private function SetInputDisplay($dataType=0, $inputMode=1, $rowID=null) {
+	// -------------------------------------------- Set input display mode -----------------------------
+	private function SetInputDisplay($dataType=0, $inputMode=1, $rowID=null) {
 		$this->data = $this->GetDataForInputDisplay($dataType, $rowID);
 		// Caption.
     	$this->data['dataType'] = 0;
@@ -132,9 +132,10 @@ class UserAuthentication extends MY_Controller {
 		$this->footer = 'frontend/userAuthentication/input/footer_v';
 		$this->extendedJs = 'frontend/userAuthentication/input/extendedJs_v';
 		$this->renderWithTemplate();
-    }
-    // ---------------------------------------------- Initial input mode -------------------------------
-    private function GetDataForInputDisplay($dataType=1, $rowID=null) {
+	}
+
+	// ---------------------------------------------- Initial input mode -------------------------------
+	private function GetDataForInputDisplay($dataType=1, $rowID=null) {
 		// Selection for masterdata object.
 		$this->load->model('masterdata/masterdataUser_m', 'oMasterdata_m');
 
@@ -157,10 +158,9 @@ class UserAuthentication extends MY_Controller {
 
     	return $result;
     }
-    
 
-    // -------------------------------------------------- Save input mode ------------------------------
-    private function SaveDataToDB($dsSave) {
+	// -------------------------------------------------- Save input mode ------------------------------
+	private function SaveDataToDB($dsSave) {
     	$result = false;
     	
     	$dataType = $dsSave['dataType'];
