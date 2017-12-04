@@ -47,13 +47,6 @@
 									<div class="col-xs-5 col-md-5 col-lg-5 margin-input">
 										<select class="form-control input-require" 
 										id="provinceCode">
-											<option value="0" selected>เลือกทั้งหมด...</option>
-											<?php 
-												foreach($dsProvince as $row) {
-													echo '<option value=' . $row['ProvinceCode'] .'>'
-													. $row['ProvinceName'] . '</option>';
-												}
-											?>
 										</select>
 									</div>
 								<!-- Daterange Sub Section -->
@@ -73,13 +66,6 @@
 									<div class="col-xs-4 col-md-4 col-lg-4 margin-input">
 										<select class="form-control input-require" 
 										id="projectName">
-											<option value="0" selected>เลือกทั้งหมด...</option>
-											<?php 
-												foreach($dsProject as $row) {
-													echo '<option value=' . $row['id'] .'>'
-													. $row['Project_Name'] . '</option>';
-												}
-											?>
 										</select>
 									</div>
 								<!-- Button Section -->

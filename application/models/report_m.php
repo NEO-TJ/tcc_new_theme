@@ -11,23 +11,26 @@ class Report_m extends CI_Model {
 
 
 // Public function.
-///////////////////////////////////////////////// Dashboard report
+	// ________________________________________________________________________________________ Get data for report.
+	// ---------------------------------------------------------------------------------------- Get all report data.
 	public function GetMainReportData($rankingLimit=10, $strDateStart=null, $strDateEnd=null
-											, $provinceCode=null, $iccCardId=null) {
+		, $provinceCode=null, $iccCardId=null) {
+
 		$sqlStrWhere = $this->CreateSqlWhere($strDateStart, $strDateEnd, $provinceCode, $iccCardId);
 
 		$result["dsMarineDebrisSinglePlace"] = $this->GetMarineDebrisSinglePlace($sqlStrWhere, $rankingLimit);
 		$result["dsMarineDebrisEventMapPlace"] = $this->GetMarineDebrisEventMapPlace($sqlStrWhere);
 		$rResult = ( ($provinceCode === NULL) 
-				? $this->GetMarineDebrisProvinceGroup($sqlStrWhere, $rankingLimit) 
-				: $this->GetMarineDebrisEventGroup($sqlStrWhere, $rankingLimit));
+			? $this->GetMarineDebrisProvinceGroup($sqlStrWhere, $rankingLimit) 
+			: $this->GetMarineDebrisEventGroup($sqlStrWhere, $rankingLimit));
 		$result["dsMarineDebrisGroupingPlace"] = $rResult["dataset"];
 		$result["placeCount"] = $rResult["placeCount"];
 		$result["rankingLimit"] = $rResult["rankingLimit"];
 	
 		return $result;
 	}
-        
+
+	// ---------------------------------------------------------------------------------------- Get main report
 	public function GetOverviewReportData($strDateStart=null, $strDateEnd=null, $provinceCode=null, $amphurCode=null) {
 		$sqlStrWhere = $this->CreateSqlWhere($strDateStart, $strDateEnd, $provinceCode, $amphurCode);
 
@@ -36,9 +39,9 @@ class Report_m extends CI_Model {
 
 		return $result;
 	}
-        
-        
-        
+
+
+	// ---------------------------------------------------------------------------------------- Get marine debris all place report
 	private function GetMarineDebrisTableRptData($sqlStrWhere) {
 		$this->load->model('dataclass/iccCard_d');
 		$this->load->model('dataclass/garbageTransaction_d');
@@ -112,12 +115,9 @@ class Report_m extends CI_Model {
 
 		return $result;
 	}
-        
-        
-        
-        
-        
-        
+
+
+	// ---------------------------------------------------------------------------------------- Get marine debris by place report
 	private function GetMarineDebrisEventGroup($sqlStrWhere, $rankingLimit=10) {
 		$this->load->model('dataclass/iccCard_d');
 		$this->load->model('dataclass/garbageTransaction_d');
@@ -202,7 +202,7 @@ class Report_m extends CI_Model {
 	}
 
 
-
+	// ---------------------------------------------------------------------------------------- Get marine debris single place report
 	private function GetMarineDebrisSinglePlace($sqlStrWhere, $rankingLimit=10) {
 		$this->load->model('dataclass/iccCard_d');
 		$this->load->model('dataclass/garbageTransaction_d');
@@ -267,50 +267,13 @@ class Report_m extends CI_Model {
 
     	return $result;
 	}
-///////////////////////////////////////////////// End Dashboard report
+	// ________________________________________________________________________________________ EndGet data for report.
+// End Public function.
 
 
 
-// ---------------------------------------------- Tools
-	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Province Table ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	public function GetDataForComboBox() {
-		$result['dsProvince'] = $this->GetDsProvince();
-		$result['dsProject'] = $this->GetDsProject();
-		
-		return $result;
-	}
-	private function GetDsProvince($id=null) {
-		$this->load->model("dataclass/province_d");
-		$this->load->model("db_m");
-
-		$this->db_m->tableName = $this->province_d->tableName;
-		$this->db_m->sequenceColumn = $this->province_d->colProvinceName;
-		$dataSet = $this->db_m->GetRowById(null, null);
-    
-		return $dataSet;
-	}
-	// Public function.
-    public function GetDsProject($provinceCode=null) {
-		$this->load->model("dataclass/iccCard_d");
-
-		// sqlQuery.
-		$sqlQuery = "SELECT " . $this->iccCard_d->colId
-				. ", " . $this->iccCard_d->colProjectName
-				. " FROM " . $this->iccCard_d->tableName
-				. " WHERE " . $this->iccCard_d->colActive . "=1"
-				. ( ($provinceCode !== NULL) 
-					? " AND " . $this->iccCard_d->colFkProvinceCode . "=" . $provinceCode 
-					: "")
-				. " ORDER BY " . $this->iccCard_d->colProjectName;
-		// Execute sql.
-		$this->load->model('db_m');
-		$dataSet = $this->db_m->GetRow($sqlQuery);
-
-    	return $dataSet;
-    }
-
-
-	// ------------------------------------------ Gen Sql
+// Private function.
+	// ---------------------------------------------------------------------------------------- Gen Sql
 	private function CreateSqlWhere($strDateStart=null, $strDateEnd=null, $provinceCode=null, $iccCardId=null) {
 		$this->load->model('dataclass/iccCard_d');
 		$this->load->model('dataclass/garbageTransaction_d');

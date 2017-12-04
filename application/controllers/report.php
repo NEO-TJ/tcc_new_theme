@@ -6,17 +6,16 @@ class Report extends MY_Controller {
 
 
 // Constructor.
-    public function __construct() {
+	public function __construct() {
 		parent::__construct();
-		$this->routingCode = 1;
-    }
+	}
 // End Constructor.
 
 
 
 
 // Method start.
-    public function index() {
+	public function index() {
 		$this->mainReport();
 	}
 // End Method start.
@@ -24,11 +23,9 @@ class Report extends MY_Controller {
 
 
 // Routing function.
-    // ------------------------------------- For display ovarview report.
 	private function mainReport() {
 		// Prepare data of view.
 		$this->data = $this->GetInitialMainReportData();
-		
 
 		// Prepare Template.
 		$this->extendedCss = 'frontend/report/main/extendedCss_v';
@@ -40,8 +37,8 @@ class Report extends MY_Controller {
 // End Routing function.
 
 
-///////////////////////////////////////////////// AJAX function.
-// Dashboard Report.
+// AJAX function.
+	// ---------------------------------------------------------------------------------------- Get Data for Combobox report and map.
 	public function ajaxGetMainReportData() {
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$rankingLimit = $this->input->post('rankingLimit');
@@ -53,41 +50,23 @@ class Report extends MY_Controller {
 			$iccCardId = ((($iccCardId == "0" ) || ($iccCardId == 0 )) ? null : $iccCardId);
 
 			$this->load->model("report_m");
-			$result = $this->report_m->GetMainReportData(
-			$rankingLimit, $strDateStart, $strDateEnd, $provinceCode, $iccCardId);
+			$result = $this->report_m->GetMainReportData($rankingLimit, $strDateStart, $strDateEnd, $provinceCode, $iccCardId);
 
 			echo json_encode($result);
 		}
 	}
-// End Dashboard Report.
-
-// Get data to ComboBox filtered.
-	public function ajaxGetProjectFiltered() {
-    	if ($this->input->server('REQUEST_METHOD') === 'POST')
-    	{
-			$provinceCode = $this->input->post('provinceCode');
-			$provinceCode = ( ($provinceCode > 0 ) ? $provinceCode : null);
-			
-			$this->load->model("report_m");
-			$dsData = $this->report_m->GetDsProject($provinceCode);
-
-			echo json_encode($dsData);
-    	}
-	}
-// End Get data to ComboBox filtered.
-///////////////////////////////////////////////// End AJAX function.
+// END AJAX function.
 
 
 // Private function.
-    // ---------------------------------------------- Dashboard Report ----------------------------------
+	// ---------------------------------------------------------------------------------------- Get initial data for Main Report.
 	private function GetInitialMainReportData() {
-		$this->load->model("report_m");
-		$data = $this->report_m->GetDataForComboBox();
 		$data["map"] = $this->CreateMap()["map"];
 
 		return $data;
 	}
 
+	// ---------------------------------------------------------------------------------------- Create Map.
 	private function CreateMap($dsMapTransaction=array()) {
 		$this->load->library('googlemaps');
 		// Config.

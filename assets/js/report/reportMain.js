@@ -93,7 +93,7 @@ function filterThenRenderMainReport() {
 // ******************************************************************************************** Method.
 // ____________________________________________________________________________________________ Initial Page load.
 function initPageLoad() {
-    changeProvinceWithDateRange();
+    ChangeDaterange($('#daterange').data('daterangepicker'));
     filterThenRenderMainReport();
 }
 // ____________________________________________________________________________________________ End Initial Page load.
