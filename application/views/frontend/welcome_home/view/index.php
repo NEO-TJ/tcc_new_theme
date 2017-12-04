@@ -1,37 +1,28 @@
-   
-    <style>
-
-<?php 
-$s = 1;
-if(count($sl) != 0){ ?>
-                    <?php foreach($sl as $row) { ?>
-.fade-carousel .slides .slide-<?=$s?> {
-  
-background-image: url(<?php echo base_url('/assets/admin/slide/'.$row['image']); ?>);
-}
-<?php
-$s++;
- } ?> 
-                    <?php } ?>  
-
-/*.fade-carousel .slides .slide-2 {
-  background-image: url(<?php echo base_url('assets/images/slide/photo-1416339134316-0e91dc9ded92.jpg'); ?>); 
-}
-.fade-carousel .slides .slide-3 {
-  background-image: url('assets/images/slide//1_i-rtqo2NH6LLDADJEPCzogx.jpeg');
-} */
-
+<style>
 
 .promo_full {
    
-    height: auto;
-     background: url(<?php echo base_url('assets/images/slide/Sunrise.jpg'); ?>) center center no-repeat fixed;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    position: relative;
+	height: auto;
+	 background: url(<?php echo base_url('assets/images/slide/Sunrise.jpg'); ?>) center center no-repeat fixed;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	position: relative;
 }
+
+.image-upper-bg-block
+{
+	text-align:center;
+	height:300px;
+	background-color:#fff;
+}
+
+.image-block-css
+{
+	margin:12px 0px;
+}
+
    <?php
 function DateThai($strDate)
 {
@@ -47,176 +38,127 @@ return "$strDay $strMonthThai $strYear";
 }
 ?>
 
-    </style>
+</style>
 
-<div class="carousel fade-carousel slide" data-ride="carousel" data-interval="4000" id="bs-carousel">
-  <!-- Overlay -->
- 
+	<div class="carousel fade-carousel slide" data-ride="carousel" data-interval="4000" id="bs-carousel">
 
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
-    <li data-target="#bs-carousel" data-slide-to="1"></li>
-    <li data-target="#bs-carousel" data-slide-to="2"></li>
-  </ol>
-  
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner">
+		<!-- Indicators -->
+		<ol class="carousel-indicators">
+			<li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
+			<li data-target="#bs-carousel" data-slide-to="1"></li>
+			<li data-target="#bs-carousel" data-slide-to="2"></li>
+		</ol>
 
-  
-
-
-<?php 
-$s = 1;
-if(count($sl) != 0){ ?>
-                    <?php foreach($sl as $row) { ?>
-<div class="item slides 
-
-<?php
-if($row['name'] == 'slide1'){
-	?>
-active
-
-	<?php
-}
-?>
-">
-      <div class="slide-<?=$s?>"></div>
-      <div class="hero">        
-        <hgroup>
-            <h2><?=$row['title']?></h2>        
-            <h4><?=$row['sub_title']?></h4>
-        </hgroup>       
-        <a class="btn btn-hero btn" href="<?=$row['url_web']?>" role="button">ดูรายละเอียด</a>
-      </div>
-    </div>
-<?php
-$s++;
- } ?> 
-<?php } ?>  
-
-
-    
-
- <!--   <div class="item slides">
-      <div class="slide-3"></div>
-      <div class="hero">        
-        <hgroup>
-            <h2>ฐานข้อมูลการเปลี่ยนแปลงชายฝั่งทะเลไทย</h2>        
-            <h4>เพื่อสร้างแบรนด์ให้เป็นที่รู้จักในตลาดโลก</h4>
-        </hgroup>
-        <button class="btn btn-hero btn" role="button">ดูรายละเอียด</button>
-      </div> background
-    </div> -->
-
-
-  </div> 
-</div>
-
-    <div class="content-section-a" style="padding: 30px 0 60px;">
-            <div class="container">
-			<div class="row" id="sec-news">
-				
-			<!-- Content-1-Home col-1 section -->
-				<div class="col-md-3">
-					<div class="content1-home databaseList">
-						<ul class="none report">
-							<li>
-								<p class="tn">
-									<a href="<?php echo base_url('/report'); ?>">
-										<img src="<?php echo base_url('assets/images/background/image-link1.png'); ?>">
-									</a>
-								</p>
-								<p>
-									<a href="<?php echo base_url('/report'); ?>">
-										<img src="<?php echo base_url('assets/images/background/caption-link1.png'); ?>" class="title-pro">
-									</a>
-								</p>
-							</li>
-						</ul>
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner">
+			<?php $s = 1; ?>
+			<?php if(count($sl) != 0) : ?>
+				<?php foreach($sl as $row) : ?>
+					<div class="item <?php echo ($s ==1) ? 'active' : ''; ?>">
+						<img src="<?php echo base_url('/assets/admin/slide/'.$row['image']); ?>" alt="Slide <?php echo $s; ?>">
 					</div>
-				</div>
-			<!-- End Content-1-Home col-1 section -->
-
-			<!-- Content-1-Home col-2 section -->
-				<div class="col-md-3">
-					<div class="content1-home databaseList">
-						<ul class="none">
-							<li>
-								<p class="tn">
-									<a href="#">
-										<img src="<?php echo base_url('assets/images/background/image-link2.png'); ?>">
-									</a>
-								</p>
-								<p>
-									<a href="#">
-										<img src="<?php echo base_url('assets/images/background/caption-link2.png'); ?>" class="title-pro">
-									</a>
-								</p>
-							</li>
-						</ul>
-					</div>
-				</div>
-			<!-- End Content-1-Home col-2 section -->
-
-			<!-- Content-1-Home col-3 section -->
-				<div class="col-md-3">
-					<div class="content1-home databaseList">
-						<ul class="none">
-							<li>
-								<p class="tn">
-									<a href="#">
-										<img src="<?php echo base_url('assets/images/background/image-link3.png'); ?>">
-									</a>
-								</p>
-								<p>
-									<a href="#" >
-										<img src="<?php echo base_url('assets/images/background/caption-link3.png'); ?>" class="title-pro">
-									</a>
-								</p>
-							</li>
-						</ul>
-					</div>
-				</div>
-			<!-- End Content-1-Home col-3 section -->
-
-			<!-- Content-1-Home col-4 section -->
-				<div class="col-md-3">
-					<div class="content1-home databaseList">
-						<ul class="none">
-							<li>
-								<p class="tn">
-									<a href="<?php echo base_url('/eventImageGallery'); ?>">
-										<img src="<?php echo base_url('assets/images/background/image-link4.png'); ?>">
-									</a>
-								</p>
-								<p>
-									<a href="<?php echo base_url('/eventImageGallery'); ?>">
-										<img src="<?php echo base_url('assets/images/background/caption-link4.png'); ?>" class="title-pro">
-									</a>
-								</p>
-							</li>
-						</ul>
-					</div>
-				</div>
-			<!-- End Content-1-Home col-4 section -->
-			</div>
+					<?php $s++; ?>
+				<?php endforeach; ?>
+			<?php endif; ?>
 		</div>
-    </div>
+
+	</div>
+
+
+	<div id="background-under-picture" style="background: url(<?php echo base_url('assets/images/bg-main.jpg'); ?>) center center no-repeat;">
+		<div class="container">
+			<div class="row">
+				<!-- Content-1-Home col-1 section -->
+				<div class="col-md-3 image-upper-bg-block">
+					<ul class="none">
+						<li>
+							<p class="tn">
+								<a href="<?php echo base_url('/report'); ?>">
+									<img class="image-block-css" src="<?php echo base_url('assets/images/background/image-link1.png'); ?>">
+								</a>
+							</p>
+							<p>
+								<a href="<?php echo base_url('/report'); ?>">
+									<img src="<?php echo base_url('assets/images/background/caption-link1.png'); ?>">
+								</a>
+							</p>
+						</li>
+					</ul>
+				</div>
+				<!-- End Content-1-Home col-1 section -->
+
+				<!-- Content-1-Home col-2 section -->
+				<div class="col-md-3 image-upper-bg-block">
+					<ul class="none">
+						<li>
+							<p class="tn">
+								<a href="<?php echo base_url('/PublicRelations/content_list'); ?>">
+									<img class="image-block-css" src="<?php echo base_url('assets/images/background/image-link2.png'); ?>">
+								</a>
+							</p>
+							<p>
+								<a href="<?php echo base_url('/PublicRelations/content_list'); ?>">
+									<img src="<?php echo base_url('assets/images/background/caption-link2.png'); ?>">
+								</a>
+							</p>
+						</li>
+					</ul>
+				</div>
+				<!-- End Content-1-Home col-2 section -->
+
+				<!-- Content-1-Home col-3 section -->
+				<div class="col-md-3 image-upper-bg-block">
+					<ul class="none">
+						<li>
+							<p class="tn">
+								<a href="#">
+									<img class="image-block-css" src="<?php echo base_url('assets/images/background/image-link3.png'); ?>">
+								</a>
+							</p>
+							<p>
+								<a href="#" >
+									<img src="<?php echo base_url('assets/images/background/caption-link3.png'); ?>">
+								</a>
+							</p>
+						</li>
+					</ul>
+				</div>
+				<!-- End Content-1-Home col-3 section -->
+
+				<!-- Content-1-Home col-4 section -->
+				<div class="col-md-3 image-upper-bg-block">
+					<ul class="none">
+						<li>
+							<p class="tn">
+								<a href="<?php echo base_url('/eventImageGallery'); ?>">
+									<img class="image-block-css" src="<?php echo base_url('assets/images/background/image-link4.png'); ?>">
+								</a>
+							</p>
+							<p>
+								<a href="<?php echo base_url('/eventImageGallery'); ?>">
+									<img src="<?php echo base_url('assets/images/background/caption-link4.png'); ?>">
+								</a>
+							</p>
+						</li>
+					</ul>
+				</div>
+				<!-- End Content-1-Home col-4 section -->
+			</div>
+		</div><!-- End .container -->
+	</div>
 
 
 
 <div class="content-section-b" style="padding: 20px 0 20px;">
-            <div class="container" >
+			<div class="container" >
 
+			  <div class="row">
+			  	<div class="col-md-6 " >
 
-              <div class="row">
-              	<div class="col-md-6 " >
-
-              		<dir><img src="<?php echo base_url('assets/images/main_index/top-menu.png'); ?>" class="img-responsive" style="max-width: 280px;"></dir>
-              		<dir class="panel">
-              			
-              			<div class="panel-body">
+			  		<dir><img src="<?php echo base_url('assets/images/main_index/top-menu.png'); ?>" class="img-responsive" style="max-width: 280px;"></dir>
+			  		<dir class="panel">
+			  			
+			  			<div class="panel-body">
 									<div class="table-responsive">
 										<table class="table table-striped mb-none">
 											<thead>
@@ -354,70 +296,64 @@ $s++;
 										</table>
 									</div>
 								</div>
-              		</dir>
-            	
-            	</div>
-            <div class="col-md-6 " >
-            	<dir class="body-project">
-            	<img src="<?php echo base_url('assets/images/main_index/advance-footer-4.png'); ?>" class="img-responsive">
-            	</dir>
+			  		</dir>
+				
+				</div>
+			<div class="col-md-6 " >
+				<dir class="body-project">
+				<img src="<?php echo base_url('assets/images/main_index/advance-footer-4.png'); ?>" class="img-responsive">
+				</dir>
 
-            
-              			
-              			<div class="panel-body">
-              				<header class="panel-heading">
+			
+			  			
+			  			<div class="panel-body">
+			  				<header class="panel-heading">
 									
 					
 									<h2 class="panel-title"><b>ระบบฐานข้อมูลเชิงพื้นที่การเปลี่ยนแปลงพื้นที่ชายฝั่งทะเลไทย</b></h2>
 									<p class="panel-subtitle" style="text-indent: 2.5em;">ในอดีตการเปลี่ยนแปลงชายฝั่งทะเลประเทศไทย จะเกิดขึ้นอย่างค่อยเป็นค่อยไปตามกระบวนการเปลี่ยนแปลงตามธรรมชาติ และจะปรับสภาพชายฝั่งให้เข้าอยู่ในภาวะสมดุลอยู่ตลอดเวลาที่เรียกว่าสมดุลแบบพลวัต (Dynamic equilibrium) ตามรอบฤดูกาล ซึ่งเป็นความสมดุลบนความเคลื่อนไหวตามธรรมชาติ แต่ในในช่วง 3 ทศวรรษ ที่ผ่านมาชายฝั่งทะเลประเทศไทยเกิดการกัดเซาะอย่างรุนแรง ทั้งเกิดจากการเปลี่ยนแปลงสภาพทางธรรมชาติและสิ่งแวดล้อมในปัจจุบัน การขาดตะกอนสะสมตัวเพราะสิ่งก่อสร้างต่างๆ ที่ไปขวางกั้นทางน้ำโดยมนุษย์ เช่น สะพาน ถนน แนวกันคลื่น</p>
 								</header>
-              			</div>
-              
+			  			</div>
+			  
 
-
-            	</div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<section class="promo_full">
-			<div class="promo_full_wp magnific">
-				<div>
-					<h4 style="font-size: 28px;">เป็นองค์กรหลักในการบริหารจัดการ</h4>
-					<h4 style="font-size: 22px;">
-						ทรัพยากรทางทะเลชายฝั่งให้มีความอุดมสมบูรณ์ฺและยั่งยืน
-					</h4>
 
 				</div>
 			</div>
-		</section>
-
-
-		    
-
+		</div>
+	</div>
 
 
 
 
-		    
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<section class="promo_full">
+		<div class="promo_full_wp magnific">
+			<div>
+				<h4 style="font-size: 28px;">เป็นองค์กรหลักในการบริหารจัดการ</h4>
+				<h4 style="font-size: 22px;">
+					ทรัพยากรทางทะเลชายฝั่งให้มีความอุดมสมบูรณ์ฺและยั่งยืน
+				</h4>
+
+			</div>
+		</div>
+	</section>
+
+
+			
  <div class="content-section-a" style="padding: 20px 0 60px;">
-            <div class="container">
+			<div class="container">
 				<div class="row">
 
 
@@ -428,85 +364,85 @@ $s++;
 						<div class="sidebar-tabing" >
 
 							<?php if(count($rs) != 0){ ?>
-                    <?php foreach($rs as $row) { ?>
+					<?php foreach($rs as $row) { ?>
 
-				                    <div class="media"> 
-				                    	<a href="<?php echo base_url('/publicRelations/content/'.$row['id']); ?>"> 
-				                    		<img class="d-flex mr-3" src="<?php echo base_url('/assets/admin/blog/'.$row['Thumbnail_Url']); ?>"  style="float:left">
-				                    	</a>
-				                    <div class="media-body">
-				                        <div class="news-title">
-				                            <a href="<?php echo base_url('/publicRelations/content/'.$row['id']); ?>" class="media-news"><?php echo $row['Title_a']; ?></a>
-				                        </div>
-				                        <div class="news-auther"><span class="time"><i class="fa fa-clock-o"></i> <?php echo DateThai($row['Create_Date']); ?>, <i class="fa fa-folder-o"></i> ข่าวสาร</span></div>
-				                    </div>
-				                  </div>
+									<div class="media"> 
+										<a href="<?php echo base_url('/publicRelations/content/'.$row['id']); ?>"> 
+											<img class="d-flex mr-3" src="<?php echo base_url('/assets/admin/blog/'.$row['Thumbnail_Url']); ?>"  style="float:left">
+										</a>
+									<div class="media-body">
+										<div class="news-title">
+											<a href="<?php echo base_url('/publicRelations/content/'.$row['id']); ?>" class="media-news"><?php echo $row['Title_a']; ?></a>
+										</div>
+										<div class="news-auther"><span class="time"><i class="fa fa-clock-o"></i> <?php echo DateThai($row['Create_Date']); ?>, <i class="fa fa-folder-o"></i> ข่าวสาร</span></div>
+									</div>
+								  </div>
 
-				             <?php } ?> 
-                    <?php } ?>     
+							 <?php } ?> 
+					<?php } ?>     
 
-				       <!--     <div class="media"> 
-				                    	<a href="#"> <img class="d-flex mr-3" src="<?php echo base_url('assets/images/news/pic-201711201511165387332.png'); ?>"  style="float:left">
-				                    	</a>
-				                    <div class="media-body">
-				                        <div class="news-title">
-				                            <a href="#" class="media-news">ทช.ประชุมรับฟังคำชี้แจงหลักการจัดทำแผนปฏิรูปองค์กร</a>
-				                        </div>
-				                        <div class="news-auther"><span class="time"><i class="fa fa-clock-o"></i> 4 พ.ย. 2560, <i class="fa fa-folder-o"></i> ข่าวสาร</span></div>
-				                    </div>
-				                  </div>
+					   <!--     <div class="media"> 
+										<a href="#"> <img class="d-flex mr-3" src="<?php echo base_url('assets/images/news/pic-201711201511165387332.png'); ?>"  style="float:left">
+										</a>
+									<div class="media-body">
+										<div class="news-title">
+											<a href="#" class="media-news">ทช.ประชุมรับฟังคำชี้แจงหลักการจัดทำแผนปฏิรูปองค์กร</a>
+										</div>
+										<div class="news-auther"><span class="time"><i class="fa fa-clock-o"></i> 4 พ.ย. 2560, <i class="fa fa-folder-o"></i> ข่าวสาร</span></div>
+									</div>
+								  </div>
 
-				            <div class="media"> 
-				                    	<a href="#"> <img class="d-flex mr-3" src="<?php echo base_url('assets/images/news/pic-201711131510561787379.JPG'); ?>"  style="float:left">
-				                    	</a>
-				                    <div class="media-body">
-				                        <div class="news-title">
-				                            <a href="#" class="media-news">รองฯ โสภณ หารือคณะทำงานการจัดประชุมขยะทะเลอาเซียน</a>
-				                        </div>
-				                        <div class="news-auther"><span class="time"><i class="fa fa-clock-o"></i> 4 พ.ย. 2560, <i class="fa fa-folder-o"></i> ข่าวสาร</span></div>
-				                    </div>
-				                  </div> -->
-
-
-				          </div>
-				          <hr>
-				          <div class="textwidget-more" style="float: right;"><a href="<?php echo base_url('PublicRelations/content_list'); ?>">ดูข่าวสารทั้งหมด <i class="fa fa-arrow-right"></i></a></div>
-
-    
-          			</div>
+							<div class="media"> 
+										<a href="#"> <img class="d-flex mr-3" src="<?php echo base_url('assets/images/news/pic-201711131510561787379.JPG'); ?>"  style="float:left">
+										</a>
+									<div class="media-body">
+										<div class="news-title">
+											<a href="#" class="media-news">รองฯ โสภณ หารือคณะทำงานการจัดประชุมขยะทะเลอาเซียน</a>
+										</div>
+										<div class="news-auther"><span class="time"><i class="fa fa-clock-o"></i> 4 พ.ย. 2560, <i class="fa fa-folder-o"></i> ข่าวสาร</span></div>
+									</div>
+								  </div> -->
 
 
-          			<div class="col-md-4">
+						  </div>
+						  <hr>
+						  <div class="textwidget-more" style="float: right;"><a href="<?php echo base_url('PublicRelations/content_list'); ?>">ดูข่าวสารทั้งหมด <i class="fa fa-arrow-right"></i></a></div>
+
+	
+		  			</div>
+
+
+		  			<div class="col-md-4">
 						<h3 class="widget-title">บทความ</h3>
 						<hr>
 						<div class="sidebar-tabing" >
 
-				                  <?php if(count($rt) != 0){ ?>
-                    <?php foreach($rt as $rows) { ?>
+								  <?php if(count($rt) != 0){ ?>
+					<?php foreach($rt as $rows) { ?>
 
-				                    <div class="media"> 
-				                    	<a href="<?php echo base_url('/publicRelations/content/'.$rows['id']); ?>"> <img class="d-flex mr-3" src="<?php echo base_url('/assets/admin/blog/'.$rows['Thumbnail_Url']); ?>"  style="float:left">
-				                    	</a>
-				                    <div class="media-body">
-				                        <div class="news-title">
-				                            <a href="<?php echo base_url('/publicRelations/content/'.$rows['id']); ?>" class="media-news"><?php echo $rows['Title_a']; ?></a>
-				                        </div>
-				                        <div class="news-auther"><span class="time"><i class="fa fa-clock-o"></i> <?php echo DateThai($rows['Create_Date']); ?>, <i class="fa fa-folder-o"></i> บทความ</span></div>
-				                    </div>
-				                  </div>
+									<div class="media"> 
+										<a href="<?php echo base_url('/publicRelations/content/'.$rows['id']); ?>"> <img class="d-flex mr-3" src="<?php echo base_url('/assets/admin/blog/'.$rows['Thumbnail_Url']); ?>"  style="float:left">
+										</a>
+									<div class="media-body">
+										<div class="news-title">
+											<a href="<?php echo base_url('/publicRelations/content/'.$rows['id']); ?>" class="media-news"><?php echo $rows['Title_a']; ?></a>
+										</div>
+										<div class="news-auther"><span class="time"><i class="fa fa-clock-o"></i> <?php echo DateThai($rows['Create_Date']); ?>, <i class="fa fa-folder-o"></i> บทความ</span></div>
+									</div>
+								  </div>
 
-				             <?php } ?> 
-                    <?php } ?>     
+							 <?php } ?> 
+					<?php } ?>     
 
 
-				          </div>
-				          <hr>
-				          <div class="textwidget-more" style="float: right;"><a href="<?php echo base_url('PublicRelations/content_list'); ?>">ดูบทความทั้งหมด  <i class="fa fa-arrow-right"></i></a></div>
+						  </div>
+						  <hr>
+						  <div class="textwidget-more" style="float: right;"><a href="<?php echo base_url('PublicRelations/content_list'); ?>">ดูบทความทั้งหมด  <i class="fa fa-arrow-right"></i></a></div>
 
-    
-          			</div>
+	
+		  			</div>
 
-          			<div class="col-md-4">
+		  			<div class="col-md-4">
 						<h3 class="widget-title">รู้จักเรา</h3>
 						<hr>
 						<div style="margin-top: -15px;">
@@ -515,9 +451,8 @@ $s++;
 							<p style="margin-top: -10px; padding-left: 5px;"><strong style="color:#9e9e9e">"ทรัพยากรทางทะเลและชายฝั่ง"</strong> หมายความว่า สิ่งที่มีอยู่หรือเกิดขึ้นตามธรรมชาติในบริเวณทะเลและชายฝั่ง รวมถึงพรุชายฝั่ง พื้นที่ชุ่มน้ําชายฝั่ง คลอง คูแพรก ทะเลสาบ และบริเวณพื้นที่ปากแม่น้ํา ที่มีพื้นที่ติดต่อกับทะเลหรืออิทธิพลของน้ําทะเลเข้าถึง เช่น ป่าชายเลน ป่าชายหาด หาด ที่ชายทะเล เกาะ หญ้าทะเล ปะการัง ดอนหอย พืชและสัตว์ทะเล  </p>
 						</div>
 
-    
-          			</div>
-
+	
+		  			</div>
 
 
 				</div>

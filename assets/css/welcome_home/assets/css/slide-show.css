@@ -7,14 +7,6 @@ Image credits: unsplash.com
 /********************************/
 /*       Fade Bs-carousel       */
 /********************************/
-.fade-carousel {
-    position: relative;
-    height: 500px;
-
-}
-.fade-carousel .carousel-inner .item {
-    height: 500px;
-}
 .fade-carousel .carousel-indicators > li {
     margin: 0 2px;
     background-color: #f39c12;
@@ -32,7 +24,7 @@ Image credits: unsplash.com
 /********************************/
 .hero {
     position: absolute;
-    top: 60%;
+    top: 75%;
     left: 50%;
     z-index: 3;
     color: #fff;
@@ -45,6 +37,7 @@ Image credits: unsplash.com
            -o-transform: translate3d(-50%,-50%,0);
               transform: translate3d(-50%,-50%,0);
 }
+
 .hero h1 {
     font-size: 6em;    
     font-weight: bold;
@@ -101,7 +94,7 @@ Image credits: unsplash.com
 .fade-carousel .slides .slide-1, 
 .fade-carousel .slides .slide-2,
 .fade-carousel .slides .slide-3 {
-  height: 100vh;
+  height: 100%;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -114,6 +107,14 @@ Image credits: unsplash.com
 @media screen and (min-width: 980px){
     .hero { width: 980px; }    
 }
+
+@media screen and (max-width: 980px){
+    .hero { width: 100%; 
+    padding-left:40px;
+    padding-right:40px;
+    }    
+}
+
 @media screen and (max-width: 640px){
     .hero h1 { font-size: 4em; }    
 }

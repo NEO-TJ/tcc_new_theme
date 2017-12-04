@@ -1,3 +1,9 @@
+
+<?php 
+
+$sharelink =  'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
+//echo $sharelink;
+?>
 <div class="container" style="padding: 30px 0 60px;">
     <div class="row">
         <style type="text/css">
@@ -162,8 +168,28 @@ return "$strDay $strMonthThai $strYear";
 
                           </div>
                           <hr>
-            
+            <!---->
+         <div  style="margin-top: 1px;">
+        <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v2.11';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="fb-like"     data-href="<?php echo $sharelink;?>" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+<div class="fb-share-button" data-href="<?php echo $sharelink;?>" 
+data-layout="button_count" data-size="small" data-mobile-iframe="true">
+<a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($sharelink);?>">แชร์</a></div>
+<div class="fb-comments" data-href="<?php echo $sharelink;?>" data-numposts="5"></div>
+        </div>
+<!---->
         </dir>
+        
+        
+        
 
         <div class="col-md-3">
 
@@ -301,10 +327,10 @@ return "$strDay $strMonthThai $strYear";
                 <h4>Social share</h4>
 
     <ul class="social-nav">
-        <li><a href="https://twitter.com/share?url=https://simplesharebuttons.com/publicRelations/content/23&amp;text=Simple%20Share%20Buttons&amp;hashtags=simplesharebuttons"  target="_blank" title="Twitter" rel="nofollow" class="twitter"><i class="fa fa-twitter"></i></a></li>
-        <li><a href="http://www.facebook.com/sharer.php?u=https://simplesharebuttons.com/publicRelations/content/23"  target="_blank" title="Facebook" rel="nofollow" class="facebook"><i class="fa fa-facebook"></i></a></li>
-        <li><a href="https://plus.google.com/share?url=https://simplesharebuttons.com/publicRelations/content/23" target="_blank" title="Google plus" rel="nofollow" class="google"><i class="fa fa-google-plus"></i></a></li>
-        <li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://simplesharebuttons.com/publicRelations/content/23" target="_blank" title="Linkedin" rel="nofollow" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
+        <li><a href="https://twitter.com/share?url=<?php echo urlencode($sharelink);?>"  target="_blank" title="Twitter" rel="nofollow" class="twitter"><i class="fa fa-twitter"></i></a></li>
+        <li><a href="http://www.facebook.com/sharer.php?u=<?php echo urlencode($sharelink);?>"  target="_blank" title="Facebook" rel="nofollow" class="facebook"><i class="fa fa-facebook"></i></a></li>
+        <li><a href="https://plus.google.com/share?url=<?php echo urlencode($sharelink);?>" target="_blank" title="Google plus" rel="nofollow" class="google"><i class="fa fa-google-plus"></i></a></li>
+        <li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo urlencode($sharelink);?>" target="_blank" title="Linkedin" rel="nofollow" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
               
     </ul>
 </div>
