@@ -221,7 +221,7 @@
 							<div>หน่วยงานที่จัด</div>
 						</div>
 						<div class="col-xs-10 col-md-10 col-lg-10 margin-input">
-							<select class="form-control input-require" id="department" name="FK_Org">
+							<select class="form-control" id="department" name="FK_Org">
 								<option value="0" selected>เลือกหน่วยงาน...</option>
 								<?php 
 									foreach($dsOrg as $row) {
