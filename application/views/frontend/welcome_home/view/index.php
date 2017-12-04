@@ -130,12 +130,12 @@ return "$strDay $strMonthThai $strYear";
 					<ul class="none">
 						<li>
 							<p class="tn">
-								<a href="<?php echo base_url('/eventImageGallery'); ?>">
+								<a href="<?php echo base_url('eventImageGallery'); ?>">
 									<img class="image-block-css" src="<?php echo base_url('assets/images/background/image-link4.png'); ?>">
 								</a>
 							</p>
 							<p>
-								<a href="<?php echo base_url('/eventImageGallery'); ?>">
+								<a href="<?php echo base_url('eventImageGallery'); ?>">
 									<img src="<?php echo base_url('assets/images/background/caption-link4.png'); ?>">
 								</a>
 							</p>

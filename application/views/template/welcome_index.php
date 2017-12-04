@@ -71,7 +71,7 @@
                         </ul>
                     </li>
                     <li><a href="<?php echo base_url('mapPlace'); ?>"> แผนที่</a></li>
-                    <li><a href="#"> รวมภาพกิจกรรม</a></li>
+                    <li><a href="<?php echo base_url('eventImageGallery'); ?>"> รวมภาพกิจกรรม</a></li>
                     <li><a href="#"> เกี่ยวกับเรา </a></li>
                     <li class="dropdown">
                         <?php if ( $this->session->userdata('isUserLoggedIn') ) : ?>
@@ -113,7 +113,7 @@
                             <ul class="service-style">
                                 <li><a href="<?php echo base_url('publicRelations/content_list/'); ?>">ข่าวสาร</a></li>
                                 <li><a href="<?php echo base_url('mapPlace'); ?>">แผนที่</a></li>
-                                <li><a href="#">รวมภาพกิจกรรม</a></li>
+                                <li><a href="<?php echo base_url('eventImageGallery'); ?>">รวมภาพกิจกรรม</a></li>
                                 <li><a href="#">เกี่ยวกับเรา </a></li>
                                 <li><a href="#">ติดต่อเรา </a></li>
                             </ul>
