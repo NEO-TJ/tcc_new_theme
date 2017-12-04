@@ -41,11 +41,5 @@
 $route['default_controller'] = "welcome_homes";
 $route['404_override'] = '';
 
-$route['posting'] = 'blog/posting';
-$route['del_img'] = 'blog/del_img';
-
-//$route['default_controller'] = 'signin';
-
-
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

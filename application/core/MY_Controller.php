@@ -55,15 +55,18 @@ class MY_Controller extends CI_Controller
             ? $this->load->view($this->extendedJs, $this->data, true) : '');
 
         if($this->isBackend) {
-            $this->load->view('template/admin_template', $this->dataTemplate);
+            // Implement Simple Login Check using simple session for all admin controller.
+            if (isset($this->session->userdata['isUserLoggedIn']) && $this->session->userdata['isUserLoggedIn'] == true) {
+                $this->load->view('template/admin_template', $this->dataTemplate);
+            } else {
+                redirect('users/login');
+            }
+            // $this->load->view('template/admin_template', $this->dataTemplate);
         } else {
             $this->load->view('template/welcome_index', $this->dataTemplate);
         }
     }
     protected function renderWithTemplate3() {
-        
-		
-
         $this->dataTemplate['extendedCss'] = ((($this->extendedCss != null) && ($this->extendedCss != ''))
             ? $this->load->view($this->extendedCss, $this->data, true) : '');
 
@@ -78,10 +81,13 @@ class MY_Controller extends CI_Controller
 
         $this->dataTemplate['extendedJs'] = ((($this->extendedJs != null) && ($this->extendedJs != ''))
             ? $this->load->view($this->extendedJs, $this->data, true) : '');
-	    //print_r( $this->data['rIccCardStatus']);exit;
 
+        // Implement Simple Login Check using simple session for all admin controller.
+        if (isset($this->session->userdata['isUserLoggedIn']) && $this->session->userdata['isUserLoggedIn'] == true) {
             $this->load->view('template/admin_template', $this->dataTemplate);
-
+        } else {
+            redirect('users/login');
+        }
     }
 
 
