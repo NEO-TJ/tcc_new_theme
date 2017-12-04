@@ -121,8 +121,8 @@ class EventImageAdmin extends MY_Controller {
 					$configi['source_image'] = $path;
 					$configi['new_image'] = $target_path;
 					$configi['maintain_ratio'] = TRUE;
-					$configi['width'] = 150; // new size
-					$configi['height'] = 150;
+					$configi['width'] = 80; // new size
+					$configi['height'] = 80;
 				// Thumpnail : Push Config to library.
 					$this->load->library('image_lib');
 					$this->image_lib->initialize($configi);

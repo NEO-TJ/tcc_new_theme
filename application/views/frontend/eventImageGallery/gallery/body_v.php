@@ -30,7 +30,7 @@
 													alt="<?=$image['Caption']?>">
 												</a>
 											</td>
-											<?php if($i > 4) { ?>
+											<?php if($i > 7) { ?>
 												</tr>
 												<tr>
 												<?php $i = 0; ?>
