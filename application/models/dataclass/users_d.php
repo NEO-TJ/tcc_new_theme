@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class User_d extends CI_Model {
+class Users_d extends CI_Model {
 	// Property.
-    public $tableName = "user";
+    public $tableName = "users";
 	public $colId = "id";
 	public $colUserId = "UserId";
 	public $colPassword = "Password";

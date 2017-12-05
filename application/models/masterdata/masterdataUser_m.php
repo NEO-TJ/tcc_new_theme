@@ -13,48 +13,48 @@ class MasterdataUser_m extends CI_Model {
 	// ------------------------------------------------------------ Get ------------------------------------------
 	// +++ To view +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	public function GetDataForViewDisplay($arrId=null, $sqlWhere=null) {
-		$this->load->model('dataclass/user_d');
+		$this->load->model('dataclass/users_d');
 		$this->load->model('dataclass/org_d');
 
 		$criteria ='';
 		// Prepare Criteria.
 		$this->load->model('helper_m');
 		if($arrId != null){
-			$criteria = $this->helper_m->CreateCriteriaIn('u.'.$this->user_d->colId, $arrId, $criteria, ' WHERE ');
+			$criteria = $this->helper_m->CreateCriteriaIn('u.'.$this->users_d->colId, $arrId, $criteria, ' WHERE ');
 		}
 		// Prepare Where.
 		$criteria = $this->helper_m->CreateSqlWhere($criteria, $sqlWhere);
 
 		// Create sql string.
-		$sqlStr = "SELECT u." . $this->user_d->colId
-			. ", u." . $this->user_d->colUserId
-			. ", u." . $this->user_d->colFirstName
-			. ", u." . $this->user_d->colLastName
+		$sqlStr = "SELECT u." . $this->users_d->colId
+			. ", u." . $this->users_d->colUserId
+			. ", u." . $this->users_d->colFirstName
+			. ", u." . $this->users_d->colLastName
 
-			. ", CASE WHEN u." . $this->user_d->colGender
-			. "=1 THEN 'Male' ELSE 'Female' END as " . $this->user_d->colGender
+			. ", CASE WHEN u." . $this->users_d->colGender
+			. "=1 THEN 'Male' ELSE 'Female' END as " . $this->users_d->colGender
 
-			. ", CASE WHEN u." . $this->user_d->colLevel . "=1 THEN 'ผู้ดูแลระบบ'"
-			. " WHEN u." . $this->user_d->colLevel . "=2 THEN 'ชำนาญการ'"
-			. " WHEN u." . $this->user_d->colLevel . "=3 THEN 'ปฏิบัติการ'"
-			. " ELSE 'อาสาสมัคร' END as " . $this->user_d->colLevel
+			. ", CASE WHEN u." . $this->users_d->colLevel . "=1 THEN 'ผู้ดูแลระบบ'"
+			. " WHEN u." . $this->users_d->colLevel . "=2 THEN 'ชำนาญการ'"
+			. " WHEN u." . $this->users_d->colLevel . "=3 THEN 'ปฏิบัติการ'"
+			. " ELSE 'อาสาสมัคร' END as " . $this->users_d->colLevel
 
 			. ", o." . $this->org_d->colDepartment
 
-			. ", CASE WHEN u." . $this->user_d->colStatus . "=0 THEN 'ยังไม่เปิดใช้งาน'"
-			. " WHEN u." . $this->user_d->colStatus . "=1 THEN 'พร้อมใช้งาน'"
-			. " WHEN u." . $this->user_d->colStatus . "=2 THEN 'รอการยืนยัน'"
-			. " ELSE 'รหัสถูกล๊อค' END as " . $this->user_d->colStatus
+			. ", CASE WHEN u." . $this->users_d->colStatus . "=0 THEN 'ยังไม่เปิดใช้งาน'"
+			. " WHEN u." . $this->users_d->colStatus . "=1 THEN 'พร้อมใช้งาน'"
+			. " WHEN u." . $this->users_d->colStatus . "=2 THEN 'รอการยืนยัน'"
+			. " ELSE 'รหัสถูกล๊อค' END as " . $this->users_d->colStatus
 
-			. " FROM " . $this->user_d->tableName . " u"
+			. " FROM " . $this->users_d->tableName . " u"
 			. " LEFT JOIN " . $this->org_d->tableName . " o"
-			. " ON u." . $this->user_d->colFkDepartment . "=o." . $this->org_d->colDepartment
+			. " ON u." . $this->users_d->colFkDepartment . "=o." . $this->org_d->colDepartment
 
 			. $criteria
-			. " ORDER BY u." . $this->user_d->colLevel
-			. ", u." . $this->user_d->colStatus
+			. " ORDER BY u." . $this->users_d->colLevel
+			. ", u." . $this->users_d->colStatus
 			. ", o." . $this->org_d->colDepartment
-			. ", u." . $this->user_d->colUserId;
+			. ", u." . $this->users_d->colUserId;
 
 		// Execute sql.
 		$this->load->model('db_m');
@@ -65,12 +65,12 @@ class MasterdataUser_m extends CI_Model {
 
 	// +++ To input ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	public function GetDataForInputDisplay($id=null) {
-		$this->load->model('dataclass/user_d');
+		$this->load->model('dataclass/users_d');
 
 		// Create sql string.
-		$sqlStr = "SELECT *, u." . $this->user_d->colId . " masterId"
-			. " FROM " . $this->user_d->tableName . " u"
-			. " WHERE u." . $this->user_d->colId . "=" . $id;
+		$sqlStr = "SELECT *, u." . $this->users_d->colId . " masterId"
+			. " FROM " . $this->users_d->tableName . " u"
+			. " WHERE u." . $this->users_d->colId . "=" . $id;
 
 		// Execute sql.
 		$this->load->model('db_m');
@@ -80,22 +80,21 @@ class MasterdataUser_m extends CI_Model {
 	}
 
 	public function GetTemplateForInputDisplay() {
-		$this->load->model('dataclass/user_d');
-		$this->load->model('dataclass/employee_d');
+		$this->load->model('dataclass/users_d');
 
 		$result = [
 				'masterId'											=> 0,
-				$this->user_d->colUserId				=> '',
-				$this->user_d->colPassword			=> '',
-				$this->user_d->colFirstName			=> '',
-				$this->user_d->colLastName			=> '',
-				$this->user_d->colEmail					=> '',
-				$this->user_d->colGender				=> 0,
-				$this->user_d->colAge						=> 0,
-				$this->user_d->colIdCardNumber	=> '',
-				$this->user_d->colLevel					=> 3,
-				$this->user_d->colFkDepartment	=> 0,
-				$this->user_d->colStatus				=> 1,
+				$this->users_d->colUserId				=> '',
+				$this->users_d->colPassword			=> '',
+				$this->users_d->colFirstName		=> '',
+				$this->users_d->colLastName			=> '',
+				$this->users_d->colEmail				=> '',
+				$this->users_d->colGender				=> 0,
+				$this->users_d->colAge					=> 0,
+				$this->users_d->colIdCardNumber	=> '',
+				$this->users_d->colLevel				=> 3,
+				$this->users_d->colFkDepartment	=> 0,
+				$this->users_d->colStatus				=> 1,
 		];
 
 		return $result;
@@ -110,13 +109,13 @@ class MasterdataUser_m extends CI_Model {
 
 	// ----------------------------------------------------------- Save ------------------------------------------
 	public function Save($id=null, $dsData) {
-		$this->load->model('dataclass/user_d');
+		$this->load->model('dataclass/users_d');
 		$this->load->model('db_m');
 
 		$rResult = $this->PrepareDataUserTable($dsData);
 		$dsSave = $rResult["dsSave"];
 		$objCreateBy = $rResult["objCreateBy"];
-		$tableNameUser = $this->user_d->tableName;
+		$tableNameUser = $this->users_d->tableName;
 
 		// Check custom duplication.
 		$this->db_m->tableName = $tableNameUser;
@@ -130,23 +129,23 @@ class MasterdataUser_m extends CI_Model {
 
 // Private function.
 	private function PrepareDataUserTable($dsData) {
-		$this->load->model('dataclass/user_d');
+		$this->load->model('dataclass/users_d');
 
 		$dsData["dsSave"] = [
-			$this->user_d->colUserId				=> $dsData[$this->user_d->colUserId],
-			$this->user_d->colPassword			=> $dsData[$this->user_d->colPassword],
-			$this->user_d->colEmail					=> $dsData[$this->user_d->colEmail],
-			$this->user_d->colLevel					=> $dsData[$this->user_d->colLevel],
-			$this->user_d->colFkDepartment	=> $dsData[$this->user_d->colFkDepartment],
-			$this->user_d->colStatus				=> 1,
-			$this->user_d->colFirstName			=> $dsData[$this->user_d->colFirstName],
-			$this->user_d->colLastName			=> $dsData[$this->user_d->colLastName],
-			$this->user_d->colGender				=> $dsData[$this->user_d->colGender],
-			$this->user_d->colAge 					=> $dsData[$this->user_d->colAge],
-			$this->user_d->colIdCardNumber	=> $dsData[$this->user_d->colIdCardNumber],
-			$this->user_d->colUpdateBy			=> $this->session->userdata['id'],
+			$this->users_d->colUserId				=> $dsData[$this->users_d->colUserId],
+			$this->users_d->colPassword			=> $dsData[$this->users_d->colPassword],
+			$this->users_d->colEmail				=> $dsData[$this->users_d->colEmail],
+			$this->users_d->colLevel				=> $dsData[$this->users_d->colLevel],
+			$this->users_d->colFkDepartment	=> $dsData[$this->users_d->colFkDepartment],
+			$this->users_d->colStatus				=> 1,
+			$this->users_d->colFirstName		=> $dsData[$this->users_d->colFirstName],
+			$this->users_d->colLastName			=> $dsData[$this->users_d->colLastName],
+			$this->users_d->colGender				=> $dsData[$this->users_d->colGender],
+			$this->users_d->colAge 					=> $dsData[$this->users_d->colAge],
+			$this->users_d->colIdCardNumber	=> $dsData[$this->users_d->colIdCardNumber],
+			$this->users_d->colUpdateBy			=> $this->session->userdata['id'],
 		];
-		$dsData['objCreateBy'] = [$this->user_d->colCreateBy => $this->session->userdata['id']];
+		$dsData['objCreateBy'] = [$this->users_d->colCreateBy => $this->session->userdata['id']];
 
 		return $dsData;
 	}
