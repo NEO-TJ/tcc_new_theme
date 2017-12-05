@@ -78,7 +78,10 @@ $(document).on("click", '.pagination a', function (e) {
     }
 });
 // -------------------------------------------------------------------------------------------- Click command.
-$(document).on('click', 'button#approveIccCard', function(e) { confirmApproveIccCardStatus(getConfirmInfo(e)); });
+$(document).on("click", "a#approveIccCard", function(e){
+    e.preventDefault();
+    confirmApproveIccCardStatus(getConfirmInfo(e));
+});
 // -------------------------------------------------------------------------------------------- End Click command.
 
 

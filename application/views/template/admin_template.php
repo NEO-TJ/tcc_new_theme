@@ -135,9 +135,16 @@ if(isset($extendedCss)) echo $extendedCss;
                         <div class="dropdown-menu">
                             <ul class="list-unstyled">
                                 <li class="divider"></li>
-                              
                                 <li>
-                                    <a role="menuitem" tabindex="-1" href="<?php echo base_url('logout'); ?>" ><i class="fa fa-power-off"></i> ออกจากระบบ</a>
+                                    <a role="menuitem" tabindex="-1" href="<?php echo base_url('/'); ?>" >
+                                        <i class="fa fa-home fa-fw"></i> หน้าหลัก
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a role="menuitem" tabindex="-1" href="<?php echo base_url('logout'); ?>" >
+                                        <i class="fa fa-power-off"></i> ออกจากระบบ
+                                    </a>
                                 </li>
                             </ul>
                         </div>

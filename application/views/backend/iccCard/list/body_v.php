@@ -167,7 +167,7 @@
 									}
 								}
 							?>
-							<th class="text-center" width="40">จัดการ</th>
+							<th class="text-center" width="40">แบบฟอร์ม</th>
 							<th class="text-center" width="40">ภาพกิจกรรม</th>
 						</tr>
 					</thead>

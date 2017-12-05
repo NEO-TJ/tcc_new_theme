@@ -80,7 +80,17 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="<?php echo base_url('logout'); ?>"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                <li>
+                                    <a href="<?php echo base_url('iccCard'); ?>">
+                                        <i class="fa fa-btn fa-database"></i>บริหารจัดการ
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="<?php echo base_url('logout'); ?>">
+                                        <i class="fa fa-btn fa-sign-out"></i>Logout
+                                    </a>
+                                </li>
                             </ul>
                         <?php else : ?>
                             <a href="<?php echo base_url('users/login'); ?>"><i class="fa fa-user"></i> เข้าสุ่ระบบ</a>

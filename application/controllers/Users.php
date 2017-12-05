@@ -171,6 +171,7 @@ class Users extends MY_Controller {
 				$data['userId']	= $u['UserId'];
                 $data['level']	= $u['Level'];
                 $data['isUserLoggedIn'] = TRUE;
+                $data['user_name'] = $u['First_Name'];
 			}
 			// set data to session
 			$this->session->set_userdata($data);

@@ -12,7 +12,10 @@
                 echo($rIccCardStatus[$value]);
                 if( (($level == 1) || ($level == 2)) && ($value == 1) ) {
                     echo ('<div>');
-                    echo ('<button id="approveIccCard" type="button" class="btn btn-info">อนุมัติ</button>');
+                        echo('<a title="อนุมัติ" class="btn btn-primary btn-xs"');
+                        echo('href="#" role="button" id="approveIccCard">');
+                            echo('<i class="fa fa-check-square-o"></i>');
+                        echo('</a>');
                     echo ('</div>');
                 }
                 echo ('</td>');
@@ -22,16 +25,17 @@
             $j++;
         }
         echo('<td class="text-center">');
-            echo('<a style="float:left; margin-right:8px;" ');
-            echo('title="แก้ไขแบบฟอร์ม" class="btn btn-primary btn-xs" ');
+            echo('<a title="แก้ไขแบบฟอร์ม" class="btn btn-primary btn-xs"');
             echo('href="#" role="button" id="editIccCard">');
-                echo('<i class="fa fa-cog "></i>');
+                echo('<i class="fa fa-pencil fa-fw"></i>');
             echo('</a>');
             echo('<input type="hidden" id="iccCardId" value="' . $row['id'] . '"/>');
         echo('</td>');
         echo('<td class="text-center">');
-            echo('<a href="#" id="eventImageAdmin"');
-            echo('class="button button-block button-rounded button-large">ภาพกิจกรรม</a>');
+            echo('<a title="ภาพกิจกรรม" class="btn btn-primary btn-xs"');
+            echo('href="#" role="button" id="eventImageAdmin">');
+                echo('<i class="fa fa-camera-retro fa-lg"></i>');
+            echo('</a>');
         echo('</td>');
     echo('</tr>');
     }
