@@ -5,5 +5,5 @@
     $this->load->view('template/sharedJs_v');
     
     // My Java Script.
-    echo js_asset('eventImage/galleryPlugin.js');
+    echo js_asset('eventImage/galleryPluginCustomize.js');
 ?>
