@@ -7,11 +7,22 @@ class User_d extends CI_Model {
 	public $colUserId = "UserId";
 	public $colPassword = "Password";
 	public $colEmail = "Email";
-	public $colFkIdEmployee = "FK_ID_Employee";
 	public $colLevel = "Level";
-	public $colActive = "Active";
+	public $colStatus = "Status";
+	public $colFirstName = "First_Name";
+	public $colLastName = "Last_Name";
+	public $colDepartment = "Department";
+	public $colGender = "Gender";
+	public $colAge = "Age";
+	public $colIdCardNumber = "ID_Card_Number";
+	public $colFkDepartment = "FK_Department";
+
 	public $colCreateDate = "Create_Date";
-	public $colUpdateDate = "Update_Date";
+    public $colCreateBy = "Create_By";
+    public $colUpdateDate = "Update_Date";
+    public $colUpdateBy = "Update_By";
+    public $colDeleteDate = "Delete_Date";
+    public $colDeleteBy = "Delete_By";
 
 
     // Constructor.

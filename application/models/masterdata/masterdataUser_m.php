@@ -3,21 +3,21 @@
 class MasterdataUser_m extends CI_Model {
 // Constructor.
 	public function __construct() {
-        parent::__construct();
-    }
+		parent::__construct();
+	}
 // End Constructor.
 
 
 
 // Public function.
-    // ------------------------------------------------------------ Get ------------------------------------------
+	// ------------------------------------------------------------ Get ------------------------------------------
 	// +++ To view +++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function GetDataForViewDisplay($arrId=null, $sqlWhere=null) {
+	public function GetDataForViewDisplay($arrId=null, $sqlWhere=null) {
 		$this->load->model('dataclass/user_d');
-		$this->load->model('dataclass/employee_d');
+		$this->load->model('dataclass/org_d');
 
-    	$criteria ='';
-    	// Prepare Criteria.
+		$criteria ='';
+		// Prepare Criteria.
 		$this->load->model('helper_m');
 		if($arrId != null){
 			$criteria = $this->helper_m->CreateCriteriaIn('u.'.$this->user_d->colId, $arrId, $criteria, ' WHERE ');
@@ -27,115 +27,103 @@ class MasterdataUser_m extends CI_Model {
 
 		// Create sql string.
 		$sqlStr = "SELECT u." . $this->user_d->colId
-					. ", u." . $this->user_d->colUserId
-					. ", e." . $this->employee_d->colFirstName
-					. ", e." . $this->employee_d->colLastName
+			. ", u." . $this->user_d->colUserId
+			. ", u." . $this->user_d->colFirstName
+			. ", u." . $this->user_d->colLastName
 
-					. ", CASE WHEN e." . $this->employee_d->colGender
-					. "=1 THEN 'Male' ELSE 'Female' END as " . $this->employee_d->colGender
+			. ", CASE WHEN u." . $this->user_d->colGender
+			. "=1 THEN 'Male' ELSE 'Female' END as " . $this->user_d->colGender
 
-					. ", CASE WHEN u." . $this->user_d->colLevel . "=1 THEN 'Admin'"
-					. " WHEN u." . $this->user_d->colLevel . "=2 THEN 'Superviser/Engineer'"
-					. " WHEN u." . $this->user_d->colLevel . "=3 THEN 'Staff'"
-					. " ELSE 'Temporary' END as " . $this->user_d->colLevel
+			. ", CASE WHEN u." . $this->user_d->colLevel . "=1 THEN 'ผู้ดูแลระบบ'"
+			. " WHEN u." . $this->user_d->colLevel . "=2 THEN 'ชำนาญการ'"
+			. " WHEN u." . $this->user_d->colLevel . "=3 THEN 'ปฏิบัติการ'"
+			. " ELSE 'อาสาสมัคร' END as " . $this->user_d->colLevel
 
-					. ", e." . $this->employee_d->colDepartment
-					. ", e." . $this->employee_d->colWorkshop
-					. ", e." . $this->employee_d->colJobTitle
-					. ", u." . $this->user_d->colUserId
+			. ", o." . $this->org_d->colDepartment
 
-					. ", CASE WHEN u." . $this->user_d->colActive
-					. "=1 THEN 'Active' ELSE 'Terminate' END as " . $this->user_d->colActive
+			. ", CASE WHEN u." . $this->user_d->colStatus . "=0 THEN 'ยังไม่เปิดใช้งาน'"
+			. " WHEN u." . $this->user_d->colStatus . "=1 THEN 'พร้อมใช้งาน'"
+			. " WHEN u." . $this->user_d->colStatus . "=2 THEN 'รอการยืนยัน'"
+			. " ELSE 'รหัสถูกล๊อค' END as " . $this->user_d->colStatus
 
-	    			. " FROM " . $this->user_d->tableName . " u"
-					. " LEFT JOIN " . $this->employee_d->tableName . " e ON u."
-					. $this->user_d->colFkIdEmployee . "=e." . $this->employee_d->colId
+			. " FROM " . $this->user_d->tableName . " u"
+			. " LEFT JOIN " . $this->org_d->tableName . " o"
+			. " ON u." . $this->user_d->colFkDepartment . "=o." . $this->org_d->colDepartment
 
-   					. $criteria
-   					. " ORDER BY u." . $this->user_d->colLevel.", u." . $this->user_d->colActive
-					. ", u." . $this->user_d->colUserId;
+			. $criteria
+			. " ORDER BY u." . $this->user_d->colLevel
+			. ", u." . $this->user_d->colStatus
+			. ", o." . $this->org_d->colDepartment
+			. ", u." . $this->user_d->colUserId;
 
 		// Execute sql.
 		$this->load->model('db_m');
 		$result = $this->db_m->GetRow($sqlStr);
 
-    	return $result;
-    }
+		return $result;
+	}
 
 	// +++ To input ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function GetDataForInputDisplay($id=null) {
+	public function GetDataForInputDisplay($id=null) {
 		$this->load->model('dataclass/user_d');
-		$this->load->model('dataclass/employee_d');
 
 		// Create sql string.
 		$sqlStr = "SELECT *, u." . $this->user_d->colId . " masterId"
-	    			. " FROM " . $this->user_d->tableName . " u"
-					. " LEFT JOIN " . $this->employee_d->tableName . " e ON u."
-					. $this->user_d->colFkIdEmployee . "=e." . $this->employee_d->colId
-   					. " WHERE u." . $this->user_d->colId . "=" . $id;
+			. " FROM " . $this->user_d->tableName . " u"
+			. " WHERE u." . $this->user_d->colId . "=" . $id;
 
 		// Execute sql.
 		$this->load->model('db_m');
 		$result = $this->db_m->GetRow($sqlStr);
 
-    	return $result;
-    }
+		return $result;
+	}
 
 	public function GetTemplateForInputDisplay() {
 		$this->load->model('dataclass/user_d');
 		$this->load->model('dataclass/employee_d');
 
 		$result = [
-				'masterId'							=> 0,
-				$this->user_d->colUserId			=> '',
+				'masterId'											=> 0,
+				$this->user_d->colUserId				=> '',
 				$this->user_d->colPassword			=> '',
-				$this->user_d->colEmail				=> '',
-				$this->user_d->colFkIdEmployee		=> 0,
-				$this->user_d->colLevel				=> 3,
-				$this->user_d->colActive			=> 1,
-
-				$this->employee_d->colFirstName		=> '',
-				$this->employee_d->colLastName		=> '',
-				$this->employee_d->colJobTitle		=> '',
-				$this->employee_d->colDepartment	=> '',
-				$this->employee_d->colWorkshop		=> '',
-				$this->employee_d->colGender		=> 0,
-				$this->employee_d->colAge			=> 0,
-				$this->employee_d->colIdCardNumber	=> '',
-				$this->employee_d->colStatus		=> 1,
+				$this->user_d->colFirstName			=> '',
+				$this->user_d->colLastName			=> '',
+				$this->user_d->colEmail					=> '',
+				$this->user_d->colGender				=> 0,
+				$this->user_d->colAge						=> 0,
+				$this->user_d->colIdCardNumber	=> '',
+				$this->user_d->colLevel					=> 3,
+				$this->user_d->colFkDepartment	=> 0,
+				$this->user_d->colStatus				=> 1,
 		];
 
-    	return $result;
-    }
+		return $result;
+	}
 
 	public function GetDataForComboBox() {
-		return null;
+		$result['dsDepartment'] = $this->GetDsDepartment();
+
+		return $result;
 	}
 
 
-    // ----------------------------------------------------------- Save ------------------------------------------
-    public function Save($id=null, $dsData) {
-		$dsUser = $this->PrepareDataUserTable($dsData);
-		$dsEmployee = $this->PrepareDataEmployeeTable($dsData);
-
-		$tableNameUser = $this->user_d->tableName;
-		$tableNameEmployee = $this->employee_d->tableName;
-
+	// ----------------------------------------------------------- Save ------------------------------------------
+	public function Save($id=null, $dsData) {
+		$this->load->model('dataclass/user_d');
 		$this->load->model('db_m');
+
+		$rResult = $this->PrepareDataUserTable($dsData);
+		$dsSave = $rResult["dsSave"];
+		$objCreateBy = $rResult["objCreateBy"];
+		$tableNameUser = $this->user_d->tableName;
+
 		// Check custom duplication.
 		$this->db_m->tableName = $tableNameUser;
-		$rChkDuplication = [
-			$this->user_d->colUserId => $dsData[$this->user_d->colUserId],
-			$this->user_d->colId . " !=" => ( ($id == null) ? 0 : $id)
-		];
-		if($rChkDuplication != null) { if( $this->db_m->Find($rChkDuplication) ) { return false; } }
-		// End Check custom duplication.
-
-		$result = $this->db_m->SaveMasterDetail($id, $dsUser, $tableNameUser
-				, $this->user_d->colFkIdEmployee, $dsEmployee, $tableNameEmployee);
+		$result = $this->db_m->Save($id, $dsSave, $objCreateBy);
 
 		return $result;
-    }
+	}
 // Public function.
 
 
@@ -144,45 +132,38 @@ class MasterdataUser_m extends CI_Model {
 	private function PrepareDataUserTable($dsData) {
 		$this->load->model('dataclass/user_d');
 
-    	$dsSave = [
-				$this->user_d->colUserId		=> $dsData[$this->user_d->colUserId],
-				$this->user_d->colPassword		=> $dsData[$this->user_d->colPassword],
-				$this->user_d->colEmail			=> $dsData[$this->user_d->colEmail],
-				$this->user_d->colFkIdEmployee	=> $dsData[$this->user_d->colFkIdEmployee],
-				$this->user_d->colLevel			=> $dsData[$this->user_d->colLevel],
-				$this->user_d->colActive		=> $dsData[$this->user_d->colActive],
+		$dsData["dsSave"] = [
+			$this->user_d->colUserId				=> $dsData[$this->user_d->colUserId],
+			$this->user_d->colPassword			=> $dsData[$this->user_d->colPassword],
+			$this->user_d->colEmail					=> $dsData[$this->user_d->colEmail],
+			$this->user_d->colLevel					=> $dsData[$this->user_d->colLevel],
+			$this->user_d->colFkDepartment	=> $dsData[$this->user_d->colFkDepartment],
+			$this->user_d->colStatus				=> 1,
+			$this->user_d->colFirstName			=> $dsData[$this->user_d->colFirstName],
+			$this->user_d->colLastName			=> $dsData[$this->user_d->colLastName],
+			$this->user_d->colGender				=> $dsData[$this->user_d->colGender],
+			$this->user_d->colAge 					=> $dsData[$this->user_d->colAge],
+			$this->user_d->colIdCardNumber	=> $dsData[$this->user_d->colIdCardNumber],
+			$this->user_d->colUpdateBy			=> $this->session->userdata['id'],
 		];
+		$dsData['objCreateBy'] = [$this->user_d->colCreateBy => $this->session->userdata['id']];
 
-		return $dsSave;
+		return $dsData;
 	}
 
-	private function PrepareDataEmployeeTable($dsData) {
-		$this->load->model('dataclass/employee_d');
 
-		if($dsData[$this->user_d->colLevel] > 2) {
-			$dsSave = [
-					$this->employee_d->colFirstName			=> $dsData[$this->employee_d->colFirstName],
-					$this->employee_d->colLastName			=> $dsData[$this->employee_d->colLastName],
-					$this->employee_d->colGender 			=> $dsData[$this->employee_d->colGender],
-					$this->employee_d->colAge 				=> $dsData[$this->employee_d->colAge],
-					$this->employee_d->colIdCardNumber		=> $dsData[$this->employee_d->colIdCardNumber],
-					$this->employee_d->colStatus 			=> 1,
-			];
-		} else {
-			$dsSave = [
-					$this->employee_d->colFirstName			=> $dsData[$this->employee_d->colFirstName],
-					$this->employee_d->colLastName			=> $dsData[$this->employee_d->colLastName],
-					$this->employee_d->colJobTitle			=> $dsData[$this->employee_d->colJobTitle],
-					$this->employee_d->colDepartment		=> $dsData[$this->employee_d->colDepartment],
-					$this->employee_d->colWorkshop 			=> $dsData[$this->employee_d->colWorkshop],
-					$this->employee_d->colGender 			=> $dsData[$this->employee_d->colGender],
-					$this->employee_d->colAge 				=> $dsData[$this->employee_d->colAge],
-					$this->employee_d->colIdCardNumber		=> $dsData[$this->employee_d->colIdCardNumber],
-					$this->employee_d->colStatus 			=> 1,
-			];
-		}
+	// ---------------------------------------------------- Get DB to combobox -----------------------------------
+	// ^^^^******^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Org table ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^****
+	private function GetDsDepartment($id=0) {
+		$this->load->model("dataclass/org_d");
+		$this->load->model("db_m");
 
-		return $dsSave;
+		$this->db_m->tableName = $this->org_d->tableName;
+		$this->db_m->sequenceColumn = $this->org_d->colDepartment;
+		$strSelect = $this->org_d->colId . ', ' . $this->org_d->colDepartment;
+		$dataSet = $this->db_m->GetRowById($id, null, $strSelect);
+    
+		return $dataSet;
 	}
 // End Private function.
 }
