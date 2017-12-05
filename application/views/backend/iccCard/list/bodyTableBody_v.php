@@ -1,4 +1,4 @@
-<!-- Table body --><?php $level=1 ?>
+<!-- Table body -->
 <?php 
     $numRecordStart++;
     foreach($dsIccCardList as $row) {
