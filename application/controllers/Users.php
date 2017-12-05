@@ -41,6 +41,7 @@ class Users extends MY_Controller {
             $this->form_validation->set_rules('username', 'Username or Email', 'required');
             $this->form_validation->set_rules('password', 'password', 'required');
             if ($this->form_validation->run() == true) {
+/*
                 $con['returnType'] = 'single';
                 $con['conditions'] = array(
                     'name'=>$this->input->post('username'),
@@ -66,7 +67,9 @@ class Users extends MY_Controller {
                     
                 }else{
                     $data['error_msg'] = 'Wrong email or password, please try again.';
-                } 
+                }
+*/
+                $this->validate();
             }
         }
 
@@ -148,4 +151,55 @@ class Users extends MY_Controller {
             return TRUE;
         }
     }
+
+
+
+
+
+    // Private function.
+    public function validate() {
+		$this->load->model('userAuthentication_m');
+		// get data from db
+		$this->userAuthentication_m->userId   = $this->input->post('username');
+		$this->userAuthentication_m->password = $this->input->post('password');
+		$user = $this->userAuthentication_m->Validate();
+
+		if(count($user) > 0) {
+            $data = array();
+			foreach ($user as $u) {
+				$data['id']		= $u['id'];
+				$data['userId']	= $u['UserId'];
+                $data['level']	= $u['Level'];
+                $data['isUserLoggedIn'] = TRUE;
+			}
+			// set data to session
+			$this->session->set_userdata($data);
+
+			//check level user
+			switch ($data['level']) {
+				case '1':
+					// redirect page to backend page
+					redirect("/iccCard");
+					break;
+				case '2':
+					// redirect page to backend page
+					redirect("/iccCard");
+					break;
+				case '3':
+					// redirect page to backend page
+					redirect("/iccCard");
+					break;
+				default:
+					// redirect page to user page
+					redirect("/");
+					break;
+			}
+		} else {
+            $data['error_msg'] = 'Wrong email or password, please try again.';
+            // redirect with session msessage
+			//$this->session->set_flashdata('msg',  'ข้อมูลไม่ถูกต้องกรุณาลองใหม่อีกครั้ง');
+			//header('Location: ../');
+        }
+	}
+    // End private function.
 }

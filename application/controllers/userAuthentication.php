@@ -13,7 +13,7 @@ class UserAuthentication extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
 		// set default data to view
-        $this->data = array();
+		$this->data = array();
 	}
 // End Constructor.
 
