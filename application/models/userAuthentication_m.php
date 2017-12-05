@@ -31,7 +31,7 @@ class UserAuthentication_m extends CI_Model {
         $arrWhere = [
 					$this->user_d->colUserId   => $this->userId,
 					$this->user_d->colPassword => $this->password,
-					$this->user_d->colActive   => '1'
+					$this->user_d->colStatus   => '1'
         ];
 		$result = $this->db_m->GetRowWhere($arrWhere);
 
