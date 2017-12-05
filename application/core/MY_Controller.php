@@ -31,7 +31,6 @@ class MY_Controller extends CI_Controller
         // Set default data.
         $this->data['level'] = ( ($this->session->userdata('level')) ? $this->session->userdata('level') : 0 );
         // making temlate and send data to view.
-        $this->dataTemplate['breadcrumb'] = $breadcrumb;
         $this->dataTemplate['useCssTemplate'] = $this->useCssTemplate;
         $this->dataTemplate['useJsTemplate'] = $this->useJsTemplate;
         $this->dataTemplate['useJsTemplateHeadTag'] = $this->useJsTemplateHeadTag;
@@ -89,12 +88,9 @@ class MY_Controller extends CI_Controller
 
 
     protected function renderWithTemplate2() {
-        // Set Breadcrumb.
-        $breadcrumb = $this->CreateBreadcrumb();
         // Set default data.
         $this->dataTemplate['level'] = ( ($this->session->userdata('level')) ? $this->session->userdata('level') : 0 );
         // making temlate and send data to view.
-        $this->dataTemplate['breadcrumb'] = $breadcrumb;
         $this->dataTemplate['useCssTemplate'] = $this->useCssTemplate;
         $this->dataTemplate['useJsTemplate'] = $this->useJsTemplate;
         $this->dataTemplate['useJsTemplateHeadTag'] = $this->useJsTemplateHeadTag;
