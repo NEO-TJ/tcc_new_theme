@@ -374,7 +374,7 @@ jQuery(document).ready(function() {
     //alert('test');
 });
 </script>
-<?php if(0){?>
+<?php if(1){?>
 <script type="text/javascript">
 $(document).ready(function() {
 
