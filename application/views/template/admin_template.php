@@ -212,7 +212,7 @@ html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
                                             <span>จัดการ iccCard</span>
                                         </a>
                                     </li>
-
+                                <?php if( ($level == 1) || ($level == 2) ) { ?>
                                     <li <?php if($this->uri->segment(1)=="blog"){ echo 'class=nav-expanded'; }?> >
                                         <a href="<?php echo base_url('blog'); ?>"  >
                                             <i class="fa fa-life-ring" aria-hidden="true"></i>
@@ -226,55 +226,56 @@ html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
                                             <span>จัดการ slideshows</span>
                                         </a>
                                     </li>
+                                <?php } ?>
                                     
                                     <li>&zwnj;</li>
                                 <?php if($level == 1) { ?>
                                     <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
                                         <a href="<?php echo base_url('masterdata/view/1'); ?>"  >
                                             <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                            <span>cleanup type </span>
+                                            <span>บริเวณที่เก็บขยะ</span>
                                         </a>
                                     </li>
                                     
                                     <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
                                         <a href="<?php echo base_url('masterdata/view/2'); ?>"  >
                                             <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                            <span>distanct unit </span>
+                                            <span>หน่วยของระยะทาง</span>
                                         </a>
                                     </li>
                                     
                                     <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
                                         <a href="<?php echo base_url('masterdata/view/3'); ?>"  >
                                             <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                            <span>weight unit </span>
+                                            <span>หน่วยของน้ำหนัก</span>
                                         </a>
                                     </li>
                                     
                                     <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
                                         <a href="<?php echo base_url('masterdata/view/4'); ?>"  >
                                             <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                            <span>animal status </span>
+                                            <span>สถานะภาพสัตว์ที่พบ</span>
                                         </a>
                                     </li>
                                     
                                     <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
                                         <a href="<?php echo base_url('masterdata/view/5'); ?>"  >
                                             <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                            <span>garbag </span>
+                                            <span>ขยะทะเล</span>
                                         </a>
                                     </li>
                                     
                                     <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
                                         <a href="<?php echo base_url('masterdata/view/6'); ?>"  >
                                             <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                            <span>garbag type </span>
+                                            <span>ประเภทขยะทะเล</span>
                                         </a>
                                     </li>
                                     
                                     <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
                                         <a href="<?php echo base_url('masterdata/view/0'); ?>"  >
                                             <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                            <span>user  </span>
+                                            <span>ทะเบียนผู้ใช้งาน</span>
                                         </a>
                                     </li>
                                 <?php } ?>
