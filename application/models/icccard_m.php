@@ -302,7 +302,7 @@ class IccCard_m extends CI_Model {
 		return $result;
 	}
 
-	
+
 	public function GetPlaceByDaterange($strDateStart=null, $strDateEnd=null) {
 		$sqlWhere = $this->CreateSqlWhereDaterangeFilter($strDateStart, $strDateEnd);
 

@@ -219,7 +219,7 @@
         <script type="text/javascript" charset="UTF-8" src="http://maps.googleapis.com/maps-api-v3/api/js/31/0/intl/th_ALL/stats.js"></script>
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyClagICh6L2KDnt5-14byUhE-wBRnjiYeg&amp;sensor=false"></script>
         <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script>
-        <script type="text/javascript" src="<?php echo base_url('assets/js/plugin/jquery/jquery-ui.min.js"');?>" ></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/js/plugin/jquery/jquery-ui.min.js');?>" ></script>
         <script type="text/javascript" src="<?php echo base_url('assets/js/plugin/jquery/jquery.blockUI.js');?>" ></script>
         <script type="text/javascript" src="<?php echo base_url('assets/js/customize/my.helper.js');?>" ></script>
         <script type="text/javascript" src="<?php echo base_url('assets/js/customize/my.mapData.js');?>" ></script>

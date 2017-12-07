@@ -4,25 +4,20 @@ class MapPlace_m extends CI_Model
 {
 // Constructor.
 	public function __construct() {
-        parent::__construct();
-    }
+		parent::__construct();
+	}
 // End Constructor.
 
 
 // Public Method.
-    // ---------------------------------------------------- Get  To view -----------------------------------------
-    public function GetDataForViewDisplay($arrId=null, $sqlWhere=null) {
-		$criteria ='';
+	// ---------------------------------------------------- Get  To view -----------------------------------------
+	public function GetDataForViewDisplay($rFilter=null) {
 		$this->load->model('dataclass/geoLocation_d');
 		$this->load->model('dataclass/iccCard_d');
 		$this->load->model('dataclass/weightUnit_d');
-    	// Prepare Criteria.
-		$this->load->model('helper_m');
-		if($arrId != null){
-			$criteria = $this->helper_m->CreateCriteriaIn("m." . $this->colId, $arrId, $criteria, ' AND ');
-		}
-		// Prepare Where.
-		$criteria = $this->helper_m->CreateSqlWhere($criteria, $sqlWhere);
+
+    // Prepare Filter.
+		$sqlWhere = $this->CreateSqlWhereFilter($rFilter);
 
 		// Create sql string.
 		$sqlStr = "SELECT m." . $this->geoLocation_d->colId . ", c." . $this->iccCard_d->colProjectName
@@ -41,14 +36,43 @@ class MapPlace_m extends CI_Model
 					. " ON c." . $this->iccCard_d->colFkWeightUnit
 					. "=wu." . $this->weightUnit_d->colId
 
-					. " WHERE m." . $this->geoLocation_d->colActive . "=1"
-					. $criteria;
+					. $sqlWhere;
 
 		// Execute sql.
 		$this->load->model('db_m');
 		$result = $this->db_m->GetRow($sqlStr);
 
-    	return $result;
-    }
+		return $result;
+	}
 // End Public Method.
+
+
+// Private function.
+	// -------------------------------------------------------------------------------------------- Gen Sql
+	private function CreateSqlWhereFilter($rFilter=null) {
+		$this->load->model('dataclass/iccCard_d');
+		$this->load->model('dataclass/geoLocation_d');
+
+		// Create sql string where.
+		$sqlWhere = " WHERE c." . $this->iccCard_d->colActive . "=1"
+			. " AND m." . $this->geoLocation_d->colActive . "=1";
+
+		if($rFilter !== NULL) {
+			$sqlWhere .= (isset($rFilter['provinceCode']) && ($rFilter['provinceCode'] > 0)
+					? " AND c." . $this->iccCard_d->colFkProvinceCode . "=" . $rFilter['provinceCode']
+					: NULL );
+			$sqlWhere .= (isset($rFilter['iccCardId']) && ($rFilter['iccCardId'] != '0')
+					? " AND c." . $this->iccCard_d->colId . "=" . $rFilter['iccCardId']
+					: NULL );
+			$sqlWhere .= (isset($rFilter['orgId']) && ($rFilter['orgId'] > 0)
+					? " AND c." . $this->iccCard_d->colFkOrg . "=" . $rFilter['orgId']
+					: NULL );
+			$sqlWhere .= " AND c." . $this->iccCard_d->colEventDate;
+			$sqlWhere .= " BETWEEN '" . $rFilter['strDateStart'] . "%' AND '" . $rFilter['strDateEnd'] . "%'";
+		}
+
+		return $sqlWhere;
+	}
+	// -------------------------------------------------------------------------------------------- End Gen Sql
+// End Private function.
 }

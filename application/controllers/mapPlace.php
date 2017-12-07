@@ -1,15 +1,10 @@
 <?php
 class MapPlace extends MY_Controller {
-// Property.
-	private $dataTypeName = "แผนที่";
-	private $inputModeName = [1 => 'เพิ่มข้อมูล', 2 => 'แก้ไข'];
-// End Property.
-
 
 // Constructor.
-    public function __construct() {
-        parent::__construct();
-    }
+	public function __construct() {
+			parent::__construct();
+	}
 // End Constructor.
 
 
@@ -23,26 +18,33 @@ class MapPlace extends MY_Controller {
 
 
 
-// Public function.
+// Routing function.
     // ------------------------------------------------- For display -----------------------------------
 	public function view() {
 		// Prepare data of view.
 		$this->data = $this->GetDataForRenderViewPage();
-		// Caption.
-		$this->data['dataTypeName'] = $this->dataTypeName;
 		
 		// Prepare Template.
 		$this->extendedCss = 'frontend/mapPlace/view/extendedCss_v';
 		$this->body = 'frontend/mapPlace/view/body_v';
 		$this->extendedJs = 'frontend/mapPlace/view/extendedJs_v';
-		$this->renderWithTemplate2();
+		$this->renderWithTemplate();
 	}
-// End Public function.
-
-
+// End Routing function.
 
 
 // AJAX function.
+	// ---------------------------------------------------------------------------------------- Get Data for list view and pagination.
+	public function ajaxGetMapPlaceList() {
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			
+			$rDataFilter = $this->input->post('rDataFilter');
+			$this->load->model('mapPlace_m');
+			$dsMapTransaction = $this->mapPlace_m->GetDataForViewDisplay($rDataFilter);
+
+			echo json_encode($dsMapTransaction);
+		}
+	}
 // End AJAX function.
 
 
@@ -51,11 +53,16 @@ class MapPlace extends MY_Controller {
 
 // Private function.
     // ---------------------------------------------- Initial view mode --------------------------------
-	private function GetDataForRenderViewPage() {
+	private function GetDataForRenderViewPage($rDataFilter=null) {
+		$this->load->model("iccCard_m");
+		$data = $this->iccCard_m->GetDataForComboBoxListView();		
+
 		$this->load->model('mapPlace_m');
-		$dsMapTransaction = $this->mapPlace_m->GetDataForViewDisplay();
-		$data = $this->CreateMap($dsMapTransaction);
-		
+		$dsMapTransaction = $this->mapPlace_m->GetDataForViewDisplay($rDataFilter);
+		$dsMapPlace = $this->CreateMap($dsMapTransaction);
+		$data['map'] = $dsMapPlace['map'];
+		//$data['check_url'] = $dsMapPlace['check_url'];
+
 		return $data;
 	}
 

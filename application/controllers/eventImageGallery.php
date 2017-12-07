@@ -7,9 +7,9 @@ class EventImageGallery extends MY_Controller {
 // End Property.
 
 // Constructor.
-function __construct() {
-	parent::__construct();
-}
+	function __construct() {
+		parent::__construct();
+	}
 // End Constructor.
 
 
