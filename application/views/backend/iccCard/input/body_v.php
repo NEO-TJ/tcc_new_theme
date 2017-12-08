@@ -1,30 +1,24 @@
-<div class="panel">----<div>
-<div class="container">
-	<div class="row top">
-		<div class="col-xs-12 col-md-12 col-lg-12 page-header users-header">
-			<div class="col-xs-10 col-md-10 col-lg-10">
-				<h1>
-					<label class="pull-left">
-						<?php echo($dataTypeName); ?> - [<?php echo($inputModeName);?>]
-					</label>
-				</h1>
-			</div>
-
-			<div class="col-xs-2 col-md-2 col-lg-2">
-				<h1>
-					<button type="button" class="btn btn-info btn-reset pull-right"
-							onclick="location.href='<?php echo(base_url());?>iccCard'">
-						<<--- back   
-					</button>
-				</h1>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="container">
+<section role="main" class="content-body">
 <div class="row">
+	<div class="row">
+		<div class="col-xs-12">
 
+<!-- ////////////////////////////////////////////////////// Breadcrumb -->
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 col-md-12 col-lg-12">
+						<ol class="breadcrumb">
+							<li><a href="<?php echo base_url('iccCard'); ?>">จัดการ Icc Card</a></li>
+							<li class="active">แบบฟอร์ม Icc Card</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+<!-- ////////////////////////////////////////////////////// End Breadcrumb -->
+
+<!-- ////////////////////////////////////////////////////// Content -->
+			<div class="container">
+				<div class="row">
 <!-- ************************************************ Panel of ICC Card - Master -->
 <?php echo form_open(base_url("iccCard"), array("id" => "formIccCardMaster")); ?>
 <div class="col-xs-12 col-md-12 col-lg-12 panel-group" id="collapseIccCardMasterParent">
@@ -506,18 +500,9 @@
 									echo '</td>';
 									echo '<td></td>';
 //<!-- Entangled Debris -->
-									echo '<td class="text-left td-group">';
+										echo '<td class="text-left td-group">';
 										echo 'ชนิดขยะที่เกี่ยวพัน';
-/*										echo '<select class="form-control text-left input-require-sibling"';
-										echo 'id="entangledDebris">';
-											echo '<option value="0" selected>----</option>';
-											foreach($dsAnimalStatus as $row) {
-												$selected = (($rowInput['FK_Animal_Status'] == $row['id']) 
-															? ' selected' : '');
-												echo '<option value='.$row['id'].$selected.'>'.$row['Name'].'</option>';
-											}
-										echo '</select>';
-*/										echo '<input type="text" class="form-control text-left input-require-sibling"';
+										echo '<input type="text" class="form-control text-left input-require-sibling"';
 										echo ' id="entangledDebris"';
 										echo ' title="ชนิดขยะที่เกี่ยวพัน" placeholder="ชนิดขยะที่เกี่ยวพัน..."';
 										echo ' value=' . ($rowInput['Entangled_Debris']) . '>';
@@ -614,30 +599,33 @@ $iGarbageType++;
 <?php echo form_close(); ?><!-- Close formGarbageTransaction -->
 <!-- ************************************************ End panel of ICC Card - Garbage Transaction -->
 
-</div>
-</div>
+					</div>
+				</div>
 
 
+				<br/>
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-8 col-md-8 col-lg-8"></div>
+
+						<div class="col-xs-2 col-md-2 col-lg-2">
+							<?php $btnDeleteHide = ( ($this->uri->segment(2) == 'edit') ? '' : ' disabled' ); ?>
+							<button type="button" class="btn btn-danger pull-right" id="deleteIccCard"
+							<?php echo($btnDeleteHide) ?>>
+								ลบข้อมูลทั้งหมด
+							</button>
+						</div>
+
+						<div class="col-xs-2 col-md-2 col-lg-2">
+							<button type="button" class="btn btn-primary pull-right" id="btnSave">บันทึกข้อมูล</button>
+						</div>
+					</div>
+				</div>
+				<hr>
+<!-- ////////////////////////////////////////////////////// End Content -->
 
 
-
-<br/><br/>
-<div class="container">
-<div class="row">
-	<div class="col-xs-8 col-md-8 col-lg-8">
+		</div>
 	</div>
-
-	<div class="col-xs-2 col-md-2 col-lg-2">
-		<?php $btnDeleteHide = ( ($this->uri->segment(2) == 'edit') ? '' : ' disabled' ); ?>
-		<button type="button" class="btn btn-danger pull-right" id="deleteIccCard"
-		<?php echo($btnDeleteHide) ?>>
-			ลบข้อมูลทั้งหมด
-		</button>
-	</div>
-
-	<div class="col-xs-2 col-md-2 col-lg-2">
-		<button type="button" class="btn btn-primary pull-right" id="btnSave">บันทึกข้อมูล</button>
-	</div>
 </div>
-</div>
-<hr>
+</section>

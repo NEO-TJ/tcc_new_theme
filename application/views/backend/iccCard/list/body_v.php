@@ -146,7 +146,7 @@
 			<?php echo form_open(base_url("iccCard/addNew"), array("id" => "formAddNew")); ?>
 				<a class="btn btn-primary " href="#" role="button"
 				onclick="javascript:document.getElementById('formAddNew').submit()">
-					<i class="fa fa-plus"></i> เพิ่มแบบข้อมูลใหม่
+					<i class="fa fa-plus"></i> เพิ่มข้อมูลใหม่
 				</a>
 			<?php echo form_close(); ?><!-- Close form choose -->
 			<br><br>

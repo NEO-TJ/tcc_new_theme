@@ -57,6 +57,8 @@
         <?php echo css_asset('plugin/sweetalert2/sweetalert2.min.css'); ?>
         <!-- input group custom css -->
         <?php echo css_asset('customize/input-group.css'); ?>
+        <!-- breadcrumb custom css -->
+        <?php echo css_asset('customize/breadcrumb.css'); ?>
 <?php  
 if(isset($extendedCss)) echo $extendedCss;
 ?>
