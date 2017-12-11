@@ -1,38 +1,25 @@
 <!doctype html>
 <html class="fixed sidebar-left-xs <?php if($this->uri->segment(1)=="iccCard"){ echo 'sidebar-left-collapsed'; }?>">
     <head>
-
         <!-- Basic -->
         <meta charset="UTF-8">
-
         <title>Admin</title>
         <meta name="keywords" content="ผู้ใช้งาน" />
         <meta name="description" content="ผู้ใช้งาน">
-
-
         <!-- Mobile Metas -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <!-- Load It Like A Native App -->
         <meta name="apple-touch-fullscreen" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <!-- Bootstrap Core CSS -->
 
-    <!-- Bootstrap Core CSS -->
-
-    <!-- Web Fonts
+        <!-- Web Fonts
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css"> -->
-
         <!-- Vendor CSS -->
         <link rel="stylesheet" href="<?php echo base_url('./assets/admin/assets/vendor/bootstrap/css/bootstrap.css'); ?>" />
-
         <link rel="stylesheet" href="<?php echo base_url('./assets/admin/assets/vendor/font-awesome/css/font-awesome.css'); ?>" />
-
-
-
-
         <!-- Specific Page Vendor CSS -->
-
-
         <!-- Theme CSS -->
         <link rel="stylesheet" href="<?php echo base_url('./assets/admin/assets/stylesheets/theme.css'); ?>" />
         <link rel="stylesheet" href="<?php echo base_url('./assets/admin/assets/style.css'); ?>" />
@@ -43,7 +30,6 @@
         <link rel="stylesheet" href="<?php echo base_url('./assets/admin/assets/vendor/pnotify/pnotify.custom.css'); ?>">
         <!-- Theme Custom CSS -->
         <link rel="stylesheet" href="<?php echo base_url('./assets/admin/assets/stylesheets/theme-custom.css'); ?>">
-
         <!-- Head Libs -->
         <link rel="stylesheet" href="<?php echo base_url('./assets/admin/assets/vendor/select2/select2.css'); ?>" />
         <link rel="stylesheet" href="<?php echo base_url('./assets/admin/assets/vendor/jquery-datatables-bs3/assets/css/datatables.css'); ?>">
@@ -52,141 +38,106 @@
         <link rel="stylesheet" href="<?php echo base_url('./assets/admin/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css'); ?>">
         <!-- Dropzone -->
         <link href="<?php echo base_url('./assets/admin/assets/upload_image/css/fileinput.css'); ?>" rel="stylesheet">
-        
         <!-- Plugin -->
         <?php echo css_asset('plugin/sweetalert2/sweetalert2.min.css'); ?>
         <!-- input group custom css -->
         <?php echo css_asset('customize/input-group.css'); ?>
         <!-- breadcrumb custom css -->
         <?php echo css_asset('customize/breadcrumb.css'); ?>
-<?php  
-if(isset($extendedCss)) echo $extendedCss;
-?>
+
+        <?php if(isset($extendedCss)) echo $extendedCss; ?>
+
         <style type="text/css">
-        .select2-container .select2-choice {
-                display: block;
-                height: 35px;
-            }
-            .dataTables_wrapper .dataTables_length .select2-container {
-                margin-right: 10px;
-                width: 85px;
-            }
-            .page-header{
-              display: none;
-            }
+            .select2-container .select2-choice {
+                    display: block;
+                    height: 35px;
+                }
+                .dataTables_wrapper .dataTables_length .select2-container {
+                    margin-right: 10px;
+                    width: 85px;
+                }
+                .page-header{
+                display: none;
+                }
 
-            @media only screen and (min-width: 768px){
-              html.fixed .inner-wrapper{
-                padding-top: 40px;
-              }
+                @media only screen and (min-width: 768px){
+                html.fixed .inner-wrapper{
+                    padding-top: 40px;
+                }
             }
-
-
         </style>
+    </head>
 
-
-
-</head>
-
-<body class="loading-overlay-showing" data-loading-overlay>
+    <body class="loading-overlay-showing" data-loading-overlay>
         <span class="loading-overlay dark">
             <span class="loader white"></span>
         </span>
 
-    <section class="body" id="sectionBody">
-
-
-        <header class="header">
+        <section class="body" id="sectionBody">
+            <header class="header">
                 <div class="logo-container">
                     <a href="#" class="logo pull-left" style="margin-top:0px;">
-                    <img src="<?php echo base_url('assets/images/logo/logo-5.png'); ?>" height="52"  /> <span style="font-size: 16px;">กรมทรัพยากรทางทะเลและชายฝั่ง<span>
-                </a>
+                        <img src="<?php echo base_url('assets/images/logo/logo-5.png'); ?>" height="52" />
+                        <span style="font-size: 16px;">กรมทรัพยากรทางทะเลและชายฝั่ง</span>
+                    </a>
                     <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened"
                     data-target="html" data-fire-event="sidebar-left-opened">
                         <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
                     </div>
                 </div>
-
                 <!-- start: search & user box -->
                 <div class="header-right">
+                   <span class="separator"></span>
+                    <?php if ( $this->session->userdata('isUserLoggedIn') ) { ?>
+                        <div id="userbox" class="userbox">
+                            <a href="#" data-toggle="dropdown">
+                                <figure class="profile-picture">
+                                    <img src="<?php echo base_url('./assets/admin/assets/images/avatar/1483537975.png'); ?>" width="35" height="35"  
+                                    class="img-circle" data-lock-picture="<?php echo base_url('./admin/assets/images/avatar/1483537975.png'); ?>" />
+                                </figure>
+                                <div class="profile-info" data-lock-name="{{ Auth::user()->name }}" >
+                                    <span class="name"><?php  echo $this->session->userdata('user_name'); ?></span>
+                                    <span class="role"></span>
+                                </div>
+                                <i class="fa custom-caret"></i>
+                            </a>
 
-
-
-
-
-                    <span class="separator"></span>
-                        <?php
-                        if ( $this->session->userdata('isUserLoggedIn') ) {
-                        ?>
-                    <div id="userbox" class="userbox">
-                        <a href="#" data-toggle="dropdown">
-                            <figure class="profile-picture">
-                            
-                              <img src="<?php echo base_url('./assets/admin/assets/images/avatar/1483537975.png'); ?>" width="35" height="35"  
-                              class="img-circle" data-lock-picture="<?php echo base_url('./admin/assets/images/avatar/1483537975.png'); ?>" />
-                        
-                            </figure>
-                            <div class="profile-info" data-lock-name="{{ Auth::user()->name }}" >
-                                <span class="name"><?php  echo $this->session->userdata('user_name'); ?></span>
-                                <span class="role"></span>
+                            <div class="dropdown-menu">
+                                <ul class="list-unstyled">
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a role="menuitem" tabindex="-1" href="<?php echo base_url('/'); ?>" >
+                                            <i class="fa fa-home fa-fw"></i> หน้าหลัก
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a role="menuitem" tabindex="-1" href="<?php echo base_url('logout'); ?>" >
+                                            <i class="fa fa-power-off"></i> ออกจากระบบ
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-
-                            <i class="fa custom-caret"></i>
-                        </a>
-
-                        <div class="dropdown-menu">
-                            <ul class="list-unstyled">
-                                <li class="divider"></li>
-                                <li>
-                                    <a role="menuitem" tabindex="-1" href="<?php echo base_url('/'); ?>" >
-                                        <i class="fa fa-home fa-fw"></i> หน้าหลัก
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a role="menuitem" tabindex="-1" href="<?php echo base_url('logout'); ?>" >
-                                        <i class="fa fa-power-off"></i> ออกจากระบบ
-                                    </a>
-                                </li>
-                            </ul>
                         </div>
-                    </div>
-                        <?php
-                         }
-                        ?>
-                     
-
-
-
-
-
-
+                    <?php } ?>
                 </div>
                 <!-- end: search & user box -->
             </header>
             <!-- end: header -->
-
-
-<div class="inner-wrapper">
-
-
-
-
-<style>
-
-ul.nav-main > li.nav-expanded > a {
-  box-shadow: 2px 0 0 #7347b3 inset;
-}
-html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
-    background: #7347b3;
-}
-.page-header h2 {
-    border-bottom-color: #7347b3;
-}
-</style>
-<!-- start: sidebar -->
+            <div class="inner-wrapper">
+                <style>
+                    ul.nav-main > li.nav-expanded > a {
+                        box-shadow: 2px 0 0 #7347b3 inset;
+                    }
+                    html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
+                        background: #7347b3;
+                    }
+                    .page-header h2 {
+                        border-bottom-color: #7347b3;
+                    }
+                </style>
+                <!-- start: sidebar -->
                 <aside id="sidebar-left" class="sidebar-left">
-
                     <div class="sidebar-header">
                         <div class="sidebar-title">
                             Navigation
@@ -297,34 +248,17 @@ html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
                         </div>
 
                     </div>
-
                 </aside>
                 <!-- end: sidebar -->
 
-
-
-
-
-<?php // print_r($this->session->all_userdata()); ?>
-
-
-
-<?php if($header) echo $header;?>
-								<?php if($body) echo $body;?>
-								<?php if($footer) echo $footer;?>
-
-
-
-
-
-                <!-- /.row -->
-   </div>
-
-    </section>
+                <?php if($header) echo $header;?>
+				<?php if($body) echo $body;?>
+				<?php if($footer) echo $footer;?>
+           </div>
+        </section>
     <!-- /#section -->
 
     <!-- jQuery -->
-
 <!-- Vendor -->
 <script src="<?php echo base_url('./assets/admin/assets/vendor/jquery/jquery.js'); ?>"></script>
 <script src="<?php echo base_url('./assets/admin/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js'); ?>"></script>
@@ -371,41 +305,23 @@ html.no-overflowscrolling .nano > .nano-pane > .nano-slider {
 
 <script src="<?php echo base_url('./assets/admin/assets/vendor/magnific-popup/jquery.magnific-popup.js'); ?>"></script>
 <script src="<?php echo base_url('./assets/admin/assets/vendor/jquery-placeholder/jquery-placeholder.js'); ?>"></script>
-<script type="text/javascript">
-jQuery(document).ready(function() {
-    
-    //alert('test');
-});
-</script>
+
 <?php if(1){?>
-<script type="text/javascript">
-$(document).ready(function() {
-
-  $('#summernote').summernote({
-
-    fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
-    disableDragAndDrop: true,
-    height: 450,                 // set editor height
-    minHeight: null,             // set minimum height of editor
-    maxHeight: null,             // set maximum height of editor
-    focus: true                  // set focus to editable area after initializing summernote
-
-  });
-
-
-});
-
-
-
-
-</script>
-
-    <?php } ?>
-
-
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+                disableDragAndDrop: true,
+                height: 450,                 // set editor height
+                minHeight: null,             // set minimum height of editor
+                maxHeight: null,             // set maximum height of editor
+                focus: true                  // set focus to editable area after initializing summernote
+            });
+        });
+    </script>
+<?php } ?>
 
 <script type="text/javascript">
-
 <?php  if($this->session->flashdata('success_blog')){ ?>
         new PNotify({
             title: 'ยินดีด้วยค่ะ',
@@ -413,7 +329,6 @@ $(document).ready(function() {
             type: 'success'
         });
 <?php  } ?>
-
 
 <?php  if($this->session->flashdata('success_blog_edit')){ ?>
         new PNotify({
@@ -431,7 +346,6 @@ $(document).ready(function() {
         });
 <?php  } ?>
 
-
 <?php  if($this->session->flashdata('success_slide')){ ?>
         new PNotify({
             title: 'ยินดีด้วยค่ะ',
@@ -439,7 +353,6 @@ $(document).ready(function() {
             type: 'success'
         });
 <?php  } ?>
-
 
 <?php  if($this->session->flashdata('success_slideshow_edit')){ ?>
         new PNotify({
@@ -449,7 +362,6 @@ $(document).ready(function() {
         });
 <?php  } ?>
 
-
 <?php  if($this->session->flashdata('success_blog_del')){ ?>
         new PNotify({
             title: 'ยินดีด้วยค่ะ',
@@ -457,7 +369,6 @@ $(document).ready(function() {
             type: 'success'
         });
 <?php  } ?>
-
 
 <?php  if($this->session->flashdata('success_slide_del')){ ?>
         new PNotify({

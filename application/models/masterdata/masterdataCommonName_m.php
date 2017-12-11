@@ -1,7 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class MasterdataCommonName_m extends CI_Model
-{
+class MasterdataCommonName_m extends CI_Model {
 // Property.
 	public $tableName = "Garbage_Type";
 	
@@ -87,6 +86,17 @@ class MasterdataCommonName_m extends CI_Model
 
 		$result = $this->db_m->Save($id, $data);
 		$this->db_m->rChkDuplication = null;
+		
+		return $result;
+    }
+
+
+	// ----------------------------------------------------------- Delete ------------------------------------------
+    public function Delete($id=0) {
+		$this->load->model('db_m');
+		$this->db_m->tableName = $this->tableName;
+
+		$result = $this->db_m->DeleteRow($id);
 		
 		return $result;
     }

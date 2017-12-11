@@ -2,6 +2,7 @@
 class IccCard extends MY_Controller {
 // Property.
 	private $paginationLimit = 15;
+	private $inputModeName = [ 1 => 'เพิ่มข้อมูลใหม่', 2 => 'แก้ไขข้อมูล' ];
 // End Property.
 
 
@@ -252,9 +253,11 @@ class IccCard extends MY_Controller {
 		// Prepare data of view.
 		$this->data = $this->GetDataForInputDisplay($rowID);
 
+		// Caption.
+		$this->data['inputModeName'] = $this->inputModeName[$inputMode];
+
 		// Prepare Template.
 		$this->extendedCss = 'backend/iccCard/input/extendedCss_v';
-		$this->header = 'backend/iccCard/input/header_v';
 		$this->body = 'backend/iccCard/input/body_v';
 		$this->footer = 'backend/iccCard/input/footer_v';
 		$this->extendedJs = 'backend/iccCard/input/extendedJs_v';

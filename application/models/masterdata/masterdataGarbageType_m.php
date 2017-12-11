@@ -83,6 +83,17 @@ class MasterdataGarbageType_m extends CI_Model {
 		
 		return $result;
     }
+
+
+	// ----------------------------------------------------------- Delete ------------------------------------------
+    public function Delete($id=0) {
+		$this->load->model('db_m');
+		$this->db_m->tableName = $this->oMaster->tableName;
+
+		$result = $this->db_m->DeleteRow($id);
+		
+		return $result;
+    }
 // End Public function.
 
 

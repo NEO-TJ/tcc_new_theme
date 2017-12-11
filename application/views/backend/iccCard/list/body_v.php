@@ -135,25 +135,32 @@
 
 <!-- List panel -->
 	<section class="panel">
+	<!-- Header content panel -->
 		<header class="panel-heading">
 			<div class="panel-actions">
 				<a href="#"  class="panel-action panel-action-toggle" data-panel-toggle></a>
 			</div>
 			<h2 class="panel-title">แบบบันทึกข้อมูลไอซีซี </h2>
 		</header>
+	<!-- End Header content panel -->
 
+	<!-- Body content panel -->
 		<div class="panel-body">
+		<!-- Form Add new -->
 			<?php echo form_open(base_url("iccCard/addNew"), array("id" => "formAddNew")); ?>
 				<a class="btn btn-primary " href="#" role="button"
 				onclick="javascript:document.getElementById('formAddNew').submit()">
 					<i class="fa fa-plus"></i> เพิ่มข้อมูลใหม่
 				</a>
 			<?php echo form_close(); ?><!-- Close form choose -->
+		<!-- End Form Add new -->
 			<br><br>
+		<!-- Form Choose table -->
 			<?php echo form_open(base_url("iccCard/edit"), array("id" => "formChoose")); ?>
 				<input type="hidden" name="iccCardId" value="0"/>
 			<!-- Tabel view display -->
 				<table class="table table-striped" id="iccCard">
+				<!-- Header Table -->
 					<thead>
 						<tr>
 							<th class="text-center" width="40"></th>
@@ -171,14 +178,20 @@
 							<th class="text-center" width="40">ภาพกิจกรรม</th>
 						</tr>
 					</thead>
+				<!-- End Header Table -->
 
+				<!-- Body Table -->
 					<tbody>
 					</tbody>
+				<!-- End Body Table -->
 				</table>
 			<!-- End Tabel view display -->
 				<div class="pagination" id="paginationLinks"> <p><?php echo $paginationLinks; ?></p> </div>
 			<?php echo form_close(); ?><!-- Close form choose -->
+		<!-- Form Choose table -->
 		</div>
+	<!-- End Body content panel -->
+
 	</section>
 <!-- List panel -->
 

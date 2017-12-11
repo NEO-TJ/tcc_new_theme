@@ -1,112 +1,96 @@
 <section role="main" class="content-body">
 <div class="row">
-              <div class="row">
-              <div class="col-xs-12">
-
-            <section class="panel">
-                
-                
-<!-- Header and button AddNew -->
-<div class="container">
 	<div class="row">
-		<div class="col-xs-12 col-md-12 col-lg-12">
-			<div class="page-header users-header">
-				<div class="col-xs-10 col-md-10 col-lg-10">
-					<h1><label class="pull-left"><?php echo($dataTypeCaption); ?></label></h1>
-				</div>
-				<div class="col-xs-2 col-md-2 col-lg-2">
+		<div class="col-xs-12">
+
+		<!-- List panel -->
+			<section class="panel">
+			<!-- Header content panel -->
+				<header class="panel-heading">
+					<div class="panel-actions">
+						<a href="#"  class="panel-action panel-action-toggle" data-panel-toggle></a>
+					</div>
+					<h2 class="panel-title">ข้อมูลหลัก  -  <?php echo($dataTypeCaption); ?></h2>
+				</header>
+			<!-- End Header content panel -->
+
+			<!-- Body content panel -->
+				<div class="panel-body">
+				<!-- Form Add new -->
 					<?php echo form_open(base_url("masterdata/addNew/".$dataType), array("id" => "formAddNew")); ?>
-						<h1>
-							<button type="submit" id="dataType" 
-							name="dataType" value=<?php echo($dataType); ?>
-							class="btn btn-warning pull-right startFocus
-							<?php echo(($dataType == '10') ? ' hide' : ''); ?>">
-								Add a new
-							</button>
-						</h1>
-					<?php echo form_close(); ?><!-- Close formAddNew -->
+						<input type='hidden' name='dataType' value=<?php echo($dataType); ?> />
+						<a class="btn btn-primary " href="#" role="button"
+						onclick="javascript:document.getElementById('formAddNew').submit()">
+							<i class="fa fa-plus"></i> เพิ่มข้อมูลใหม่
+						</a>
+					<?php echo form_close(); ?><!-- Close form choose -->
+				<!-- End Form Add new -->
+					<br><br>
+				<!-- Form Choose table -->
+					<?php echo form_open(base_url("masterdata/edit/".$dataType), array("id" => "formChoose")); ?>
+						<input type='hidden' name='dataType' value=<?php echo($dataType); ?> />
+						<input type='hidden' name='rowId' value='0' />
+					<!-- Tabel view display -->	
+						<table id="view" class="table table-bordered table-components 
+						table-condensed table-hover table-striped table-responsive">
+						<!-- Header Table -->
+							<thead class="table-header">
+								<tr>
+									<th class="text-center" width="40">No.</th>
+									<?php 
+										if(count($dsView) > 0) {
+											$i=0;
+											foreach($dsView[0] as $col => $value) {
+												if($i++ > 0) {
+													echo ('<th class="text-center">'. $col .'</th>');
+												}
+											}
+										}
+									?>
+									<th class="text-center" width="90">จัดการ</th>
+								</tr>
+							</thead>
+						<!-- End Header Table -->
+
+						<!-- Body Table -->
+							<tbody>
+								<?php $i = 1; ?>
+								<?php foreach($dsView as $row) { ?>
+									<tr>
+										<td class="text-center"><?php echo($i++) ?></td>
+										<?php $j=0; ?>
+										<?php foreach($row as $value) { ?>
+											<?php if($j++ > 0) { ?>
+												<td class="text-left"><?php echo($value) ?></td>
+											<?php } ?>
+										<?php } ?>
+										<td class="text-center">
+											<a title="แก้ไขข้อมูล" class="btn btn-primary btn-xs" href="#" role="button"  id="editRow">
+												<i class="fa fa-pencil fa-fw"></i>
+											</a>
+
+											<a title="ลบข้อมูล" class="btn btn-danger btn-xs" href="#" role="button" id="deleteRow" 
+											style="margin-left:10px">
+												<i class="fa fa-times"></i>
+											</a>
+
+											<input type="hidden" id="rowId" value="<?php echo($row['id']) ?>"/>
+										</td>
+									</tr>
+								<?php } ?>
+							</tbody>
+						<!-- End Body Table -->
+						</table>
+					<!-- Tabel view display -->
+					<?php echo form_close(); ?><!-- Close form choose -->
+				<!-- Form Choose table -->
 				</div>
-			</div>
+			<!-- End Body content panel -->
+
+			</section>
+		<!-- List panel -->
+
 		</div>
 	</div>
 </div>
-
-
-<!-- Table list view -->
-<?php echo form_open(base_url("masterdata/edit/".$dataType), array("id" => "formChoose")); ?>
-<div class="container">
-	<div class="row">
-		<div class="col-xs-12 col-md-12 col-lg-12">
-			<input type='hidden' id='dataType' name='dataType' value=<?php echo($dataType); ?> />
-			<div style="overflow-x:auto; overflow-y:auto;">
-			<table id="view"
-			class="table table-bordered table-components table-condensed table-hover table-striped table-responsive">
-			<!-- Table -->			
-				<thead class="table-header">
-				<!-- Row table header -->
-					<tr>
-						<th class="text-center" width="40">No.</th>
-						<?php 
-							if(count($dsView) > 0) {
-								$i=0;
-								foreach($dsView[0] as $col => $value) {
-									if($i++ > 0) {
-										echo ('<th class="text-center">'. $col .'</th>');
-									}
-								}
-							}
-						?>
-						<th class="text-center" width="40">#</th>
-					</tr>
-				</thead>
-				
-				<tbody>
-				<!-- Row table body -->
-					<?php 
-						$i = 1;
-						foreach($dsView as $row) {
-							echo ('<tr>');
-								echo('<td class="text-center">' . $i++ . '</td>');
-								$j=0;
-								foreach($row as $value) {
-									if($j++ > 0) {
-										echo('<td class="text-left">' . $value . '</td>');
-									}
-								}
-								echo('<td class="text-center">
-										<button type="submit" class="btn btn-success'.(($dataType == '10') ? ' hide' : '').'"
-											id="rowID" name="rowID" value='.$row['id'].'>
-											edit
-										</button>
-									</td>');
-							echo ('</tr>');
-						}
-					?>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</div>
-<?php echo form_close(); ?><!-- Close formChoose -->
-
-
-<div id="footer">
-	<hr>
-	<div class="inner">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-10 col-md-10 col-lg-10">
-				</div>
-				<div class="col-xs-2 col-md-2 col-lg-2">
-					<a href="#">Back to top</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
- </section>
-
-              </div>
-            </div>
-        </div>
 </section>

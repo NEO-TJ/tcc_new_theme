@@ -14,12 +14,12 @@ class MasterdataGarbage_m extends CI_Model {
 
 
 // Public function.
-    // ------------------------------------------------------------ Get ------------------------------------------
+  // ------------------------------------------------------------ Get ------------------------------------------
 	// ___________________________________________________ Zipper Tape Color Code ________________________________
 	// +++ To view +++++++++++++++++++++++++++++++++++++++++++++++++++++++
   public function GetDataForViewDisplay($arrId=null, $sqlWhere=null) {
-    	$criteria ='';
-    	// Prepare Criteria.
+		$criteria ='';
+		// Prepare Criteria.
 		$this->load->model('helper_m');
 		if($arrId != null){
 			$criteria = $this->helper_m->CreateCriteriaIn("d." . $this->colId, $arrId, $criteria, ' WHERE ');
@@ -56,18 +56,18 @@ class MasterdataGarbage_m extends CI_Model {
 		$this->load->model('db_m');
 		$result = $this->db_m->GetRow($sqlStr);
 
-    	return $result;
-    }
+		return $result;
+	}
 
-    public function GetTemplateForInputDisplay() {
+	public function GetTemplateForInputDisplay() {
 		$result = [
-				$this->oDetail->colId				=> 0,
-				$this->oDetail->colName				=> '',
-				$this->oDetail->colFkGarbageType	=> 0,
+			$this->oDetail->colId				=> 0,
+			$this->oDetail->colName				=> '',
+			$this->oDetail->colFkGarbageType	=> 0,
 		];
 
-    	return $result;
-    }
+   	return $result;
+	}
 
 	public function GetDataForComboBox() {
 		$result['dsGarbageType'] = $this->GetDsGarbageType();
@@ -76,7 +76,7 @@ class MasterdataGarbage_m extends CI_Model {
 	}
 
 
-    // ----------------------------------------------------------- Save ------------------------------------------
+	// ----------------------------------------------------------- Save ------------------------------------------
   public function Save($id=null, $data) {
 		$this->load->model('db_m');
 		$this->db_m->tableName = $this->oDetail->tableName;
@@ -92,21 +92,32 @@ class MasterdataGarbage_m extends CI_Model {
 		$this->db_m->rChkDuplication = null;
 
 		return $result;
-    }
+	}
+
+
+	// ----------------------------------------------------------- Delete ------------------------------------------
+	public function Delete($id=0) {
+		$this->load->model('db_m');
+		$this->db_m->tableName = $this->oDetail->tableName;
+
+		$result = $this->db_m->DeleteRow($id);
+		
+		return $result;
+	}
 // End Public function.
 
 
 
 // Private function.
-    // ---------------------------------------------------- Get DB to combobox -----------------------------------
-    // ^^^^******^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unit table ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^****
-    private function GetDsGarbageType($id=0) {
+	// ---------------------------------------------------- Get DB to combobox -----------------------------------
+	// ^^^^******^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unit table ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^****
+	private function GetDsGarbageType($id=0) {
 		$this->load->model("db_m");
 
 		$this->db_m->tableName = $this->oMaster->tableName;
 		$dataSet = $this->db_m->GetRowById($id, null);
-    
-    	return $dataSet;
-    }
+
+		return $dataSet;
+	}
 // End Private function.
 }

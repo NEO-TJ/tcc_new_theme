@@ -1,9 +1,6 @@
 // ******************************************************************************************** Event
 // -------------------------------------------------------------------------------------------- Page Load
 $(document).ready(function() {
-    //window.location = $('#backToTop').prop('href');
-    // DateTimePicker.
-
     // UI Block.
     $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
 
@@ -20,44 +17,9 @@ function initDaterange() {
     });
     $('#dtsEventDate').val(moment().format('DD-MMM-YYYY'));
 }
-
-/*
-    $('#eventDate').daterangepicker({
-        startDate: start,
-        endDate: end,
-        ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month')
-            , moment().subtract(1, 'month').endOf('month')],
-
-            'This Year': [moment().startOf('year'), moment().endOf('year')],
-            'Last Year': [moment().subtract(1, 'year').startOf('year')
-            , moment().subtract(1, 'year').endOf('year')],
-
-            '2 Year': [moment().subtract(1, 'year').startOf('year'), moment()],
-            '5 Year': [moment().subtract(5, 'year').startOf('year'), moment()],
-            '10 Year': [moment().subtract(10, 'year').startOf('year'), moment()]
-        }
-    }, cb);
-*/
-
-//    cb(start, end);
-
 // -------------------------------------------------------------------------------------------- End Page Load.
 
 
-/*
-$('a#eventImage').on('click', function(e) {
-    alert("event image");
-    let baseUrl = window.location.origin + "/" + window.location.pathname.split('/')[1] + "/";
-    e.preventDefault();
-    $.post(baseUrl + 'eventImage/manipulate', {"iccCardId" : iccCardId}, function() { window.location.href = 'page.php' });  
-});
-*/
 // -------------------------------------------------------------------------------------------- Submit & Reset
 $('button#btnSave').on('click', function(e) {
     if (ValidateInputRequire()) {

@@ -1,6 +1,4 @@
-<input type='hidden' id='dataType' name='dataType' value=<?php echo($dataType); ?>></input>
-<input type='hidden' id='rowID' name='rowID' value=<?php echo($dsInput['id']); ?>></input>
-<input type='hidden' id='baseUrl' value="<?php echo(base_url()); ?>"></input>
+<?php $this->load->view('backend/masterdata/input/header_v'); ?>
 
 <!-- Common Name -->
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
@@ -9,8 +7,10 @@
 			<button class="btn btn-primary disabled" type="button">Name : </button>
 		</span>
 		<input type="text" class="form-control input-require startFocus" autocomplete="off"
-			placeholder=<?php echo(str_replace(' ', '_', $dataTypeCaption) . "_Name..."); ?> 
+			placeholder=<?php echo(str_replace(' ', '_', $dataTypeCaption)); ?> 
 			id=<?php echo($dataType); ?> name="Name"
 			value="<?php echo($dsInput['Name']); ?>">
 	</div>
 </div>
+
+<?php $this->load->view('backend/masterdata/input/footer_v'); ?>

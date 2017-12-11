@@ -1,33 +1,39 @@
-<div class="container">
+<section role="main" class="content-body">
+<div class="row">
 	<div class="row">
-		<div class="col-xs-12 col-md-12 col-lg-12 page-header users-header">
+		<div class="col-xs-12">
+
+<!-- ////////////////////////////////////////////////////// Breadcrumb -->
 			<div class="container">
 				<div class="row">
-					<div class="col-xs-10 col-md-10 col-lg-10">
-						<h1>
-							<label class="pull-left"><?php echo($dataTypeCaption); ?></label>
-						</h1>
-					</div>
-
-					<div class="col-xs-2 col-md-2 col-lg-2">
-						<h1>
-							<button type="button" class="btn btn-danger btn-reset pull-right"
-							onclick="location.href='<?php echo(base_url());?>masterdata/view/<?php echo($dataType);?>'">
-								<<--- back   
-							</button>
-						</h1>
+					<div class="col-xs-12 col-md-12 col-lg-12">
+						<ol class="breadcrumb">
+							<li><a href="<?php echo base_url('masterdata/view/'.$dataType); ?>"><?php echo($dataTypeCaption); ?></a></li>
+							<li class="active"><?php echo($inputModeName);?></li>
+						</ol>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
+<!-- ////////////////////////////////////////////////////// End Breadcrumb -->
 
-<?php echo form_open(base_url("masterdata/save"), array("id" => "formInputData")); ?>
-<div class="container">
-	<div class="row">
-		<div class="col-xs-12 col-md-12 col-lg-12">
-			<div class="panel panel-success">
-				<div class="panel-heading" style="text-align: center;">
-					<h3 id="panel-caption"><?php echo($inputModeName);?></h3>
-				</div>
+<!-- ////////////////////////////////////////////////////// Content -->
+			<div class="container">
+				<div class="row">
+<!-- ************************************************ Panel of Masterdata input -->
+					<?php echo form_open(base_url("masterdata/save"), array("id" => "formInputData")); ?>
+						<input type='hidden' id='dataType' name='dataType' value=<?php echo($dataType); ?>></input>
+						<input type='hidden' id='rowId' name='rowId' value=<?php echo($dsInput['id']); ?>></input>
+						<div class="col-xs-12 col-md-12 col-lg-12 panel-group" id="collapseIccCardMasterParent">
+							<div class="panel panel-primary">
+							<!-- ************************************** Panel ICC Card - Master -->
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#collapseIccCardMasterParent" 
+										href="#collapseIccCardMaster" style="color:white">
+										ข้อมูลหลัก  -  <?php echo($dataTypeCaption); ?>
+										</a>
+									</h4>
+								</div>
+								<div class="panel-collapse collapse in" id="collapseIccCardMaster">
+									<div class="panel-body">
+										<div class="row">

@@ -8,8 +8,8 @@
 				<div class="row">
 					<div class="col-xs-12 col-md-12 col-lg-12">
 						<ol class="breadcrumb">
-							<li><a href="<?php echo base_url('iccCard'); ?>">จัดการ Icc Card</a></li>
-							<li class="active">แบบฟอร์ม Icc Card</li>
+							<li><a href="<?php echo base_url('iccCard'); ?>">Icc Card</a></li>
+							<li class="active"><?php echo($inputModeName);?></li>
 						</ol>
 					</div>
 				</div>

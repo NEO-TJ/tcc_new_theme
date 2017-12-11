@@ -26,7 +26,7 @@ class MasterdataUser_m extends CI_Model {
 		$criteria = $this->helper_m->CreateSqlWhere($criteria, $sqlWhere);
 
 		// Create sql string.
-		$sqlStr = "SELECT u." . $this->users_d->colId
+		$sqlStr = "SELECT u." . $this->users_d->colId . " AS id"
 			. ", u." . $this->users_d->colUserId
 			. ", u." . $this->users_d->colFirstName
 			. ", u." . $this->users_d->colLastName
@@ -48,7 +48,7 @@ class MasterdataUser_m extends CI_Model {
 
 			. " FROM " . $this->users_d->tableName . " u"
 			. " LEFT JOIN " . $this->org_d->tableName . " o"
-			. " ON u." . $this->users_d->colFkDepartment . "=o." . $this->org_d->colDepartment
+			. " ON u." . $this->users_d->colFkDepartment . "=o." . $this->org_d->colId
 
 			. $criteria
 			. " ORDER BY u." . $this->users_d->colLevel
@@ -68,7 +68,7 @@ class MasterdataUser_m extends CI_Model {
 		$this->load->model('dataclass/users_d');
 
 		// Create sql string.
-		$sqlStr = "SELECT *, u." . $this->users_d->colId . " masterId"
+		$sqlStr = "SELECT *"
 			. " FROM " . $this->users_d->tableName . " u"
 			. " WHERE u." . $this->users_d->colId . "=" . $id;
 
@@ -83,7 +83,7 @@ class MasterdataUser_m extends CI_Model {
 		$this->load->model('dataclass/users_d');
 
 		$result = [
-				'masterId'											=> 0,
+				$this->users_d->colId						=> 0,
 				$this->users_d->colUserId				=> '',
 				$this->users_d->colPassword			=> '',
 				$this->users_d->colFirstName		=> '',
@@ -121,6 +121,32 @@ class MasterdataUser_m extends CI_Model {
 		$this->db_m->tableName = $tableNameUser;
 		$result = $this->db_m->Save($id, $dsSave, $objCreateBy);
 
+		return $result;
+	}
+
+
+	// ----------------------------------------------------------- Delete ------------------------------------------
+	public function Delete($id=0) {
+		$this->load->model('dataclass/users_d');
+		$this->load->model('db_m');
+		$this->db_m->tableName = $this->users_d->tableName;
+
+		$result = $this->db_m->DeleteRow($id);
+		
+		return $result;
+	}
+
+	public function Inactive($id=0) {
+		$this->load->model('dataclass/users_d');
+		$this->load->model('db_m');
+		$this->db_m->tableName = $this->users_d->tableName;
+		$data = array(
+			$this->users_d->colStatus => 0,
+			$this->users_d->colDeleteBy => $this->session->userdata['id']
+		);
+
+		$result = $this->db_m->UpdateRow($id, $data);
+		
 		return $result;
 	}
 // Public function.

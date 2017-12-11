@@ -1,6 +1,4 @@
-<input type='hidden' id='dataType' name='dataType' value=<?php echo($dataType); ?>></input>
-<input type='hidden' id='rowID' name='rowID' value=<?php echo($dsInput['masterId']); ?> />
-<input type='hidden' id='baseUrl' value="<?php echo(base_url()); ?>"></input>
+<?php $this->load->view('backend/masterdata/input/header_v'); ?>
 
 <!-- User ID -->
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
@@ -114,7 +112,7 @@
 		<span class="input-group-btn">
 			<button class="btn btn-primary disabled" type="button">Department : </button>
 		</span>
-		<select class="form-control input-require startFocus" id="department" name="FK_Department">
+		<select class="form-control startFocus" id="department" name="FK_Department">
 			<option value="0" selected>กรุณาเลือกหน่วยงานที่สังกัด</option>
 			<?php 
 				foreach($dsDepartment as $row) {
@@ -141,3 +139,5 @@
 		</select>
 	</div>
 </div>
+
+<?php $this->load->view('backend/masterdata/input/footer_v'); ?>
