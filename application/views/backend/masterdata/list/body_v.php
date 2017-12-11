@@ -3,18 +3,20 @@
 	<div class="row">
 		<div class="col-xs-12">
 
-		<!-- List panel -->
+		<!-- List section panel -->
 			<section class="panel">
-			<!-- Header content panel -->
+			<!-- ////////////////////////////////////////////////////// Breadcrumb -->
 				<header class="panel-heading">
-					<div class="panel-actions">
-						<a href="#"  class="panel-action panel-action-toggle" data-panel-toggle></a>
-					</div>
-					<h2 class="panel-title">ข้อมูลหลัก  -  <?php echo($dataTypeCaption); ?></h2>
+					<h2 class="panel-title">
+						<ol class="breadcrumb">
+							<li class="active"><?php echo($dataTypeCaption); ?></li>
+						</ol>
+					</h2>
 				</header>
-			<!-- End Header content panel -->
+			<!-- ////////////////////////////////////////////////////// End Breadcrumb -->
+				<br>
 
-			<!-- Body content panel -->
+			<!-- ////////////////////////////////////////////////////// Content -->
 				<div class="panel-body">
 				<!-- Form Add new -->
 					<?php echo form_open(base_url("masterdata/addNew/".$dataType), array("id" => "formAddNew")); ?>
@@ -85,10 +87,10 @@
 					<?php echo form_close(); ?><!-- Close form choose -->
 				<!-- Form Choose table -->
 				</div>
-			<!-- End Body content panel -->
+			<!-- ////////////////////////////////////////////////////// Content -->
 
 			</section>
-		<!-- List panel -->
+		<!-- End List section panel -->
 
 		</div>
 	</div>

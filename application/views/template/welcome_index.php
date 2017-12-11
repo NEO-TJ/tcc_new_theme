@@ -80,12 +80,14 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
+                                <?php if( ($level == 1) || ($level == 2) || ($level == 3) ) { ?>
                                 <li>
                                     <a href="<?php echo base_url('iccCard'); ?>">
                                         <i class="fa fa-btn fa-database"></i>บริหารจัดการ
                                     </a>
                                 </li>
                                 <li class="divider"></li>
+                                <?php } ?>
                                 <li>
                                     <a href="<?php echo base_url('logout'); ?>">
                                         <i class="fa fa-btn fa-sign-out"></i>Logout
