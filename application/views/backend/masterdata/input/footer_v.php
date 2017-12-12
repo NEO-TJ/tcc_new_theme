@@ -4,7 +4,7 @@
 										<div class="col-xs-10 col-md-10 col-lg-10">
 										</div>
 										<div class="col-xs-2 col-md-2 col-lg-2 pull-right">
-											<button type="submit" class="btn btn-primary btn-submit pull-right">Save</button>
+											<button type="submit" class="btn btn-primary btn-submit pull-right">บันทึกข้อมูล</button>
 										</div>
 									</div>
 								</div>

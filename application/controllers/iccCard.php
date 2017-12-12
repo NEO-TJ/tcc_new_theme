@@ -259,7 +259,6 @@ class IccCard extends MY_Controller {
 		// Prepare Template.
 		$this->extendedCss = 'backend/iccCard/input/extendedCss_v';
 		$this->body = 'backend/iccCard/input/body_v';
-		$this->footer = 'backend/iccCard/input/footer_v';
 		$this->extendedJs = 'backend/iccCard/input/extendedJs_v';
 		$this->renderWithTemplate();
 	}

@@ -151,7 +151,6 @@
                         <div class="nano-content">
                             <nav id="menu" class="nav-main" role="navigation">
                                 <ul class="nav nav-main">
-
                                     <li <?php if($this->uri->segment(1)=="dashboard"){ echo 'class=nav-expanded'; }?> >
                                         <a href="<?php echo base_url('dashboard'); ?>"  >
                                             <i class="fa fa-home" aria-hidden="true"></i>
@@ -165,88 +164,77 @@
                                             <span>จัดการ iccCard</span>
                                         </a>
                                     </li>
-                                <?php if( ($level == 1) || ($level == 2) ) { ?>
-                                    <li <?php if($this->uri->segment(1)=="blog"){ echo 'class=nav-expanded'; }?> >
-                                        <a href="<?php echo base_url('blog'); ?>"  >
-                                            <i class="fa fa-life-ring" aria-hidden="true"></i>
-                                            <span>จัดการ บทความ/ข่าวสาร</span>
-                                        </a>
-                                    </li>
+                                    <?php if( ($level == 1) || ($level == 2) ) { ?>
+                                        <li <?php if($this->uri->segment(1)=="blog"){ echo 'class=nav-expanded'; }?> >
+                                            <a href="<?php echo base_url('blog'); ?>"  >
+                                                <i class="fa fa-life-ring" aria-hidden="true"></i>
+                                                <span>จัดการ บทความ/ข่าวสาร</span>
+                                            </a>
+                                        </li>
 
-                                     <li <?php if($this->uri->segment(1)=="slideshow"){ echo 'class=nav-expanded'; }?> >
-                                        <a href="<?php echo base_url('slideshow'); ?>"  >
-                                            <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
-                                            <span>จัดการ slideshows</span>
-                                        </a>
-                                    </li>
-                                <?php } ?>
+                                        <li <?php if($this->uri->segment(1)=="slideshow"){ echo 'class=nav-expanded'; }?> >
+                                            <a href="<?php echo base_url('slideshow'); ?>"  >
+                                                <i class="fa fa-caret-square-o-right" aria-hidden="true"></i>
+                                                <span>จัดการ slideshows</span>
+                                            </a>
+                                        </li>
+                                    <?php } ?>
                                     
                                     <li>&zwnj;</li>
-                                <?php if($level == 1) { ?>
-                                    <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
-                                        <a href="<?php echo base_url('masterdata/view/1'); ?>"  >
-                                            <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                            <span>บริเวณที่เก็บขยะ</span>
-                                        </a>
-                                    </li>
-                                    
-                                    <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
-                                        <a href="<?php echo base_url('masterdata/view/2'); ?>"  >
-                                            <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                            <span>หน่วยของระยะทาง</span>
-                                        </a>
-                                    </li>
-                                    
-                                    <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
-                                        <a href="<?php echo base_url('masterdata/view/3'); ?>"  >
-                                            <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                            <span>หน่วยของน้ำหนัก</span>
-                                        </a>
-                                    </li>
-                                    
-                                    <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
-                                        <a href="<?php echo base_url('masterdata/view/4'); ?>"  >
-                                            <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                            <span>สถานะภาพสัตว์ที่พบ</span>
-                                        </a>
-                                    </li>
-                                    
-                                    <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
-                                        <a href="<?php echo base_url('masterdata/view/5'); ?>"  >
-                                            <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                            <span>ขยะทะเล</span>
-                                        </a>
-                                    </li>
-                                    
-                                    <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
-                                        <a href="<?php echo base_url('masterdata/view/6'); ?>"  >
-                                            <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                            <span>ประเภทขยะทะเล</span>
-                                        </a>
-                                    </li>
-                                    
-                                    <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
-                                        <a href="<?php echo base_url('masterdata/view/0'); ?>"  >
-                                            <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                                            <span>ทะเบียนผู้ใช้งาน</span>
-                                        </a>
-                                    </li>
-                                <?php } ?>
-                                    
-
+                                    <?php if($level == 1) { ?>
+                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                            <a href="<?php echo base_url('masterdata/view/1'); ?>"  >
+                                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <span>บริเวณที่เก็บขยะ</span>
+                                            </a>
+                                        </li>
+                                        
+                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                            <a href="<?php echo base_url('masterdata/view/2'); ?>"  >
+                                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <span>หน่วยของระยะทาง</span>
+                                            </a>
+                                        </li>
+                                        
+                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                            <a href="<?php echo base_url('masterdata/view/3'); ?>"  >
+                                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <span>หน่วยของน้ำหนัก</span>
+                                            </a>
+                                        </li>
+                                        
+                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                            <a href="<?php echo base_url('masterdata/view/4'); ?>"  >
+                                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <span>สถานะภาพสัตว์ที่พบ</span>
+                                            </a>
+                                        </li>
+                                        
+                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                            <a href="<?php echo base_url('masterdata/view/5'); ?>"  >
+                                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <span>ขยะทะเล</span>
+                                            </a>
+                                        </li>
+                                        
+                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                            <a href="<?php echo base_url('masterdata/view/6'); ?>"  >
+                                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <span>ประเภทขยะทะเล</span>
+                                            </a>
+                                        </li>
+                                        
+                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                            <a href="<?php echo base_url('masterdata/view/0'); ?>"  >
+                                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <span>ทะเบียนผู้ใช้งาน</span>
+                                            </a>
+                                        </li>
+                                    <?php } ?>
                                 </ul>
-
-
-
                             </nav>
-
-
-
                             <hr class="separator" />
-
-
                         </div>
-
                     </div>
                 </aside>
                 <!-- end: sidebar -->
@@ -254,7 +242,7 @@
                 <?php if($header) echo $header;?>
 				<?php if($body) echo $body;?>
 				<?php if($footer) echo $footer;?>
-           </div>
+            </div>
         </section>
     <!-- /#section -->
 
@@ -295,9 +283,9 @@
 <!-- Examples -->
 
 <script src="<?php echo base_url('./assets/admin/assets/javascripts/ui-elements/examples.modals.js'); ?>"></script>
- <script src="<?php echo base_url('./assets/admin/assets/javascripts/tables/examples.datatables.default.js'); ?>"></script>
+<script src="<?php echo base_url('./assets/admin/assets/javascripts/tables/examples.datatables.default.js'); ?>"></script>
 
- <script src="<?php echo base_url('./assets/admin/assets/javascripts/ui-elements/examples.loading.overlay.js'); ?>"></script>
+<script src="<?php echo base_url('./assets/admin/assets/javascripts/ui-elements/examples.loading.overlay.js'); ?>"></script>
 <script src="<?php echo base_url('./assets/admin/assets/vendor/jquery-validation/jquery.validate.js'); ?>"></script>
 
 <script src="<?php echo base_url('./assets/admin/assets/text/dist/summernote.js?v1'); ?>"></script>

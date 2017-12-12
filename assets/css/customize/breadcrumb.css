@@ -1,5 +1,5 @@
 .breadcrumb {background: rgba(245, 245, 245, 1); border: 3px solid rgba(245, 245, 245, 1); border-radius: 16px; display: block;}
-.breadcrumb li {font-size: 30px;}
+.breadcrumb li {font-size: 20px;}
 .breadcrumb a {color: rgba(66, 139, 202, 1);}
 .breadcrumb a:hover {color: rgba(42, 100, 150, 1);}
 .breadcrumb>.active {color: rgba(0, 0, 0, 1);}
