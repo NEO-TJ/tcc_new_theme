@@ -8,7 +8,8 @@ a:focus, a:hover {
     margin-right: 6px;
 }
 .site-title{
-    padding-left: 0px!important;  font-size: 20px;
+	padding-left: 0px!important;  
+	font-size: 16px;
     margin-top:-18px;
 }
 .nav > li.li-site-description {
@@ -125,4 +126,19 @@ li > a.go-related-website-link.green, li > a.go-related-website-link.green:hover
 li > a.go-related-website-link.red, li > a.go-related-website-link.red:hover
 {
     background:#cc181e;
+}
+
+.data-block-welcome-page
+{
+	padding-top:20px;
+	background-color:#F5F5F5;
+}
+.background-under-picture
+{
+	/*background-color:green;*/
+	background: url('../../assets/images/bg-main-full.jpg') center bottom no-repeat;
+}
+
+.navbar-brand {
+	padding:15px 0px;
 }
