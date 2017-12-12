@@ -36,7 +36,10 @@ class MapPlace_m extends CI_Model
 					. " ON c." . $this->iccCard_d->colFkWeightUnit
 					. "=wu." . $this->weightUnit_d->colId
 
-					. $sqlWhere;
+					. $sqlWhere
+					
+					. " GROUP BY m." . $this->geoLocation_d->colLatitude
+					. ", m." . $this->geoLocation_d->colLongitude;
 
 		// Execute sql.
 		$this->load->model('db_m');
