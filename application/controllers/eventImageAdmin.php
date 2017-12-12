@@ -143,7 +143,6 @@ class EventImageAdmin extends MY_Controller {
 		// Prepare Template.
 		$this->extendedCss = 'backend/eventImageAdmin/extendedCss_v';
 		$this->body = 'backend/eventImageAdmin/body_v';
-		$this->footer = 'backend/eventImageAdmin/footer_v';
 		$this->extendedJs = 'backend/eventImageAdmin/extendedJs_v';
 		$this->renderWithTemplate();
 	}
