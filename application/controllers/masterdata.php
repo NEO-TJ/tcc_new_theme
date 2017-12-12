@@ -107,7 +107,7 @@ class Masterdata extends MY_Controller {
 		$result = 1;
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$allDataPost = $this->input->post(NULL, TRUE);
-			
+
 			$result = $this->SaveDataToDB($allDataPost);
 		}
 
@@ -144,7 +144,7 @@ class Masterdata extends MY_Controller {
 
 		// User.
 		if($dataType == '0') {
-			$this->load->model('masterdata/masterdataUser_m', 'oMasterdata_m');
+			$this->load->model('masterdata/masterdataUser_m', 'oMasterdata_m');		
 		}
 
 		// Cleanup Type.
@@ -276,6 +276,7 @@ class Masterdata extends MY_Controller {
 
 		// Selection for masterdata object.
 		$this->SelectMasterdataObject($dataType);
+		//if($dataType == '0') { $dsSave['Password'] = md5($dsSave['Password']); }
 
 		// Save data to DB.
 		$result = $this->oMasterdata_m->Save($rowId, $dsSave);

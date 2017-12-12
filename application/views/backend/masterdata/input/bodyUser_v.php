@@ -101,7 +101,7 @@
 			<option value="1" <?php echo(($dsInput['Level'] == '1') ? ' selected' : ''); ?>>ผู้ดูแลระบบ</option>
 			<option value="2" <?php echo(($dsInput['Level'] == '2') ? ' selected' : ''); ?>>ชำนาญการ</option>
 			<option value="3" <?php echo(($dsInput['Level'] == '3') ? ' selected' : ''); ?>>ปฏิบัติการ</option>
-			<option value="4" <?php echo(($dsInput['Level'] == '3') ? ' selected' : ''); ?>>อาสาสมัคร</option>
+			<option value="4" <?php echo(($dsInput['Level'] == '4') ? ' selected' : ''); ?>>อาสาสมัคร</option>
 		</select>
 	</div>
 </div>

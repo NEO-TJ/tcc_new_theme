@@ -12,7 +12,10 @@ class User extends CI_Model{
         
         //fetch data by conditions
         if(array_key_exists("conditions",$params)){
-            $this->db->where("(name='".$params['conditions']['name']."' OR email='".$params['conditions']['email']."') AND password='".$params['conditions']['password']."' AND status='".$params['conditions']['status']."'");
+            $this->db->where("(UserId='".$params['conditions']['UserId']
+            ."' OR Email='".$params['conditions']['Email']
+            ."') AND Password='".$params['conditions']['Password']
+            ."' AND Status='".$params['conditions']['Status']."'");
         }
         
         if(array_key_exists("id",$params)){

@@ -125,33 +125,33 @@
                             -->
                             <div class="form-group">
                                 <div class="col-md-12 ">
-                                    <label for="name" class=" control-label">ชื่อ-นามสกุล</label>
-                                    <input id="name" type="text" class="form-control" name="name" 
-                                    value="<?php echo !empty($user['name'])?$user['name']:''; ?>" required>
-                                    <?php echo form_error('name','<span class="help-block"><strong>','</strong></span>'); ?>
+                                    <label for="firstName" class=" control-label">ชื่อ</label>
+                                    <input id="firstName" type="text" class="form-control" name="First_Name" 
+                                    value="<?php echo !empty($user['First_Name'])?$user['First_Name']:''; ?>" required>
+                                    <?php echo form_error('firstName','<span class="help-block"><strong>','</strong></span>'); ?>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-12 ">
                                     <label for="email" class=" control-label">อีเมล์</label>
-                                    <input id="email" type="email" class="form-control" name="email" 
-                                    value="<?php echo !empty($user['email'])?$user['email']:''; ?>" required>
+                                    <input id="email" type="email" class="form-control" name="Email" 
+                                    value="<?php echo !empty($user['Email'])?$user['Email']:''; ?>" required>
                                     <?php echo form_error('email','<span class="help-block"><strong>','</strong></span>'); ?>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-12 ">
-                                    <label for="password" class=" control-label">Password</label>
-                                    <input id="password" type="password" class="form-control" name="password" required>
+                                    <label for="password" class=" control-label">รหัสผ่าน</label>
+                                    <input id="password" type="password" class="form-control" name="Password" required>
                                     <?php echo form_error('password','<span class="help-block"><strong>','</strong></span>'); ?>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-12 ">
-                                    <label for="password-confirm" class=" control-label">Confirm Password</label>
+                                    <label for="password-confirm" class=" control-label">ยืนยันรหัสผ่าน</label>
                                     <?php echo form_error('password_confirmation','<span class="help-block">','</span>'); ?>
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                                 </div>
@@ -161,24 +161,26 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-12 ">
-                                    <label for="email" class=" control-label">หนังสือเดินทาง/หมายเลขบัตรประชาชน</label>
-                                    <input id="card_id" type="text" class="form-control" name="card_id" value="<?php echo !empty($user['card_id'])?$user['card_id']:''; ?>" required>
-                                    <?php echo form_error('card_id','<span class="help-block"><strong>','</strong></span>'); ?>
+                                    <label for="lastName" class=" control-label">นามสกุล</label>
+                                    <input id="lastName" type="text" class="form-control" name="Last_Name" 
+                                    value="<?php echo !empty($user['Last_Name'])?$user['Last_Name']:''; ?>" required>
+                                    <?php echo form_error('lastName','<span class="help-block"><strong>','</strong></span>'); ?>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-12 ">
-                                    <label for="email" class=" control-label">อายุ</label>
-                                    <input id="year_old" type="munber" class="form-control" name="year_old" value="<?php echo !empty($user['year_old'])?$user['year_old']:''; ?>" required>
-                                    <?php echo form_error('year_old','<span class="help-block"><strong>','</strong></span>'); ?>
+                                    <label for="age" class=" control-label">อายุ</label>
+                                    <input id="age" type="munber" class="form-control" name="Age" 
+                                    value="<?php echo !empty($user['Age'])?$user['Age']:''; ?>">
+                                    <?php echo form_error('age','<span class="help-block"><strong>','</strong></span>'); ?>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-12 ">
-                                    <label for="email" class=" control-label">เพศ</label>
-                                    <select class="form-control" name="sex" required>
+                                    <label for="gender" class=" control-label">เพศ</label>
+                                    <select class="form-control" name="Gender" required>
                                         <option value="1">ชาย</option>
                                         <option value="1">หญิง</option>
                                     </select>
