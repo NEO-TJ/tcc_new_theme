@@ -23,6 +23,17 @@ class UserAuthentication_m extends CI_Model {
 
 // Public function.
     // ---------------------------------------------------------------------------------------- Validate
+    public function GetProfile($id) {
+        $this->load->model('dataclass/users_d');
+		$this->load->model('db_m');
+
+		// Check custom duplication.
+		$this->db_m->tableName = $this->users_d->tableName;
+		$result = $this->db_m->GetRowById($id);
+
+		return $result;
+    }
+    // ---------------------------------------------------------------------------------------- Validate
     public function Validate() {
 		$this->load->model('dataclass/users_d');
 		$this->load->model('db_m');
@@ -66,14 +77,14 @@ class UserAuthentication_m extends CI_Model {
         return $result;
     }
 
-    // ---------------------------------------------------------------------------------------- Validate
-    public function Save($dsData) {
+    // ---------------------------------------------------------------------------------------- Save
+    public function Save($id, $dsData) {
         $this->load->model('dataclass/users_d');
 		$this->load->model('db_m');
 
 		// Check custom duplication.
 		$this->db_m->tableName = $this->users_d->tableName;
-		$result = $this->db_m->CreateRow($dsData);
+		$result = $this->db_m->Save($id, $dsData);
 
 		return $result;
     }

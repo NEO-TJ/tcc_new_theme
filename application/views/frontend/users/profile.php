@@ -99,7 +99,7 @@
                     <?php  if(!empty($success_msg)){ ?>
                         <div class="alert alert-success">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            คุณทำการลงทะเบียน สำเร็จเรียบร้อยแล้ว กรุณา login เข้าสู่ระบบ
+                            คุณทำการแก้ไขข้อมูล สำเร็จเรียบร้อยแล้ว
                         </div>
                     <?php }elseif(!empty($error_msg)){ ?>
                         <div class="alert alert-danger">
@@ -108,21 +108,11 @@
                         </div>
                      <?php } ?>
 
-                    <h4 class="site-titles text-center" > สมัครสมาชิกเข้าสู่ระบบ </h4>
+                    <h4 class="site-titles text-center" > แก้ไขข้อมูลส่วนตัว </h4>
                     <hr style="margin-bottom: 10px;">
 
                     <form class="form-horizontal" method="POST" action="">
                         <div class="col-md-6">
-                            <!--
-                                <div class="form-group">
-                                    <div style="margin-bottom: 16px;">
-                                        <a href="redirect" class=" ui facebook fluid button"><i class="fa fa-facebook icon-fa " style=""></i> สมัครด้วย Facebook</a>
-                                    </div>
-                                </div> 
-                                <div>
-                                    <p class="t_mid" style="margin: 0 0 0px;">หรือ</p>
-                                </div>
-                            -->
                             <div class="form-group">
                                 <div class="col-md-12 ">
                                     <label for="firstName" class=" control-label">ชื่อ</label>
@@ -135,7 +125,7 @@
                             <div class="form-group">
                                 <div class="col-md-12 ">
                                     <label for="email" class=" control-label">อีเมล์</label>
-                                    <input id="email" type="email" class="form-control" name="Email" 
+                                    <input id="email" type="email" class="form-control" name="Email" disabled
                                     value="<?php echo !empty($user['Email'])?$user['Email']:''; ?>" required>
                                     <?php echo form_error('email','<span class="help-block"><strong>','</strong></span>'); ?>
                                 </div>
@@ -181,8 +171,12 @@
                                 <div class="col-md-12 ">
                                     <label for="gender" class=" control-label">เพศ</label>
                                     <select class="form-control" name="Gender" required>
-                                        <option value="1">ชาย</option>
-                                        <option value="2">หญิง</option>
+                                        <option value="1" <?php echo(($user['Gender'] == "1") ? "selected" : "") ?>>
+                                            ชาย
+                                        </option>
+                                        <option value="2" <?php echo(($user['Gender'] == "2") ? "selected" : "") ?>>
+                                            หญิง
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -190,7 +184,7 @@
                             <br>
                             <div class="form-group" style="margin-top: 6px;">
                                 <div class="col-md-12 ">
-                                    <input type="submit" name="regisSubmit" class="btn btn-primary btn-block" value="สมัครสมาชิก"/>
+                                    <input type="submit" name="editSubmit" class="btn btn-primary btn-block" value="อัพเดทข้อมูล"/>
                                 </div>
                             </div>
                         </div>

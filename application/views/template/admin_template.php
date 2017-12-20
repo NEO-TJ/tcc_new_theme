@@ -112,6 +112,11 @@
                                     </li>
                                     <li class="divider"></li>
                                     <li>
+                                        <a href="<?php echo base_url('users/profile'); ?>">
+                                            <i class="fa fa-users"></i>ข้อมูลส่วนตัว
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a role="menuitem" tabindex="-1" href="<?php echo base_url('logout'); ?>" >
                                             <i class="fa fa-power-off"></i> ออกจากระบบ
                                         </a>

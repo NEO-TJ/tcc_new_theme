@@ -89,6 +89,11 @@
                                 <li class="divider"></li>
                                 <?php } ?>
                                 <li>
+                                    <a href="<?php echo base_url('users/profile'); ?>">
+                                        <i class="fa fa-users"></i>ข้อมูลส่วนตัว
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="<?php echo base_url('logout'); ?>">
                                         <i class="fa fa-btn fa-sign-out"></i>Logout
                                     </a>

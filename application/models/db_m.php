@@ -51,8 +51,12 @@ class Db_m extends CI_Model {
 		$result = false;
  
 		// check in database
-		$exist = $this->GetRowById($id);
-		$ce = count($exist);
+		if($id == NULL) {
+			$ce = 0;
+		} else {
+			$exist = $this->GetRowById($id);
+			$ce = count($exist);
+		}
 
 		$result = (($ce > 0) ? $this->UpdateRow($id, $data) 
 				: $this->CreateRow( 

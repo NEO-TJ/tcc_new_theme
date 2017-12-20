@@ -139,6 +139,25 @@
 							</div>
 						</div>
 
+						<div class='image'><?php echo $image ?></div>
+							<!-- Calling for refresh captcha image. -->
+							<a href='#' class ='refresh'>
+								<img id = 'ref_symbol' src ="<?php echo base_url('assets/images/refresh.png') ?>">
+							</a>
+							<br><br>
+							<!-- Captcha word field. -->
+							<?php 
+								echo form_label('Captcha');
+								$data_captcha = array(
+									'name' => 'captcha',
+									'class' => 'input_box',
+									'color' => 'white',
+									'placeholder' => '',
+									'id' => 'captcha'
+								);
+								echo form_input($data_captcha);
+							?>
+
 						<div class="form-group">
 							<div class="col-md-12 ">
 								<input type="submit" name="loginSubmit" class="btn btn-primary btn-block" value="เข้าสู่ระบบ"/>
