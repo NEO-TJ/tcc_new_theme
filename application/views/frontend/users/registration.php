@@ -104,7 +104,7 @@
                     <?php }elseif(!empty($error_msg)){ ?>
                         <div class="alert alert-danger">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            มีบางอย่างผิดพลาด
+                            <?php echo $error_msg ?>
                         </div>
                      <?php } ?>
 

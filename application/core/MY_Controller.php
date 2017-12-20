@@ -120,19 +120,16 @@ class MY_Controller extends CI_Controller {
 
 	// *************************************************** Check logged ********************************
 	protected function is_logged() {
-            /*
 		if(!$this->session->userdata('id')){
 			$this->logout();
 			return false;
 		} else {
-                    
-			
-		}*/
-                return true;
+            return true;
+        }
 	}
 	protected function logout() {
         $this->session->sess_destroy();
-        redirect("index");
+        redirect("/");
     }
     // **************************************************** End logged *********************************
 // End public method.

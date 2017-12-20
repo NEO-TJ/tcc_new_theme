@@ -95,7 +95,7 @@
 					<?php }elseif(!empty($error_msg)){ ?>
 					<div class="alert alert-danger">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-							ข้อผิดพลาด “รหัสผ่านไม่ถูกต้อง”
+							<?php echo $error_msg ?>
 					</div>
 					<?php }?>
 
@@ -134,29 +134,30 @@
 							<div class="col-md-12 ">
 								<label>
 									<input type="checkbox" name="remember"> Remember Me 
-									</label>
+								</label>
 								<a class="btn btn-link g_right"  href="#">Forgot Password?</a>
 							</div>
 						</div>
 
-						<div class='image'><?php echo $image ?></div>
-							<!-- Calling for refresh captcha image. -->
-							<a href='#' class ='refresh'>
-								<img id = 'ref_symbol' src ="<?php echo base_url('assets/images/refresh.png') ?>">
-							</a>
-							<br><br>
-							<!-- Captcha word field. -->
-							<?php 
-								echo form_label('Captcha');
-								$data_captcha = array(
-									'name' => 'captcha',
-									'class' => 'input_box',
-									'color' => 'white',
-									'placeholder' => '',
-									'id' => 'captcha'
-								);
-								echo form_input($data_captcha);
-							?>
+						<div class="form-group">
+							<div class="col-md-10">
+								<div class='image' id='captchaImage'><?php echo $image ?></div>
+							</div>
+							<div class="col-md-2">
+								<!-- Calling for refresh captcha image. -->
+								<a href='#' class ='refresh' id='captchaRefresh'>
+									<img id = 'ref_symbol' src ="<?php echo base_url('assets/images/refresh.png') ?>">
+								</a>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-12 ">
+									<label for="captcha" class=" control-label">captcha</label>
+									<input id="captcha" type="text" class="form-control" name="captcha" required>
+									<?php echo form_error('captcha','<span class="help-block"><strong>','</strong></span>'); ?>
+							</div>
+						</div>
 
 						<div class="form-group">
 							<div class="col-md-12 ">

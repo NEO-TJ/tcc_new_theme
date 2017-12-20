@@ -9,6 +9,7 @@ class Users extends MY_Controller {
         $this->load->helper('captcha');
         $this->load->library('form_validation');
         $this->load->model('user');
+        session_start(); 
     }
     
     /*
@@ -68,20 +69,24 @@ class Users extends MY_Controller {
                             redirect('/');
                         }
                 */
-                $this->captcha_compare();
-                $this->validate();                
+                if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
+                    $this->validate();
+                } else {
+                    $data['error_msg'] = 'รหัส captcha ไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
+                }
             }else{
-                $data['error_msg'] = 'Wrong email or password, please try again.';
+                $data['error_msg'] = 'อีเมล์หรือรหัสผ่านไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
             }
         }
 
         // Set data to view file.
-        $data = $this->captcha_setting();
+        $data['image'] = $this->captcha_setting();
 
         // Load the view.
+        $this->data = $data;
 		$this->body = 'frontend/users/login';
-		$this->data = $data;
-		$this->renderWithTemplate();	
+        $this->extendedJs = 'frontend/users/extendedJs_v';
+		$this->renderWithTemplate();
     }
     
     /*
@@ -123,25 +128,29 @@ class Users extends MY_Controller {
             );
 
             if($this->form_validation->run() == true){
-                $this->load->model("userAuthentication_m");
-                $result = $this->userAuthentication_m->Save(null, $userData);
-                if($result) {
-                    $this->session->set_userdata('success_msg'
-                    , 'คุณทำการลงทะเบียน สำเร็จเรียบร้อยแล้ว กรุณา login เข้าสู่ระบบ.');
-                    redirect('users/login');
-                }else{
-                    $data['error_msg'] = 'มีบางอย่างผิดพลาด.';
+                if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
+                    $this->load->model("userAuthentication_m");
+                    $result = $this->userAuthentication_m->Save(null, $userData);
+                    if($result) {
+                        $this->session->set_userdata('success_msg'
+                        , 'คุณทำการลงทะเบียน สำเร็จเรียบร้อยแล้ว กรุณา login เข้าสู่ระบบ.');
+                        redirect('users/login');
+                    }else{
+                        $data['error_msg'] = 'มีบางอย่างผิดพลาด โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
+                    }
+                } else {
+                    $data['error_msg'] = 'รหัส captcha ไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
                 }
             }
         }
 
         // Set data to view file.
-        $data = $this->captcha_setting();
+        $data['image'] = $this->captcha_setting();
         $data['user'] = $userData;
 
         // Load the view.
-        $this->body = 'frontend/users/registration';
 		$this->data = $data;
+        $this->body = 'frontend/users/registration';
 		$this->renderWithTemplate();
     }
     
@@ -150,6 +159,7 @@ class Users extends MY_Controller {
      * User edit profile
      */
     public function profile(){
+        if(!($this->is_logged())) {exit(0);}
         $data = array();
         $userData = array();
         // flash data.
@@ -173,7 +183,7 @@ class Users extends MY_Controller {
 
             $this->load->model("dataclass/users_d");
             $userData = array(
-                $this->users_d->colPassword     => strip_tags($this->input->post('Password')),
+                $this->users_d->colEmail        => strip_tags($this->input->post('Email')),
                 $this->users_d->colFirstName    => strip_tags($this->input->post('First_Name')),
                 $this->users_d->colLastName     => strip_tags($this->input->post('Last_Name')),
                 $this->users_d->colGender       => $this->input->post('Gender'),
@@ -181,14 +191,22 @@ class Users extends MY_Controller {
             );
 
             if($this->form_validation->run() == true){
-                $this->load->model("userAuthentication_m");
-                $result = $this->userAuthentication_m->Save($this->session->userdata['id'], $userData);
-                if($result) {
-                    $dsProfile = $this->userAuthentication_m->GetProfile($this->session->userdata['id']);
-                    $userData = ((count($dsProfile) > 0) ? $dsProfile[0] : NULL);
-                    $data['success_msg'] = 'คุณทำการแก้ไขข้อมูลส่วนตัว เรียบร้อยแล้ว.';
-                }else{
-                    $data['error_msg'] = 'มีบางอย่างผิดพลาด.';
+                if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
+                    $userData[$this->users_d->colPassword] = strip_tags($this->input->post('Password'));
+                    unset($userData[$this->users_d->colEmail]);
+
+                    $this->load->model("userAuthentication_m");
+                    $result = $this->userAuthentication_m->Save($this->session->userdata['id'], $userData);
+                    
+                    if($result) {
+                        $dsProfile = $this->userAuthentication_m->GetProfile($this->session->userdata['id']);
+                        $userData = ((count($dsProfile) > 0) ? $dsProfile[0] : NULL);
+                        $data['success_msg'] = 'คุณทำการแก้ไขข้อมูลส่วนตัว เรียบร้อยแล้ว.';
+                    }else{
+                        $data['error_msg'] = 'มีบางอย่างผิดพลาด โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
+                    }
+                } else {
+                    $data['error_msg'] = 'รหัส captcha ไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
                 }
             }
         } else {
@@ -198,11 +216,12 @@ class Users extends MY_Controller {
         }
 
         // Set data to view file.
-        $data = $this->captcha_setting();
+        $data['image'] = $this->captcha_setting();
         $data['user'] = $userData;
+
         // Load the view.
-        $this->body = 'frontend/users/profile';
         $this->data = $data;
+        $this->body = 'frontend/users/profile';
 		$this->renderWithTemplate();
     }
     
@@ -282,25 +301,26 @@ class Users extends MY_Controller {
 			//header('Location: ../');
         }
     }
-    
+
     // This function genrate CAPTCHA image and store in "image folder".
-    public function captcha_setting(){
+    public function captcha_setting($imgWidth=280){
         $values = array(
             'word' => '',
-            'word_length' => 8,
+            'word_length' => 5,
             'img_path' => './assets/images/captcha/',
             'img_url' =>  base_url() .'assets/images/captcha/',
             'font_path'  => base_url() . 'system/fonts/texb.ttf',
-            'img_width' => '150',
+            'img_width' => $imgWidth,
             'img_height' => 50,
             'expiration' => 3600
         );
         $data = create_captcha($values);
         $_SESSION['captchaWord'] = $data['word'];
-              
-        // image will store in "$data['image']" index and its send on view page 
-        //$this->load->view('captcha_view', $data);
-    }    
+
+        // image will store in "$data['image']" index and its send on view page
+        return $data['image'];
+    }
+
     // For new image on click refresh button.
     public function captcha_refresh(){
         $values = array(
@@ -316,14 +336,6 @@ class Users extends MY_Controller {
         $data = create_captcha($values);
         $_SESSION['captchaWord'] = $data['word'];
         echo $data['image'];
-    }
-
-    private function captcha_compare() {
-        if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
-            echo "<script type='text/javascript'> alert('Your form successfully submitted'); </script>";
-        } else {
-            echo "<script type='text/javascript'> alert('Try Again'); </script>";
-        }
     }
     // End private function.
 }

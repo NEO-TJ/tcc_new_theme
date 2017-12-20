@@ -104,7 +104,7 @@
                     <?php }elseif(!empty($error_msg)){ ?>
                         <div class="alert alert-danger">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            มีบางอย่างผิดพลาด
+                            <?php echo $error_msg ?>
                         </div>
                      <?php } ?>
 
@@ -112,6 +112,19 @@
                     <hr style="margin-bottom: 10px;">
 
                     <form class="form-horizontal" method="POST" action="">
+                        <!-- Email -->
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-md-12 ">
+                                    <label for="email" class=" control-label">อีเมล์</label>
+                                    <input id="email" type="email" class="form-control" name="Email" disabled
+                                    value="<?php echo !empty($user['Email'])?$user['Email']:''; ?>" required>
+                                    <?php echo form_error('email','<span class="help-block"><strong>','</strong></span>'); ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- First Name -->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-12 ">
@@ -121,16 +134,75 @@
                                     <?php echo form_error('firstName','<span class="help-block"><strong>','</strong></span>'); ?>
                                 </div>
                             </div>
+                        </div>
 
+                        <!-- Last Name -->
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <div class="col-md-12 ">
-                                    <label for="email" class=" control-label">อีเมล์</label>
-                                    <input id="email" type="email" class="form-control" name="Email" disabled
-                                    value="<?php echo !empty($user['Email'])?$user['Email']:''; ?>" required>
-                                    <?php echo form_error('email','<span class="help-block"><strong>','</strong></span>'); ?>
+                                    <label for="lastName" class=" control-label">นามสกุล</label>
+                                    <input id="lastName" type="text" class="form-control" name="Last_Name" 
+                                    value="<?php echo !empty($user['Last_Name'])?$user['Last_Name']:''; ?>" required>
+                                    <?php echo form_error('lastName','<span class="help-block"><strong>','</strong></span>'); ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Age -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-12 ">
+                                    <label for="age" class=" control-label">อายุ</label>
+                                    <input id="age" type="munber" class="form-control" name="Age" 
+                                    value="<?php echo !empty($user['Age'])?$user['Age']:''; ?>">
+                                    <?php echo form_error('age','<span class="help-block"><strong>','</strong></span>'); ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-12 ">
+                                    <label for="gender" class=" control-label">เพศ</label>
+                                    <select class="form-control" name="Gender" required>
+                                        <option value="1" <?php echo(($user['Gender'] == "1") ? "selected" : "") ?>>
+                                            ชาย
+                                        </option>
+                                        <option value="2" <?php echo(($user['Gender'] == "2") ? "selected" : "") ?>>
+                                            หญิง
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Captcha -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <div class='image' id='captchaImage'><?php echo $image ?></div>
+                                </div>
+                                <div class="col-md-2">
+                                    <!-- Calling for refresh captcha image. -->
+                                    <a href='#' class ='refresh' id='captchaRefresh'>
+                                        <img id = 'ref_symbol' src ="<?php echo base_url('assets/images/refresh.png') ?>">
+                                    </a>
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <div class="col-md-12 ">
+                                    <label for="captcha" class=" control-label">captcha</label>
+                                    <input id="captcha" type="text" class="form-control" name="captcha" required>
+                                    <?php echo form_error('captcha','<span class="help-block"><strong>','</strong></span>'); ?>
+                                </div>
+    						</div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="col-md-6 panel">
                             <div class="form-group">
                                 <div class="col-md-12 ">
                                     <label for="password" class=" control-label">รหัสผ่าน</label>
@@ -148,39 +220,8 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <div class="col-md-12 ">
-                                    <label for="lastName" class=" control-label">นามสกุล</label>
-                                    <input id="lastName" type="text" class="form-control" name="Last_Name" 
-                                    value="<?php echo !empty($user['Last_Name'])?$user['Last_Name']:''; ?>" required>
-                                    <?php echo form_error('lastName','<span class="help-block"><strong>','</strong></span>'); ?>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-12 ">
-                                    <label for="age" class=" control-label">อายุ</label>
-                                    <input id="age" type="munber" class="form-control" name="Age" 
-                                    value="<?php echo !empty($user['Age'])?$user['Age']:''; ?>">
-                                    <?php echo form_error('age','<span class="help-block"><strong>','</strong></span>'); ?>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-12 ">
-                                    <label for="gender" class=" control-label">เพศ</label>
-                                    <select class="form-control" name="Gender" required>
-                                        <option value="1" <?php echo(($user['Gender'] == "1") ? "selected" : "") ?>>
-                                            ชาย
-                                        </option>
-                                        <option value="2" <?php echo(($user['Gender'] == "2") ? "selected" : "") ?>>
-                                            หญิง
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
+                        <!-- submit -->
+                        <div class="col-md-12">
                             <br>
                             <div class="form-group" style="margin-top: 6px;">
                                 <div class="col-md-12 ">
