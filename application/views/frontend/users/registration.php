@@ -113,16 +113,6 @@
 
                     <form class="form-horizontal" method="POST" action="">
                         <div class="col-md-6">
-                            <!--
-                                <div class="form-group">
-                                    <div style="margin-bottom: 16px;">
-                                        <a href="redirect" class=" ui facebook fluid button"><i class="fa fa-facebook icon-fa " style=""></i> สมัครด้วย Facebook</a>
-                                    </div>
-                                </div> 
-                                <div>
-                                    <p class="t_mid" style="margin: 0 0 0px;">หรือ</p>
-                                </div>
-                            -->
                             <div class="form-group">
                                 <div class="col-md-12 ">
                                     <label for="firstName" class=" control-label">ชื่อ</label>

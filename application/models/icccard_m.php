@@ -54,9 +54,9 @@ class IccCard_m extends CI_Model {
 				
 				. $sqlExtend
 				
-				. " ORDER BY p." . $this->province_d->colProvinceName
+				. " ORDER BY c." . $this->iccCard_d->colEventDate . " desc"
+				. ", p." . $this->province_d->colProvinceName
 				. ", a." . $this->amphur_d->colAmphurName
-				. ", c." . $this->iccCard_d->colEventDate
 				. ", c." . $this->iccCard_d->colProjectName
 				
 				. $sqlLimit;
