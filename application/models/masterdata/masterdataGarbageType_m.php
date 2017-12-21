@@ -27,7 +27,11 @@ class MasterdataGarbageType_m extends CI_Model {
 		$criteria = $this->helper_m->CreateSqlWhere($criteria, $sqlWhere);
 
 		// Create sql string.
-		$sqlStr = "SELECT * FROM " . $this->oMaster->tableName
+		$sqlStr = "SELECT " . $this->oMaster->colId
+					. ", " . $this->oMaster->colPriority . " ลำดับที่"
+					. ", " . $this->oMaster->colName . " ชื่อของขยะ"
+					
+					. " FROM " . $this->oMaster->tableName
 					. $criteria
    					. " ORDER BY " . $this->oMaster->colPriority;
 

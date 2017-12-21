@@ -4,10 +4,10 @@
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
 	<div class="input-group">
 		<span class="input-group-btn">
-			<button class="btn btn-primary disabled" type="button">Garbage Type : </button>
+			<button class="btn btn-primary disabled" type="button">ประเภทขยะ : </button>
 		</span>
 		<select class="form-control input-require startFocus" id="garbageTypeID" name="FK_Garbage_Type">
-			<option value="0" selected>Please select Garbage Type</option>
+			<option value="0" selected>เลือกประเภทขยะ</option>
 			<?php 
 				foreach($dsGarbageType as $row) {
 					$selected = (($dsInput['FK_Garbage_Type'] == $row['id']) 
@@ -23,10 +23,10 @@
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
 	<div class="input-group">
 		<span class="input-group-btn">
-			<button class="btn btn-primary disabled" type="button">Name : </button>
+			<button class="btn btn-primary disabled" type="button">ชื่อ : </button>
 		</span>
 		<input type="text" class="form-control input-require" 
-			autocomplete="off" placeholder="Garbage Name..."
+			autocomplete="off" placeholder="ชื่อของขยะ..."
 			id="Name" name="Name" value="<?php echo($dsInput['Name']); ?>">
 	</div>
 </div>

@@ -37,7 +37,7 @@
 							<!-- Header Table -->
 								<thead class="table-header">
 									<tr>
-										<th class="text-center" width="40">No.</th>
+										<th class="text-center" width="40"></th>
 										<?php 
 											if(count($dsView) > 0) {
 												$i=0;

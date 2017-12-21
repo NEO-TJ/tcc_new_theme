@@ -4,7 +4,7 @@
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
 	<div class="input-group">
 		<span class="input-group-btn">
-			<button class="btn btn-primary disabled" type="button">User ID : </button>
+			<button class="btn btn-primary disabled" type="button">รหัสผู้ใช้งาน : </button>
 		</span>
 		<input type="text" class="form-control input-require" autocomplete="off"
 			placeholder="UserID..." id="userID" name="UserId" value="<?php echo($dsInput['UserId']); ?>">
@@ -15,7 +15,7 @@
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
 	<div class="input-group">
 		<span class="input-group-btn">
-			<button class="btn btn-primary disabled" type="button">Password : </button>
+			<button class="btn btn-primary disabled" type="button">รหัสผ่าน : </button>
 		</span>
 		<input type="password" class="form-control input-require" autocomplete="off" 
 			readonly onfocus="this.removeAttribute('readonly');"
@@ -27,7 +27,7 @@
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
 	<div class="input-group">
 		<span class="input-group-btn">
-			<button class="btn btn-primary disabled" type="button">First Name : </button>
+			<button class="btn btn-primary disabled" type="button">ชื่อ : </button>
 		</span>
 		<input type="text" class="form-control input-require startFocus" autocomplete="off"
 			placeholder="First Name..." id="firstName" name="First_Name" value="<?php echo($dsInput['First_Name']); ?>">
@@ -38,7 +38,7 @@
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
 	<div class="input-group">
 		<span class="input-group-btn">
-			<button class="btn btn-primary disabled" type="button">Last Name : </button>
+			<button class="btn btn-primary disabled" type="button">นามสกุล : </button>
 		</span>
 		<input type="text" class="form-control" autocomplete="off"
 			placeholder="Last Name..." id="lastName" name="Last_Name" value="<?php echo($dsInput['Last_Name']); ?>">
@@ -49,7 +49,7 @@
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
 	<div class="input-group">
 		<span class="input-group-btn">
-			<button class="btn btn-primary disabled" type="button">Email : </button>
+			<button class="btn btn-primary disabled" type="button">อีเมล์ : </button>
 		</span>
 		<input type="text" class="form-control" autocomplete="off"
 			placeholder="Email@..." id="email" name="Email" value="<?php echo($dsInput['Email']); ?>">
@@ -60,7 +60,7 @@
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
 	<div class="input-group">
 		<span class="input-group-btn">
-			<button class="btn btn-primary disabled" type="button">Gender : </button>
+			<button class="btn btn-primary disabled" type="button">เพศ : </button>
 		</span>
 		<select class="form-control" id="gender" name="Gender">
 			<option value=1<?php echo(($dsInput['Gender'] == 1) ? ' selected' : ''); ?>>Male</option>
@@ -73,7 +73,7 @@
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
 	<div class="input-group">
 		<span class="input-group-btn">
-			<button class="btn btn-primary disabled" type="button">Age : </button>
+			<button class="btn btn-primary disabled" type="button">อายุ : </button>
 		</span>
 		<input type="text" class="form-control" autocomplete="off"
 			placeholder="Age..." id="age" name="Age" value="<?php echo($dsInput['Age']); ?>">
@@ -84,7 +84,7 @@
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
 	<div class="input-group">
 		<span class="input-group-btn">
-			<button class="btn btn-primary disabled" type="button">ID Card Number : </button>
+			<button class="btn btn-primary disabled" type="button">รหัสบัตรประชาชน : </button>
 		</span>
 		<input type="text" class="form-control" autocomplete="off"
 			placeholder="ID Card Number..." id="idCardNumber" name="ID_Card_Number" value="<?php echo($dsInput['ID_Card_Number']); ?>">
@@ -95,7 +95,7 @@
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
 	<div class="input-group">
 		<span class="input-group-btn">
-			<button class="btn btn-primary disabled" type="button">Level : </button>
+			<button class="btn btn-primary disabled" type="button">ระดับสิทธิ์ในระบบ : </button>
 		</span>
 		<select class="form-control" id="level" name="Level">
 			<option value="1" <?php echo(($dsInput['Level'] == '1') ? ' selected' : ''); ?>>ผู้ดูแลระบบ</option>
@@ -110,7 +110,7 @@
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
 	<div class="input-group">
 		<span class="input-group-btn">
-			<button class="btn btn-primary disabled" type="button">Department : </button>
+			<button class="btn btn-primary disabled" type="button">แผนก : </button>
 		</span>
 		<select class="form-control startFocus" id="department" name="FK_Department">
 			<option value="0" selected>กรุณาเลือกหน่วยงานที่สังกัด</option>
@@ -129,7 +129,7 @@
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
 	<div class="input-group">
 		<span class="input-group-btn">
-			<button class="btn btn-primary disabled" type="button">Status : </button>
+			<button class="btn btn-primary disabled" type="button">สถานะ : </button>
 		</span>
 		<select class="form-control" id="status" name="Status">
 			<option value="0"<?php echo(($dsInput['Status'] == 0) ? ' selected' : ''); ?>>ยังไม่เปิดใช้งาน</option>

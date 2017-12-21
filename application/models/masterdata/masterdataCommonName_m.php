@@ -33,9 +33,10 @@ class MasterdataCommonName_m extends CI_Model {
 		$criteria = $this->helper_m->CreateSqlWhere($criteria, $sqlWhere);
 
 		// Create sql string.
-		$sqlStr = "SELECT * FROM " . $this->tableName
-   					.$criteria
-   					." ORDER BY ".$this->colName;
+		$sqlStr = "SELECT id, Name as ชื่อ"
+			. " FROM " . $this->tableName
+			. $criteria
+			. " ORDER BY ".$this->colName;
 
 		// Execute sql.
 		$this->load->model('db_m');

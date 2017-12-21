@@ -4,7 +4,7 @@
 <div class="col-xs-12 col-md-12 col-lg-12 margin-input">
 	<div class="input-group">
 		<span class="input-group-btn">
-			<button class="btn btn-primary disabled" type="button">Name : </button>
+			<button class="btn btn-primary disabled" type="button">ชื่อ : </button>
 		</span>
 		<input type="text" class="form-control input-require startFocus" autocomplete="off"
 			placeholder=<?php echo(str_replace(' ', '_', $dataTypeCaption)); ?> 

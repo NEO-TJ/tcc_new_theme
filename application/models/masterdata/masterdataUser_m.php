@@ -26,25 +26,25 @@ class MasterdataUser_m extends CI_Model {
 		$criteria = $this->helper_m->CreateSqlWhere($criteria, $sqlWhere);
 
 		// Create sql string.
-		$sqlStr = "SELECT u." . $this->users_d->colId . " AS id"
-			. ", u." . $this->users_d->colUserId
-			. ", u." . $this->users_d->colFirstName
-			. ", u." . $this->users_d->colLastName
+		$sqlStr = "SELECT u." . $this->users_d->colId . " as id"
+			. ", u." . $this->users_d->colUserId . " as รหัสผู้ใช้งาน"
+			. ", u." . $this->users_d->colFirstName . " as ชื่อผู้ใช้งาน"
+			. ", u." . $this->users_d->colLastName . " as นามสกุล"
 
 			. ", CASE WHEN u." . $this->users_d->colGender
-			. "=1 THEN 'Male' ELSE 'Female' END as " . $this->users_d->colGender
+			. "=1 THEN 'Male' ELSE 'Female' END as เพศ"
 
 			. ", CASE WHEN u." . $this->users_d->colLevel . "=1 THEN 'ผู้ดูแลระบบ'"
 			. " WHEN u." . $this->users_d->colLevel . "=2 THEN 'ชำนาญการ'"
 			. " WHEN u." . $this->users_d->colLevel . "=3 THEN 'ปฏิบัติการ'"
-			. " ELSE 'อาสาสมัคร' END as " . $this->users_d->colLevel
+			. " ELSE 'อาสาสมัคร' END as ระดับสิทธิ์ในระบบ"
 
-			. ", o." . $this->org_d->colDepartment
+			. ", o." . $this->org_d->colDepartment . " as ชื่อหน่วยงาน"
 
 			. ", CASE WHEN u." . $this->users_d->colStatus . "=0 THEN 'ยังไม่เปิดใช้งาน'"
 			. " WHEN u." . $this->users_d->colStatus . "=1 THEN 'พร้อมใช้งาน'"
 			. " WHEN u." . $this->users_d->colStatus . "=2 THEN 'รอการยืนยัน'"
-			. " ELSE 'รหัสถูกล๊อค' END as " . $this->users_d->colStatus
+			. " ELSE 'รหัสถูกล๊อค' END as สถานะของรหัส"
 
 			. " FROM " . $this->users_d->tableName . " u"
 			. " LEFT JOIN " . $this->org_d->tableName . " o"
