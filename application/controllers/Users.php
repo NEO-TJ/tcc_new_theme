@@ -130,11 +130,17 @@ class Users extends MY_Controller {
             if($this->form_validation->run() == true){
                 if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
                     $this->load->model("userAuthentication_m");
-                    $result = $this->userAuthentication_m->Save(null, $userData);
+                    $result = TRUE;//$this->userAuthentication_m->Save(null, $userData);
                     if($result) {
-                        $this->session->set_userdata('success_msg'
-                        , 'คุณทำการลงทะเบียน สำเร็จเรียบร้อยแล้ว กรุณา login เข้าสู่ระบบ.');
-                        redirect('users/login');
+                        if($this->sendEmail($this->input->post('Email'))){
+                            $this->session->set_userdata('success_msg'
+                                , 'ระบบได้ทำการลงทะเบียนสมาชิกใหม่เรียบร้อยแล้ว<br>'
+                                . 'ทางเราได้จัดส่งอีเมล์ยีนยันการสมัครไปที่อีเมล์ที่คุณลงทะเบียนไว้<br>'
+                                . 'กรุณายืนยันการสมัครจากอีเมล์ที่ทางเราส่งให้ เพื่อดำเนินการสมัครสมาชิกอย่างสมบูรณ์<br>'
+                                . 'ขอบคุณคะ');
+                            redirect('users/login');
+                        } else {
+                        }
                     }else{
                         $data['error_msg'] = 'มีบางอย่างผิดพลาด โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
                     }
@@ -153,7 +159,6 @@ class Users extends MY_Controller {
         $this->body = 'frontend/users/registration';
 		$this->renderWithTemplate();
     }
-    
 
     /*
      * User edit profile
@@ -224,8 +229,6 @@ class Users extends MY_Controller {
         $this->body = 'frontend/users/profile';
 		$this->renderWithTemplate();
     }
-    
-
 
 
     /*
@@ -238,25 +241,10 @@ class Users extends MY_Controller {
         redirect('/');
     }
     
-    /*
-     * Existing email check during validation
-     */
-    public function email_check($str){
-        $this->load->model("userAuthentication_m");
-        $checkEmail = $this->userAuthentication_m->ChkEmailDup($str);
-
-        if($checkEmail > 0){
-            $this->form_validation->set_message('email_check', 'The given email already exists.');
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
 
 
     // Private function.
-    public function validate() {
+    private function validate() {
 		$this->load->model('userAuthentication_m');
 		// get data from db
         $this->userAuthentication_m->userId = $this->input->post('username');
@@ -301,6 +289,75 @@ class Users extends MY_Controller {
 			//header('Location: ../');
         }
     }
+
+
+    // ************************************************************ Email group method
+    public function email_check($str){
+        $this->load->model("userAuthentication_m");
+        $checkEmail = $this->userAuthentication_m->ChkEmailDup($str);
+
+        if($checkEmail > 0){
+            $this->form_validation->set_message('email_check', 'The given email already exists.');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
+    // ----------------------------------------------------------- Send confirm mail
+    private function sendEmail($receiver){
+        $from = "dmcrtccmaster@gmail.com";    //senders email address
+        $subject = 'ยืนยันการลงทะเบียน สมาชิก thaicoastalcleanup';  //email subject
+        
+        //sending confirmEmail($receiver) function calling link to the user, inside message body
+        $message = 'เรียน ท่านสมาชิก,<br><br> เพื่อความสมบูรณืในการสมัครสมาชิก โปรดคลิ๊กปุ่ม activation ด้านล่างนี้<br><br>
+        <a href=\'http://164.115.42.55/thaicoastalcleanup/Users/confirmEmail/'
+        . md5($receiver).'\'>http://164.115.42.55/thaicoastalcleanup/Users/confirmEmail/'
+        . md5($receiver) .'</a><br><br>ขอบคุณค่ะ';
+
+        //config email settings
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = 'ssl://smtp.gmail.com';
+        $config['smtp_port'] = '465';
+        $config['smtp_user'] = $from;
+        $config['smtp_pass'] = 'admintcc';  //sender's password
+        $config['mailtype'] = 'html';
+        $config['charset'] = 'utf-8';
+        $config['wordwrap'] = 'TRUE';
+        $config['newline'] = "\r\n"; 
+        
+        $this->load->library('email', $config);
+        $this->email->initialize($config);
+        //send email
+        $this->email->from($from);
+        $this->email->to($receiver);
+        $this->email->subject($subject);
+        $this->email->message($message);
+        
+        if($this->email->send()){
+            //for testing
+            echo "sent to: ".$receiver."<br>";
+            echo "from: ".$from. "<br>";
+            echo "protocol: ". $config['protocol']."<br>";
+            echo "message: ".$message;
+            return true;
+        }else{
+            echo "เกิดความผิดพลาดในการส่งอีเมล์ยีนยันตนเอง";
+            return false;
+        }
+    }
+    
+    private function confirmEmail($hashcode){
+        if($this->userAuthentication_m->verifyEmail($hashcode)){
+            $this->session->set_flashdata('verify', '<div class="alert alert-success text-center">Email address is confirmed. Please login to the system</div>');
+            redirect('users/login');
+        }else{
+            $this->session->set_flashdata('verify', '<div class="alert alert-danger text-center">Email address is not confirmed. Please try to re-register.</div>');
+            redirect('users/login');
+        }
+    }
+
+
 
     // This function genrate CAPTCHA image and store in "image folder".
     public function captcha_setting($imgWidth=280){

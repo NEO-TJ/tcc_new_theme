@@ -33,21 +33,13 @@ class UserAuthentication_m extends CI_Model {
 
 		return $result;
     }
+
     // ---------------------------------------------------------------------------------------- Validate
     public function Validate() {
 		$this->load->model('dataclass/users_d');
 		$this->load->model('db_m');
 
-        /*
-            $this->db_m->tableName = $this->users_d->tableName;
-            $arrWhere = [
-                        $this->users_d->colUserId   => $this->userId,
-                        $this->users_d->colPassword => $this->password,
-                        $this->users_d->colStatus   => '1'
-            ];
-            $result = $this->db_m->GetRowWhere($arrWhere);
-        */
-        		// Create sql string.
+        // Create sql string.
 		$sqlStr = "SELECT *"
             . " FROM " . $this->users_d->tableName
 
@@ -75,6 +67,14 @@ class UserAuthentication_m extends CI_Model {
 		$result = $this->db_m->Find($arrWhere);
 
         return $result;
+    }
+    
+    //activate account
+    function verifyEmail($key){
+        $data = array('Status' => 1);
+        $this->db->where('md5(Email)',$key);
+
+        return $this->db->update('users', $data);    //update status as 1 to make active user
     }
 
     // ---------------------------------------------------------------------------------------- Save
