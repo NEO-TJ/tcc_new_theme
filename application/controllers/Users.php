@@ -130,8 +130,11 @@ class Users extends MY_Controller {
             if($this->form_validation->run() == true){
                 if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
                     $this->load->model("userAuthentication_m");
-                    $result = TRUE;//$this->userAuthentication_m->Save(null, $userData);
+                    $result = $this->userAuthentication_m->Save(null, $userData);
                     if($result) {
+                        $this->session->set_userdata('success_msg', 'คุณทำการลงทะเบียน สำเร็จเรียบร้อยแล้ว กรุณา login เข้าสู่ระบบ.');
+                        redirect('users/login');
+                        /*
                         if($this->sendEmail($this->input->post('Email'))){
                             $this->session->set_userdata('success_msg'
                                 , 'ระบบได้ทำการลงทะเบียนสมาชิกใหม่เรียบร้อยแล้ว<br>'
@@ -141,6 +144,7 @@ class Users extends MY_Controller {
                             redirect('users/login');
                         } else {
                         }
+                        */
                     }else{
                         $data['error_msg'] = 'มีบางอย่างผิดพลาด โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
                     }
@@ -157,6 +161,7 @@ class Users extends MY_Controller {
         // Load the view.
 		$this->data = $data;
         $this->body = 'frontend/users/registration';
+        $this->extendedJs = 'frontend/users/extendedJs_v';
 		$this->renderWithTemplate();
     }
 
@@ -227,6 +232,7 @@ class Users extends MY_Controller {
         // Load the view.
         $this->data = $data;
         $this->body = 'frontend/users/profile';
+        $this->extendedJs = 'frontend/users/extendedJs_v';
 		$this->renderWithTemplate();
     }
 
@@ -311,8 +317,8 @@ class Users extends MY_Controller {
         
         //sending confirmEmail($receiver) function calling link to the user, inside message body
         $message = 'เรียน ท่านสมาชิก,<br><br> เพื่อความสมบูรณืในการสมัครสมาชิก โปรดคลิ๊กปุ่ม activation ด้านล่างนี้<br><br>
-        <a href=\'http://164.115.42.55/thaicoastalcleanup/Users/confirmEmail/'
-        . md5($receiver).'\'>http://164.115.42.55/thaicoastalcleanup/Users/confirmEmail/'
+        <a href=\'http://tcc.dmcr.go.th/thaicoastalcleanup/Users/confirmEmail/'
+        . md5($receiver).'\'>http://tcc.dmcr.go.th/thaicoastalcleanup/Users/confirmEmail/'
         . md5($receiver) .'</a><br><br>ขอบคุณค่ะ';
 
         //config email settings
@@ -322,7 +328,7 @@ class Users extends MY_Controller {
         $config['smtp_user'] = $from;
         $config['smtp_pass'] = 'admintcc';  //sender's password
         $config['mailtype'] = 'html';
-        $config['charset'] = 'utf-8';
+        $config['charset'] = 'iso-8859-1';
         $config['wordwrap'] = 'TRUE';
         $config['newline'] = "\r\n"; 
         
@@ -342,6 +348,7 @@ class Users extends MY_Controller {
             echo "message: ".$message;
             return true;
         }else{
+            //show_error($this->email->print_debugger());
             echo "เกิดความผิดพลาดในการส่งอีเมล์ยีนยันตนเอง";
             return false;
         }
@@ -361,6 +368,19 @@ class Users extends MY_Controller {
 
     // This function genrate CAPTCHA image and store in "image folder".
     public function captcha_setting($imgWidth=280){
+        $result = $this->createCaptcha(280);
+
+        return $result;
+    }
+
+    // For new image on click refresh button.
+    public function captcha_refresh($imgWidth=280){
+        $result = $this->createCaptcha(280);
+
+        echo $result;
+    }
+
+    private function createCaptcha($imgWidth=280) {
         $values = array(
             'word' => '',
             'word_length' => 5,
@@ -376,23 +396,6 @@ class Users extends MY_Controller {
 
         // image will store in "$data['image']" index and its send on view page
         return $data['image'];
-    }
-
-    // For new image on click refresh button.
-    public function captcha_refresh(){
-        $values = array(
-            'word' => '',
-            'word_length' => 8,
-            'img_path' => './assets/images/captcha/',
-            'img_url' =>  base_url() .'assets/images/captcha/',
-            'font_path'  => base_url() . 'system/fonts/texb.ttf',
-            'img_width' => '150',
-            'img_height' => 50,
-            'expiration' => 3600
-        );
-        $data = create_captcha($values);
-        $_SESSION['captchaWord'] = $data['word'];
-        echo $data['image'];
     }
     // End private function.
 }
