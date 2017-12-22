@@ -44,13 +44,11 @@ class UserAuthentication_m extends CI_Model {
             . " FROM " . $this->users_d->tableName
 
             . " WHERE " . $this->users_d->colStatus . "=1"
-            . " AND ((" . $this->users_d->colLevel . "<4  AND " .$this->users_d->colUserId . "='" . $this->userId . "')"
-            . " OR (" . $this->users_d->colLevel . "=4 AND " . $this->users_d->colEmail . "='" . $this->userId . "'))";
+            . " AND " . $this->users_d->colUserId . "='" . $this->userId . "'";
 
         // Execute sql.
         $this->load->model('db_m');
         $result = $this->db_m->GetRow($sqlStr);
-
 
         return $result;
     }

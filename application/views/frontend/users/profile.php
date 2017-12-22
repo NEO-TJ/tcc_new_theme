@@ -112,14 +112,14 @@
                     <hr style="margin-bottom: 10px;">
 
                     <form class="form-horizontal" method="POST" action="">
-                        <!-- Email -->
+                        <!-- UserId -->
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="col-md-12 ">
-                                    <label for="email" class=" control-label">อีเมล์</label>
-                                    <input id="email" type="email" class="form-control" name="Email" disabled
-                                    value="<?php echo !empty($user['Email'])?$user['Email']:''; ?>" required>
-                                    <?php echo form_error('email','<span class="help-block"><strong>','</strong></span>'); ?>
+                                    <label for="userId" class=" control-label">อีเมล์/รหัสผู้ใช้งาน</label>
+                                    <input id="userId" type="email" class="form-control" name="UserId" disabled
+                                    value="<?php echo !empty($user['UserId'])?$user['UserId']:''; ?>" required>
+                                    <?php echo form_error('userId','<span class="help-block"><strong>','</strong></span>'); ?>
                                 </div>
                             </div>
                         </div>

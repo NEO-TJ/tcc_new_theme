@@ -51,7 +51,7 @@
 		<span class="input-group-btn">
 			<button class="btn btn-primary disabled" type="button">อีเมล์ : </button>
 		</span>
-		<input type="text" class="form-control" autocomplete="off"
+		<input type="text" class="form-control input-require" autocomplete="off"
 			placeholder="Email@..." id="email" name="Email" value="<?php echo($dsInput['Email']); ?>">
 	</div>
 </div>

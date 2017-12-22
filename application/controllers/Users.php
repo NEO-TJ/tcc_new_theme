@@ -117,8 +117,9 @@ class Users extends MY_Controller {
 
             $this->load->model("dataclass/users_d");
             $userData = array(
-                $this->users_d->colEmail        => strip_tags($this->input->post('Email')),
+                $this->users_d->colUserId       => strip_tags($this->input->post('Email')),
                 $this->users_d->colPassword     => strip_tags($this->input->post('Password')),
+                $this->users_d->colEmail        => strip_tags($this->input->post('Email')),
                 $this->users_d->colFirstName    => strip_tags($this->input->post('First_Name')),
                 $this->users_d->colLastName     => strip_tags($this->input->post('Last_Name')),
                 $this->users_d->colGender       => $this->input->post('Gender'),
@@ -193,7 +194,7 @@ class Users extends MY_Controller {
 
             $this->load->model("dataclass/users_d");
             $userData = array(
-                $this->users_d->colEmail        => strip_tags($this->input->post('Email')),
+                $this->users_d->colUserId       => strip_tags($this->input->post('UserId')),
                 $this->users_d->colFirstName    => strip_tags($this->input->post('First_Name')),
                 $this->users_d->colLastName     => strip_tags($this->input->post('Last_Name')),
                 $this->users_d->colGender       => $this->input->post('Gender'),
@@ -203,7 +204,7 @@ class Users extends MY_Controller {
             if($this->form_validation->run() == true){
                 if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
                     $userData[$this->users_d->colPassword] = strip_tags($this->input->post('Password'));
-                    unset($userData[$this->users_d->colEmail]);
+                    unset($userData[$this->users_d->colUserId]);
 
                     $this->load->model("userAuthentication_m");
                     $result = $this->userAuthentication_m->Save($this->session->userdata['id'], $userData);
