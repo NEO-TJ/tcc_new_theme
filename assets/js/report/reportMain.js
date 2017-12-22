@@ -141,7 +141,7 @@ function renderChart(rDsData) {
             "dataFormat": "json",
             "dataSource": {
                 "chart": {
-                    "caption": "แผนภาพวงกลมชนิดของข้อมูลขยะทะเล 10 อันดับแรกในประเทศไทย",
+                    "caption": "แผนภาพวงกลมชนิดของข้อมูลขยะทะเลในประเทศไทย",
                     "subCaption": "",
                     "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
                     "bgColor": "#ffffff",
@@ -185,7 +185,7 @@ function renderChart(rDsData) {
             "dataFormat": "json",
             "dataSource": {
                 "chart": {
-                    "caption": "รายงานปริมาณขยะทะเล 10 อันดับในแต่ละสถานที่",
+                    "caption": "รายงานปริมาณขยะทะเลในแต่ละสถานที่",
                     "subCaption": "",
                     "xAxisName": "สถานที่",
                     "yAxisName": "จำนวน",

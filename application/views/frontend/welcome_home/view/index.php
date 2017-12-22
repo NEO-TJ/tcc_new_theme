@@ -163,11 +163,11 @@
 									<?php $iCount = count($dsMarineDebris10); ?>
 									<?php for($i=0; $i<$iCount; $i++) { ?>
 										<?php $row = $dsMarineDebris10[$i]; ?>
-										<?php $mdPercent = (($row['qty'] / $dsMarineDebrisTotal) * 100); ?>
+										<?php $mdPercent = (($row['value'] / $marineDebrisTotal) * 100); ?>
 										<tr>
 											<td><?php echo($i+1); ?></td>
-											<td><?php echo($row["Name"]) ?></td>
-											<td><span class="total-sc"><?php echo(number_format($row["qty"]) . " ชิ้น") ?></span></td>
+											<td><?php echo($row["label"]) ?></td>
+											<td><span class="total-sc"><?php echo(number_format($row["value"]) . " ชิ้น") ?></span></td>
 											<td>
 												<div class="progress progress-sm progress-half-rounded m-none mt-xs light">
 													<div class="progress-bar progress-bar-danger" 

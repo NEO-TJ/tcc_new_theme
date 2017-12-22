@@ -38,36 +38,10 @@ class welcome_homes extends MY_Controller {
 		}  
 
 		// Top ten marine debris.
-		// Calc total.
-		$sqls="select SUM(gt.Garbage_Qty) as qty"
-			. " from garbage_transaction gt"
-			. " left join garbage g on gt.FK_Garbage=g.id"
-			. " where gt.Active = 1";
-		$dsMarineDebrisTotal=$this->db->query($sqls);
-
-		if($dsMarineDebrisTotal->num_rows() == 0){
-			$data['dsMarineDebrisTotal'] = 1;
-			$dsMarineDebrisTotal = 1;
-		}else{
-			$dsTemp =$dsMarineDebrisTotal->result_array();
-			$data['dsMarineDebrisTotal'] = $dsTemp[0]["qty"];
-		}
-
-		// get top ten and percent.
-		$sqls="select g.Name, SUM(gt.Garbage_Qty) as qty"
-			. " from garbage_transaction gt"
-			. " left join garbage g on gt.FK_Garbage=g.id"
-			. " where gt.Active = 1"
-			. " group by gt.FK_Garbage"
-			. " order by qty desc"
-			. " limit 10";
-		$dsMarineDebris10=$this->db->query($sqls);
-
-		if($dsMarineDebris10->num_rows() == 0){
-			$data['dsMarineDebris10'] = array();
-		}else{
-			$data['dsMarineDebris10'] =$dsMarineDebris10->result_array();
-		}
+		$this->load->model("report_m");
+		$rData = $this->report_m->GetMarineDebrisTopTen();
+		$data['dsMarineDebris10'] = $rData['dsMarineDebrisTopTen'];
+		$data['marineDebrisTotal'] = $rData['marineDebrisTotal'];
 
 		// Set template
 		$this->data = $data;

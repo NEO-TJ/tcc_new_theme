@@ -30,6 +30,14 @@ class Report_m extends CI_Model {
 		return $result;
 	}
 
+	// ---------------------------------------------------------------------------------------- Get only marine debris top ten data.
+	public function GetMarineDebrisTopTen() {
+		$sqlStrWhere = $this->CreateSqlWhere();
+		$result["dsMarineDebrisTopTen"] = $this->GetMarineDebrisSinglePlace($sqlStrWhere, 10);
+		$result["marineDebrisTotal"] = $this->GetMarineDebrisTotal($sqlStrWhere);
+
+		return $result;
+	}
 	// ---------------------------------------------------------------------------------------- Get main report
 	public function GetOverviewReportData($strDateStart=null, $strDateEnd=null, $provinceCode=null, $amphurCode=null) {
 		$sqlStrWhere = $this->CreateSqlWhere($strDateStart, $strDateEnd, $provinceCode, $amphurCode);
@@ -267,6 +275,30 @@ class Report_m extends CI_Model {
 
     	return $result;
 	}
+
+	// ---------------------------------------------------------------------------------------- Get marine debris total.
+	private function GetMarineDebrisTotal($sqlStrWhere) {
+		$this->load->model('dataclass/iccCard_d');
+		$this->load->model('dataclass/garbageTransaction_d');
+		$this->load->model('dataclass/garbage_d');
+
+		// Create sql string.
+		$sqlStr = "SELECT SUM(gt." . $this->garbageTransaction_d->colGarbageQty . ") AS total"
+				. " FROM " . $this->garbageTransaction_d->tableName . " AS gt"
+
+				. " LEFT JOIN " . $this->iccCard_d->tableName . " AS c"
+				. " ON gt." . $this->garbageTransaction_d->colFkIccCard
+				. "=c." . $this->iccCard_d->colId
+				
+				. $sqlStrWhere;
+
+		// Execute sql.
+		$this->load->model('db_m');
+		$result = $this->db_m->GetRow($sqlStr);
+		$total = ((count($result) > 0) ? $result[0]['total'] : 1);
+
+		return $total;
+	}
 	// ________________________________________________________________________________________ EndGet data for report.
 // End Public function.
 
@@ -284,8 +316,9 @@ class Report_m extends CI_Model {
 			. " AND gt." . $this->garbageTransaction_d->colActive . "=1"
 			. (($provinceCode!==NULL) ? " AND c." . $this->iccCard_d->colFkProvinceCode . "=" . $provinceCode : NULL )
 			. (($iccCardId!==NULL) ? " AND c." . $this->iccCard_d->colId . "=" . $iccCardId : NULL )
-			. " AND c." . $this->iccCard_d->colEventDate
-			. " BETWEEN '" . $strDateStart . "%' AND '" . $strDateEnd . "%'";
+			. ((($strDateStart!==NULL) && ($strDateEnd!==NULL)) ?
+			" AND c." . $this->iccCard_d->colEventDate
+			. " BETWEEN '" . $strDateStart . "%' AND '" . $strDateEnd . "%'" : NULL);
 
 		return $sqlWhere;
 	}
