@@ -132,16 +132,25 @@ function renderChart(rDsData) {
     let rDataChart = PrepareDataToChart(rDsData.dsMarineDebrisGroupingPlace
                                     , rDsData.placeCount, rDsData.rankingLimit);
 
+    let chartType = $("input[name='chartType']:checked").val();
+    let chartTypeJSName, chartCaption;
+    if(chartType == 1) {
+        chartTypeJSName = "pie3d";
+        chartCaption = "แผนภาพวงกลม";
+    } else {
+        chartTypeJSName = "line";
+        chartCaption = "กราฟเส้น";
+    }
     FusionCharts.ready(function () {
         var marineDebrisSinglePlaceChart = new FusionCharts({
-            "type": "pie3d",
+            "type": chartTypeJSName,
             "renderAt": "marineDebrisSinglePlaceChart",
             "width": "100%",
             "height": "450",
             "dataFormat": "json",
             "dataSource": {
                 "chart": {
-                    "caption": "แผนภาพวงกลมชนิดของข้อมูลขยะทะเลในประเทศไทย",
+                    "caption": chartCaption + " ข้อมูลปริมาณขยะทะเลในประเทศไทย",
                     "subCaption": "",
                     "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
                     "bgColor": "#ffffff",
@@ -185,7 +194,7 @@ function renderChart(rDsData) {
             "dataFormat": "json",
             "dataSource": {
                 "chart": {
-                    "caption": "รายงานปริมาณขยะทะเลในแต่ละสถานที่",
+                    "caption": "รายงานแผนภูมิแท่ง เปรียบเทียบชนิดและปริมาณขยะทะเลในแต่ละสถานที่",
                     "subCaption": "",
                     "xAxisName": "สถานที่",
                     "yAxisName": "จำนวน",

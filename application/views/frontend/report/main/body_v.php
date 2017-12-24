@@ -89,7 +89,14 @@
 													<div class="panel-heading">
 														<h4 class="panel-title">
 															<div id="panelHeaderCaption">
-																แผนภาพวงกลม แสดงชนิดและปริมาณขยะทะเลตามสถานที่
+																<label class="radio-inline">
+																	<input type="radio" checked id="chartPie3" name="chartType" value="1">
+																	แผนภาพวงกลม
+																</label>
+																<label class="radio-inline">
+																	<input type="radio" id="chartLine" name="chartType" value="2">
+																	กราฟเส้น
+																</label>
 															</div>
 														</h4>
 													</div>
@@ -152,7 +159,7 @@
 															data-parent="#collapseMarineDebrisSinglePlaceReportParent" 
 															href="#collapseMarineDebrisSinglePlaceReport">
 																<div id="panelHeaderCaption">
-																	<u class="u-caption">ตารางแสดงชนิดและปริมาณขยะทะเลตามสถานที่</u>
+																	<u class="u-caption">ตาราง แสดงข้อมูลปริมาณขยะทะเลในประเทศไทย</u>
 																</div>
 															</a>
 														</h4>
@@ -206,7 +213,7 @@
 															data-parent="#collapseMarineDebrisPlaceCompareReportParent" 
 															href="#collapseMarineDebrisPlaceCompareReport">
 																<div id="panelHeaderCaption">
-																	<u class="u-caption">ตารางเปรียบเทียบชนิดและปริมาณขยะทะเลในแต่ละสถานที่</u>
+																	<u class="u-caption">ตาราง เปรียบเทียบชนิดและปริมาณขยะทะเลในแต่ละสถานที่</u>
 																</div>
 															</a>
 														</h4>
