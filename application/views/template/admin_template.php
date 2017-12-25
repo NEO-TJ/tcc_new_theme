@@ -1,6 +1,17 @@
 <!doctype html>
 <html class="fixed sidebar-left-xs <?php if($this->uri->segment(1)=="iccCard"){ echo 'sidebar-left-collapsed'; }?>">
     <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111602628-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-111602628-1');
+        </script>
+        <!-- End Global site tag (gtag.js) - Google Analytics -->
+
         <!-- Basic -->
         <meta charset="UTF-8">
         <title>Admin</title>
