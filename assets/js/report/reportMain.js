@@ -150,6 +150,12 @@ function renderChart(rDsData) {
             "dataFormat": "json",
             "dataSource": {
                 "chart": {
+                    "exportEnabled": "1",
+                    "exportFileName": "marinDebris_" + chartTypeJSName + "Chart",
+                    "exportFormats": "PNG=Export As PNG|"
+                                    + "JPG=Export As JPG|"
+                                    + "PDF=Export As PDF|"
+                                    + "SVG=Export As SVG|",
                     "caption": chartCaption + " ข้อมูลปริมาณขยะทะเลในประเทศไทย",
                     "subCaption": "",
                     "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
@@ -180,20 +186,26 @@ function renderChart(rDsData) {
                     "legendShadow": "0",
                     "legendItemFontSize": "10",
                     "legendItemFontColor": "#666666",
-                    "useDataPlotColorForLabels": "1"
+                    "useDataPlotColorForLabels": "1",
                 },
                 "data": rDsData.dsMarineDebrisSinglePlace
             }
         }).render();
 
         var marineDebrisGroupingPlaceChart = new FusionCharts({
-            "type": "scrollstackedcolumn2d", //"stackedcolumn3d",
+            "type": "stackedcolumn3d",
             "renderAt": "marineDebrisPlaceGroupChart",
             "width": "100%",
             "height": "650",
             "dataFormat": "json",
             "dataSource": {
                 "chart": {
+                    "exportEnabled": "1",
+                    "exportFileName": "marinDebris_columnChart",
+                    "exportFormats": "PNG=Export As PNG|"
+                                    + "JPG=Export As JPG|"
+                                    + "PDF=Export As PDF|"
+                                    + "SVG=Export As SVG|",
                     "caption": "รายงานแผนภูมิแท่ง เปรียบเทียบชนิดและปริมาณขยะทะเลในแต่ละสถานที่",
                     "subCaption": "",
                     "xAxisName": "สถานที่",
