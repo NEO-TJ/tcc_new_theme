@@ -25,13 +25,13 @@ function ChangeDaterange(picker) {
 
     // Filter with daterange by ajax.
     $.ajax({
-        url: baseUrl + 'iccCard/ajaxGetPlaceByDaterange',
+        url: baseUrl + 'ajaxService/ajaxGetPlaceByDaterange',
         type: 'post',
         data: data,
         dataType: 'json',
         beforeSend: function() {},
         error: function(xhr, textStatus) {
-            swal("Error", textStatus + xhr.responseText, "error");
+            swal("Error", textStatus, "error");
         },
         complete: function() {},
         success: function(result) {
@@ -59,13 +59,13 @@ function changeProvinceWithDateRange(e) {
 
     // Filter with province code by ajax.
     $.ajax({
-        url: baseUrl + 'iccCard/ajaxGetFullSubProvince',
+        url: baseUrl + 'ajaxService/ajaxGetFullSubProvince',
         type: 'post',
         data: data,
         dataType: 'json',
         beforeSend: function() {},
         error: function(xhr, textStatus) {
-            swal("Error", textStatus + xhr.responseText, "error");
+            swal("Error", textStatus, "error");
         },
         complete: function() {},
         success: function(result) {
@@ -82,13 +82,13 @@ function changeProvinceToAmphur(e) {
 
     // Filter with province code by ajax.
     $.ajax({
-        url: baseUrl + 'iccCard/ajaxGetAmphurByProvince',
+        url: baseUrl + 'ajaxService/ajaxGetFullSubProvince',
         type: 'post',
         data: data,
         dataType: 'json',
         beforeSend: function() {},
         error: function(xhr, textStatus) {
-            swal("Error", textStatus + xhr.responseText, "error");
+            swal("Error", textStatus, "error");
         },
         complete: function() {},
         success: function(result) {

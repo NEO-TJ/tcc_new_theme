@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -27,8 +27,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" media="all">
    
     <?php
+        $this->load->view('template/coreCSS_v');
         echo css_asset("customize/my-panel.css");
         echo css_asset("customize/my-daterange.css");
+        echo css_asset('customize/input-group.css');
+        if(isset($extendedCss)) echo $extendedCss;
         if($useCssTemplate) {
             $this->load->view('template/welcome_css');
         }
@@ -51,7 +54,8 @@
                 <!-- Branding Image  visible-sm visible-xs-->
                 <a class="navbar-brand" href="<?php echo base_url('/'); ?>">
                     <img style="margin-top:-25px;" src="<?php echo base_url('assets/images/logo/logo.png'); ?>" height="55" title="logo">
-                    <a href="<?php echo base_url('/'); ?>" style="font-size: 16px;" class="site-sm-title visible-sm visible-xs"> กรมทรัพยากรชายฝั่ง</a>
+                </a>
+                <a href="<?php echo base_url('/'); ?>" style="font-size: 16px;" class="site-sm-title visible-sm visible-xs"> กรมทรัพยากรชายฝั่ง
                     <span class="site-sm-description visible-sm visible-xs">ฐานข้อมูลขยะทะเล</span>
                 </a>
             </div>
@@ -237,12 +241,10 @@
         <script type="text/javascript" charset="UTF-8" src="http://maps.googleapis.com/maps-api-v3/api/js/31/0/intl/th_ALL/stats.js"></script>
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyClagICh6L2KDnt5-14byUhE-wBRnjiYeg&amp;sensor=false"></script>
         <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script>
-        <script type="text/javascript" src="<?php echo base_url('assets/js/plugin/jquery/jquery-ui.min.js');?>" ></script>
-        <script type="text/javascript" src="<?php echo base_url('assets/js/plugin/jquery/jquery.blockUI.js');?>" ></script>
-        <script type="text/javascript" src="<?php echo base_url('assets/js/customize/my.helper.js');?>" ></script>
         <script type="text/javascript" src="<?php echo base_url('assets/js/customize/my.mapData.js');?>" ></script>
     <?php endif; ?>
 
+<?php $this->load->view('template/coreJs_v');; ?>
 <?php if(isset($extendedJs)) echo $extendedJs; ?>
 </body>
 </html>

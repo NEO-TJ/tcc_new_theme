@@ -49,14 +49,16 @@
         <link rel="stylesheet" href="<?php echo base_url('./assets/admin/assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css'); ?>">
         <!-- Dropzone -->
         <link href="<?php echo base_url('./assets/admin/assets/upload_image/css/fileinput.css'); ?>" rel="stylesheet">
+        
         <!-- Plugin -->
-        <?php echo css_asset('plugin/sweetalert2/sweetalert2.min.css'); ?>
-        <!-- input group custom css -->
-        <?php echo css_asset('customize/input-group.css'); ?>
-        <!-- breadcrumb custom css -->
-        <?php echo css_asset('customize/breadcrumb.css'); ?>
-
-        <?php if(isset($extendedCss)) echo $extendedCss; ?>
+        <?php 
+            $this->load->view('template/coreCSS_v');
+            echo css_asset("customize/my-panel.css");
+            echo css_asset("customize/my-daterange.css");
+            echo css_asset('customize/input-group.css');
+            echo css_asset('customize/breadcrumb.css');
+            if(isset($extendedCss)) echo $extendedCss;
+        ?>
 
         <style type="text/css">
             .select2-container .select2-choice {

@@ -21,7 +21,6 @@ function initDaterange() {
             'Today': [moment(), moment()],
             'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
             'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
             'This Month': [moment().startOf('month'), moment().endOf('month')],
             'Last Month': [moment().subtract(1, 'month').startOf('month')
             , moment().subtract(1, 'month').endOf('month')],
@@ -39,6 +38,26 @@ function initDaterange() {
     cb(start, end);
 }
 
+
+// -------------------------------------------------------------------------------------------- Click Export table to csv
+$("a#marineDebrisSinglePlaceExport").click(function(e){
+    e.preventDefault();
+
+    $("table#marineDebrisSinglePlaceTable").table2excel({
+        exclude: ".noExl",                  // exclude CSS class
+        name: "MarinDebris Summary",
+        filename: "MarinDebris_Summary.xls" //do not include extension
+    });
+});
+$("a#marineDebrisGroupingPlaceExport").click(function(e){
+    e.preventDefault();
+
+    $("table#marineDebrisGroupingPlaceTable").table2excel({
+        exclude: ".noExl",                  // exclude CSS class
+        name: "MarinDebris ByPlace",
+        filename: "MarinDebris_ByPlace.xls" //do not include extension
+    });
+});
 // ____________________________________________________________________________________________ Force AJAX.
 // -------------------------------------------------------------------------------------------- Click Render main report
 $('button#genReport').on('click', function(e) { filterThenRenderMainReport(); });
@@ -74,7 +93,7 @@ function filterThenRenderMainReport() {
         dataType: 'json',
         beforeSend: function(){},
         error: function(xhr, textStatus){
-            swal("Error", textStatus + xhr.responseText, "error");
+            swal("Error", textStatus, "error");
         },
         complete: function(){},
         success: function(result) {
@@ -196,7 +215,7 @@ function renderChart(rDsData) {
             "type": "stackedcolumn3d",
             "renderAt": "marineDebrisPlaceGroupChart",
             "width": "100%",
-            "height": "650",
+            "height": "1200",
             "dataFormat": "json",
             "dataSource": {
                 "chart": {

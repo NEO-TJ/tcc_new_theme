@@ -7,7 +7,7 @@ $("a#captchaRefresh").click(function() {
         type: "post",
         beforeSend: function() {},
         error: function(xhr, textStatus) {
-            swal("Error", textStatus + xhr.responseText, "error");
+            swal("Error", textStatus, "error");
         },
         complete: function() {},
         success: function(result) {

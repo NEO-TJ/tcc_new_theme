@@ -92,7 +92,7 @@
 					<div class="panel-actions">
 						<a href="#"  class="panel-action panel-action-toggle" data-panel-toggle></a>
 					</div>
-						<h2 class="panel-title">อัลบัมภาพกิจกรรม </h2>
+					<h2 class="panel-title">อัลบัมภาพกิจกรรม </h2>
 				</header>
 
 				<div class="panel-body">

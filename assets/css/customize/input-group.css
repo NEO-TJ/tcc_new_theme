@@ -6,3 +6,9 @@
 	border: 1px solid #ccc;
 	cursor:default
 }
+
+.margin-input {
+	margin-top: 4px;
+	margin-bottom: 4px;
+	text-align: left;
+}

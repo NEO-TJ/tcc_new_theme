@@ -148,47 +148,6 @@ class IccCard extends MY_Controller {
 		$result = (($result) ? 0 : 1);
 		echo $result;
 	}
-
-	// ---------------------------------------------------------------------------------------- Get data to ComboBox 
-	public function ajaxGetPlaceByDaterange() {
-		if(!($this->is_logged())) {exit(0);}
-
-    	if ($this->input->server('REQUEST_METHOD') === 'POST') {
-				$strDateStart = $this->input->post('strDateStart');
-    		$strDateEnd = $this->input->post('strDateEnd');
-
-				$this->load->model("iccCard_m");
-				$dsData = $this->iccCard_m->GetPlaceByDaterange($strDateStart, $strDateEnd);
-
-				echo json_encode($dsData);
-    	}
-	}
-	public function ajaxGetFullSubProvince() {
-		if(!($this->is_logged())) {exit(0);}
-
-    	if ($this->input->server('REQUEST_METHOD') === 'POST') {
-				$strDateStart = $this->input->post('strDateStart');
-    		$strDateEnd = $this->input->post('strDateEnd');
-    		$provinceCode = $this->input->post('provinceCode');
-
-				$this->load->model("iccCard_m");
-				$dsData = $this->iccCard_m->GetFullSubProvince($strDateStart, $strDateEnd, $provinceCode);
-
-				echo json_encode($dsData);
-    	}
-	}
-	public function ajaxGetAmphurByProvince() {
-		if(!($this->is_logged())) {exit(0);}
-
-    	if ($this->input->server('REQUEST_METHOD') === 'POST') {
-    		$provinceCode = $this->input->post('provinceCode');
-
-				$this->load->model("iccCard_m");
-				$dsData = $this->iccCard_m->GetOnlyAmphurSubProvince($provinceCode);
-
-				echo json_encode($dsData);
-    	}
-	}
 // End AJAX function.
 
 

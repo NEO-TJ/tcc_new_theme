@@ -20,7 +20,6 @@ function initDaterange() {
             'Today': [moment(), moment()],
             'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
             'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
             'This Month': [moment().startOf('month'), moment().endOf('month')],
             'Last Month': [moment().subtract(1, 'month').startOf('month')
             , moment().subtract(1, 'month').endOf('month')],
@@ -125,7 +124,7 @@ function filterThenRenderIccCardList(pageCode) {
         dataType: 'json',
         beforeSend: function() {},
         error: function(xhr, textStatus) {
-            swal("Error", textStatus + xhr.responseText, "error");
+            swal("Error", textStatus, "error");
         },
         complete: function() {},
         success: function(rDataResult) {

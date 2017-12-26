@@ -158,9 +158,11 @@
 															<a data-toggle="collapse" 
 															data-parent="#collapseMarineDebrisSinglePlaceReportParent" 
 															href="#collapseMarineDebrisSinglePlaceReport">
-																<div id="panelHeaderCaption">
-																	<u class="u-caption">ตาราง แสดงข้อมูลปริมาณขยะทะเลในประเทศไทย</u>
-																</div>
+																<u class="u-caption">ตาราง แสดงข้อมูลปริมาณขยะทะเลในประเทศไทย</u>
+															</a>
+															 : 
+															<a href="#" id="marineDebrisSinglePlaceExport">
+																<u class="u-export">Export</u>
 															</a>
 														</h4>
 													</div>
@@ -212,9 +214,11 @@
 															<a data-toggle="collapse" 
 															data-parent="#collapseMarineDebrisPlaceCompareReportParent" 
 															href="#collapseMarineDebrisPlaceCompareReport">
-																<div id="panelHeaderCaption">
-																	<u class="u-caption">ตาราง เปรียบเทียบชนิดและปริมาณขยะทะเลในแต่ละสถานที่</u>
-																</div>
+																<u class="u-caption">ตาราง เปรียบเทียบชนิดและปริมาณขยะทะเลในแต่ละสถานที่</u>
+															</a>
+															: 
+															<a href="#" id="marineDebrisGroupingPlaceExport">
+																<u class="u-export">Export</u>
 															</a>
 														</h4>
 													</div>

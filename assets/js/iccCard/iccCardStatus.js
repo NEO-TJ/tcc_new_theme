@@ -115,7 +115,7 @@ function deleteFullIccCard(iccCardId) {
             });
         },
         error: function(xhr, textStatus) {
-            swal("Error", textStatus + xhr.responseText, "error");
+            swal("Error", textStatus, "error");
         },
         complete: function() {},
         success: function(result) {
@@ -160,7 +160,7 @@ function approveIccCardStatus(iccCardId) {
             });
         },
         error: function(xhr, textStatus) {
-            swal("Error", textStatus + xhr.responseText, "error");
+            swal("Error", textStatus, "error");
         },
         complete: function() {},
         success: function(result) {
@@ -205,7 +205,7 @@ function doneIccCardStatus(iccCardId) {
             });
         },
         error: function(xhr, textStatus) {
-            swal("Error", textStatus + xhr.responseText, "error");
+            swal("Error", textStatus, "error");
         },
         complete: function() {},
         success: function(result) {
