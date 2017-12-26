@@ -183,6 +183,12 @@ class CI_Pagination {
 			$this->cur_page = $base_page;
 		}
 
+///////////////////////////////////////////////////////////////////////////// Koravit.
+	if($this->setCurPage >= 0) {
+		$this->cur_page = $this->setCurPage;
+	}
+///////////////////////////////////////////////////////////////////////////// Koravit.
+
 // Is the page number beyond the result range?
 		// If so we show the last page
 		if ($this->use_page_numbers)

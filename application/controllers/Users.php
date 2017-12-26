@@ -387,16 +387,16 @@ class Users extends MY_Controller {
             'word_length' => 5,
             'img_path' => './assets/images/captcha/',
             'img_url' =>  base_url() .'assets/images/captcha/',
-            'font_path'  => base_url() . 'system/fonts/texb.ttf',
+            'font_path'  => FCPATH . 'assets/fonts/VERDANA.TTF',
             'img_width' => $imgWidth,
             'img_height' => 50,
-            'expiration' => 3600
+            'expiration' => 7200
         );
-        $data = create_captcha($values);
-        $_SESSION['captchaWord'] = $data['word'];
+        $rCaptcha = create_captcha($values);
+        $_SESSION['captchaWord'] = $rCaptcha['word'];
 
-        // image will store in "$data['image']" index and its send on view page
-        return $data['image'];
+        // image will store in "$rCaptcha['image']" index and its send on view page
+        return $rCaptcha['image'];
     }
     // End private function.
 }
