@@ -84,7 +84,7 @@ class Users extends MY_Controller {
 
         // Load the view.
         $this->data = $data;
-		$this->body = 'frontend/users/login';
+		$this->body = 'frontend/users/login_v';
         $this->extendedJs = 'frontend/users/extendedJs_v';
 		$this->renderWithTemplate();
     }
@@ -132,10 +132,11 @@ class Users extends MY_Controller {
                 if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
                     $this->load->model("userAuthentication_m");
                     $result = $this->userAuthentication_m->Save(null, $userData);
+
                     if($result) {
-                        $this->session->set_userdata('success_msg', 'คุณทำการลงทะเบียน สำเร็จเรียบร้อยแล้ว กรุณา login เข้าสู่ระบบ.');
-                        redirect('users/login');
-                        /*
+                        //$this->session->set_userdata('success_msg', 'คุณทำการลงทะเบียน สำเร็จเรียบร้อยแล้ว กรุณา login เข้าสู่ระบบ.');
+                        //redirect('users/login');
+var_dump($result . "<br>" . $this->input->post('Email'));
                         if($this->sendEmail($this->input->post('Email'))){
                             $this->session->set_userdata('success_msg'
                                 , 'ระบบได้ทำการลงทะเบียนสมาชิกใหม่เรียบร้อยแล้ว<br>'
@@ -144,11 +145,13 @@ class Users extends MY_Controller {
                                 . 'ขอบคุณคะ');
                             redirect('users/login');
                         } else {
+                            $this->session->set_userdata('error_msg', 'ระบบส่ง Email ผิดพลาด<br>'
+                                . 'กรุณาลองใหม่อีกครั้ง ขอบคุณครับ');
                         }
-                        */
                     }else{
                         $data['error_msg'] = 'มีบางอย่างผิดพลาด โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
                     }
+
                 } else {
                     $data['error_msg'] = 'รหัส captcha ไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
                 }
@@ -161,7 +164,7 @@ class Users extends MY_Controller {
 
         // Load the view.
 		$this->data = $data;
-        $this->body = 'frontend/users/registration';
+        $this->body = 'frontend/users/registration_v';
         $this->extendedJs = 'frontend/users/extendedJs_v';
 		$this->renderWithTemplate();
     }
@@ -232,7 +235,7 @@ class Users extends MY_Controller {
 
         // Load the view.
         $this->data = $data;
-        $this->body = 'frontend/users/profile';
+        $this->body = 'frontend/users/profile_v';
         $this->extendedJs = 'frontend/users/extendedJs_v';
 		$this->renderWithTemplate();
     }
@@ -313,6 +316,8 @@ class Users extends MY_Controller {
 
     // ----------------------------------------------------------- Send confirm mail
     private function sendEmail($receiver){
+        $result = false;
+
         $from = "dmcrtccmaster@gmail.com";    //senders email address
         $subject = 'ยืนยันการลงทะเบียน สมาชิก thaicoastalcleanup';  //email subject
         
@@ -347,12 +352,14 @@ class Users extends MY_Controller {
             echo "from: ".$from. "<br>";
             echo "protocol: ". $config['protocol']."<br>";
             echo "message: ".$message;
-            return true;
+            $result = true;
         }else{
             //show_error($this->email->print_debugger());
             echo "เกิดความผิดพลาดในการส่งอีเมล์ยีนยันตนเอง";
-            return false;
+            $result = false;
         }
+var_dump($result);
+        return $result;
     }
     
     private function confirmEmail($hashcode){
