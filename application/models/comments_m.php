@@ -70,7 +70,13 @@ class Comments_m extends CI_Model {
 		$this->load->model('db_m');
 		$this->db_m->tableName = $this->comments_d->tableName;
 
-		$result = (($this->db_m->UpdateRow($commentsId, $dsComments)) ? 1 : 0);
+		$specialData = array(
+			array(
+				"key"		=> $this->comments_d->colModified,
+				"value"	=> "NOW()"
+			)
+		);
+		$result = (($this->db_m->UpdateRow($commentsId, $dsComments, null, $specialData)) ? 1 : 0);
 
 		return $result;
 	}

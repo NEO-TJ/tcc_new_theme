@@ -18,7 +18,6 @@ class Db_m extends CI_Model {
 // End Property.
 
 
-
 // Transaction.
 	public function TransBegin() {
 		return $this->db->trans_begin();
@@ -87,8 +86,6 @@ class Db_m extends CI_Model {
 		return $result;
   }
 // End Find.
-
-
 
 
 
@@ -183,18 +180,26 @@ class Db_m extends CI_Model {
 	}
 
 	// ________________________________________________________ Update ______________________________________________
-	public function UpdateRow($id, $data, $rWhere=null) {
+	public function UpdateRow($id, $data, $rWhere=null, $specialData=null) {
 		// Check custom duplication.
 		if($this->rChkDuplication != null) { if( $this->db_m->Find($this->rChkDuplication) ) { return false; } }
-		// End Check custom duplication.
 
+		// Check Other where.
 		if(isset($rWhere)) {
 			$this->db->where($rWhere);
 		} else {
 			$this->db->where($this->colId, $id);
 		}
+		// Check special data.
+		if(isset($specialData)) {
+			for($i=0; $i<count($specialData); $i++) {
+				$this->db->set($specialData[$i]['key'], $specialData[$i]['value'], FALSE);
+			}
+		}
+
+		// Execute update command.
 		$this->db->update($this->tableName, $data);
-		
+
 		$report = array();
 		$report['error'] = $this->db->_error_number();
 		$report['message'] = $this->db->_error_message();
@@ -285,8 +290,6 @@ class Db_m extends CI_Model {
 		return $result;
 	}
 // End CRUD with table name.
-
-
 
 
 

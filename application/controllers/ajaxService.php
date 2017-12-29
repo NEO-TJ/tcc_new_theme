@@ -92,6 +92,7 @@ class AjaxService extends MY_Controller {
 				$dsComments = $this->input->post('dsComments');
 
 				// Prepare data before save to database.
+				$this->load->model("dataclass/comments_d");
 				$dsComments = $this->prepareDataBeforeSave($dsComments);
 
 				// Update to database.
