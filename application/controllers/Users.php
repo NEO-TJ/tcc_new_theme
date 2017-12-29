@@ -134,10 +134,10 @@ class Users extends MY_Controller {
                     $result = $this->userAuthentication_m->Save(null, $userData);
 
                     if($result) {
-                        //$this->session->set_userdata('success_msg', 'คุณทำการลงทะเบียน สำเร็จเรียบร้อยแล้ว กรุณา login เข้าสู่ระบบ.');
-                        //redirect('users/login');
-var_dump($result . "<br>" . $this->input->post('Email'));
-                        if($this->sendEmail($this->input->post('Email'))){
+                        $this->session->set_userdata('success_msg', 'คุณทำการลงทะเบียน สำเร็จเรียบร้อยแล้ว กรุณา login เข้าสู่ระบบ.');
+                        redirect('users/login');
+//var_dump($result . "<br>" . $this->input->post('Email'));
+/*                        if($this->sendEmail($this->input->post('Email'))){
                             $this->session->set_userdata('success_msg'
                                 , 'ระบบได้ทำการลงทะเบียนสมาชิกใหม่เรียบร้อยแล้ว<br>'
                                 . 'ทางเราได้จัดส่งอีเมล์ยีนยันการสมัครไปที่อีเมล์ที่คุณลงทะเบียนไว้<br>'
@@ -148,7 +148,7 @@ var_dump($result . "<br>" . $this->input->post('Email'));
                             $this->session->set_userdata('error_msg', 'ระบบส่ง Email ผิดพลาด<br>'
                                 . 'กรุณาลองใหม่อีกครั้ง ขอบคุณครับ');
                         }
-                    }else{
+*/                    }else{
                         $data['error_msg'] = 'มีบางอย่างผิดพลาด โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
                     }
 
@@ -358,7 +358,7 @@ var_dump($result . "<br>" . $this->input->post('Email'));
             echo "เกิดความผิดพลาดในการส่งอีเมล์ยีนยันตนเอง";
             $result = false;
         }
-var_dump($result);
+//var_dump($result);
         return $result;
     }
     

@@ -1,4 +1,5 @@
 <?php echo my_css_asset("plugins/prettyPhoto/css/prettyPhoto.css") ?>
+<input type='hidden' id='iccCardId' value='<?php echo($dsIccCard[0]["id"]); ?>' />
 <!-- Body content -->
 	<div class="container">
 		<div class="row">
@@ -44,6 +45,9 @@
 						<!-- End Gallery Image -->
 						</div>
 					<!-- End Panel Body -->
+
+						<br><b><hr>
+						<div id="comments-container"></div>
 					</div>
 				</div>
 			</div>
