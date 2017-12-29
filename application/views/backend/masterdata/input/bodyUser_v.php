@@ -63,8 +63,8 @@
 			<button class="btn btn-primary disabled" type="button">เพศ : </button>
 		</span>
 		<select class="form-control" id="gender" name="Gender">
-			<option value=1<?php echo(($dsInput['Gender'] == 1) ? ' selected' : ''); ?>>Male</option>
-			<option value=2<?php echo(($dsInput['Gender'] == 2) ? ' selected' : ''); ?>>Female</option>
+			<option value=1<?php echo(($dsInput['Gender'] == 1) ? ' selected' : ''); ?>>ชาย</option>
+			<option value=2<?php echo(($dsInput['Gender'] == 2) ? ' selected' : ''); ?>>หญิง</option>
 		</select>
 	</div>
 </div>

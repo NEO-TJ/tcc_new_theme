@@ -32,7 +32,7 @@ class MasterdataUser_m extends CI_Model {
 			. ", u." . $this->users_d->colLastName . " as นามสกุล"
 
 			. ", CASE WHEN u." . $this->users_d->colGender
-			. "=1 THEN 'Male' ELSE 'Female' END as เพศ"
+			. "=1 THEN 'ชาย' ELSE 'หญิง' END as เพศ"
 
 			. ", CASE WHEN u." . $this->users_d->colLevel . "=1 THEN 'ผู้ดูแลระบบ'"
 			. " WHEN u." . $this->users_d->colLevel . "=2 THEN 'ชำนาญการ'"
