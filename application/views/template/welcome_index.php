@@ -30,6 +30,7 @@
         $this->load->view('template/coreCSS_v');
         echo css_asset("customize/my-panel.css");
         echo css_asset("customize/my-daterange.css");
+        echo css_asset("customize/my-anchor.css");
         echo css_asset('customize/input-group.css');
         if(isset($extendedCss)) echo $extendedCss;
         if($useCssTemplate) {
@@ -157,8 +158,15 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8" style="border-top: 1px solid rgba(255,255,255,.06); margin-top:25px;">
-                            <p class="copyright small" style="padding-top: 15px; color: #ccc; margin: 0 0 1px;">เว็บไซต์ กรมทรัพยากรทางทะเลและชายฝั่ง แสดงผลได้ดีกับบราวเซอร์  <img src="https://www.learnsbuy.com/assets/image/chrome-512.png" style="margin-left:10px;height:25px;"> <img src="https://www.learnsbuy.com/assets/image/appicns_Firefox.png" style="height:25px;"> <img src="https://www.learnsbuy.com/assets/image/500px-Internet_Explorer_4_and_5_logo.svg.png" style="height:25px;"> <img src="https://www.learnsbuy.com/assets/image/safari_PNG28.png" style="height:25px;margin-right:10px;">  เวอร์ชั่นล่าสุด</p>
-                            <p class="copyright small" style="padding: 3px 0; color: #ccc;font-size: 13px;">สงวนลิขสิทธิ์ © พ.ศ.๒๕๕๖ กรมทรัพยากรทางทะเลและชายฝั่ง</p>
+                            <p class="copyright small" style="padding-top: 15px; color: #ccc; margin: 0 0 1px;">เว็บไซต์ กรมทรัพยากรทางทะเลและชายฝั่ง แสดงผลได้ดีกับบราวเซอร์  
+                                <img src="https://www.learnsbuy.com/assets/image/chrome-512.png" style="margin-left:10px;height:25px;"> 
+                                <img src="https://www.learnsbuy.com/assets/image/appicns_Firefox.png" style="height:25px;"> 
+                                <img src="https://www.learnsbuy.com/assets/image/500px-Internet_Explorer_4_and_5_logo.svg.png" style="height:25px;"> 
+                                <img src="https://www.learnsbuy.com/assets/image/safari_PNG28.png" style="height:25px;margin-right:10px;">  เวอร์ชั่นล่าสุด
+                            </p>
+                            <p class="copyright small" style="padding: 3px 0; color: #ccc;font-size: 13px;">สงวนลิขสิทธิ์ © พ.ศ.๒๕๕๖ กรมทรัพยากรทางทะเลและชายฝั่ง
+                                <u><a href="<?php echo base_url('sitemap'); ?>" id="sitemap" class="sitemap" style="color:#FFFFFF; margin-left:145px;">sitemap</a></u>
+                            </p>
                         </div>
                         <div>
                             

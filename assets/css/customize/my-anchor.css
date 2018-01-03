@@ -1,0 +1,10 @@
+a#sitemap:link, a#sitemap:visited {
+  color: white  !important;
+  text-align: center  !important;
+  text-decoration: underline  !important;
+  display: inline-block  !important;
+}
+a#sitemap:hover, a#sitemap:active {
+  text-decoration: none  !important;
+  color: lightgreen  !important;
+}
