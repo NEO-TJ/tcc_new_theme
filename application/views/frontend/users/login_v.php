@@ -102,7 +102,7 @@
 					<div class="col-md-12">
 						<h3 class="site-titles text-center" > สมาชิกเข้าสู่ระบบ </h3>
 					</div>
-
+<!--
 					<div class="form-group">
 						<div style="margin-bottom: 16px;">
 							<a href="redirect" class=" ui facebook fluid button">
@@ -112,7 +112,7 @@
 					</div>
 
 					<div><p class="t_mid">หรือ</p></div>
-
+-->
 					<form class="form-horizontal" action="" method="post">
 
 						<div class="form-group has-feedback">
