@@ -56,7 +56,8 @@
                 <a class="navbar-brand" href="<?php echo base_url('/'); ?>">
                     <img style="margin-top:-25px;" src="<?php echo base_url('assets/images/logo/logo.png'); ?>" height="55" title="logo">
                 </a>
-                <a href="<?php echo base_url('/'); ?>" style="font-size: 16px;" class="site-sm-title visible-sm visible-xs"> กรมทรัพยากรชายฝั่ง
+                <a href="<?php echo base_url('/'); ?>" style="font-size: 16px;" 
+                class="site-sm-title visible-sm visible-xs"> กรมทรัพยากรทางทะเลและชายฝั่ง
                     <span class="site-sm-description visible-sm visible-xs">ฐานข้อมูลขยะทะเล</span>
                 </a>
             </div>
@@ -64,7 +65,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav hidden-sm hidden-xs">
-                    <li><a href="<?php echo base_url('/'); ?>" class="site-title"> กรมทรัพยากรชายฝั่ง</a></li>
+                    <li><a href="<?php echo base_url('/'); ?>" class="site-title"> กรมทรัพยากรทางทะเลและชายฝั่ง</a></li>
                     <li class="li-site-description"><a href="<?php echo base_url('/'); ?>" class="site-description">
                      ฐานข้อมูลขยะทะเล</a></li>
                 </ul>
@@ -136,9 +137,9 @@
                             <p style="    font-size: 13px;">เลขที่ 120 หมู่ที่ 3 ชั้นที่ 5-9 อาคารรัฐประศาสนภักดี ศูนย์ราชการเฉลิมพระเกียรติ 
                             80 พรรษา 5 ธันวาคม 2550 ถนนแจ้งวัฒนะ แขวงทุ่งสองห้อง เขตหลักสี่ กรุงเทพมหานคร 10210</p>
                             <ul>
-                                <li><span>โทรศัพท์ :</span> (+66) 0 2141 1299-300 </li>
-                                <li><span>โทรสาร :</span> (+66) 0 2143 9242 </li>
-                                <li><span>อีเมล:</span> it@dmcr.mail.go.th </li>
+                                <!--<li><span>โทรศัพท์ :</span> (+66) 0 2141 1299-300 </li>-->
+                                <li><span>โทรสาร :</span> (+66) 0 2143 9263 </li>
+                                <!--<li><span>อีเมล:</span> it@dmcr.mail.go.th </li>-->
                             </ul>
                         </div>
                         <div class="col-md-3">
@@ -153,18 +154,26 @@
                         </div>
                         <div class="col-md-4">
                             <h4>ติดตามข่าวสาร<span class="head-line"></span></h4>
-                            <div class="fb-page" data-href="https://www.facebook.com/DMCRTH/" data-tabs="timeline" data-height="100" data-small-header="false" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/DMCRTH/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/DMCRTH/">กรมทรัพยากรทางทะเลและชายฝั่ง</a></blockquote></div>
+                            <div class="fb-page" data-href="https://www.facebook.com/DMCRTH/" 
+                            data-tabs="timeline" data-height="100" data-small-header="false" 
+                            data-adapt-container-width="false" data-hide-cover="false" 
+                            data-show-facepile="false">
+                                <blockquote cite="https://www.facebook.com/DMCRTH/" class="fb-xfbml-parse-ignore">
+                                    <a href="https://www.facebook.com/DMCRTH/">กรมทรัพยากรทางทะเลและชายฝั่ง</a>
+                                </blockquote>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-8" style="border-top: 1px solid rgba(255,255,255,.06); margin-top:25px;">
-                            <p class="copyright small" style="padding-top: 15px; color: #ccc; margin: 0 0 1px;">เว็บไซต์ กรมทรัพยากรทางทะเลและชายฝั่ง แสดงผลได้ดีกับบราวเซอร์  
+                            <p class="copyright small" style="padding-top: 15px; color: #ccc; margin: 0 0 1px;">
+                                เว็บไซต์ กรมทรัพยากรทางทะเลและชายฝั่ง แสดงผลได้ดีกับบราวเซอร์  
                                 <img src="https://www.learnsbuy.com/assets/image/chrome-512.png" style="margin-left:10px;height:25px;"> 
                                 <img src="https://www.learnsbuy.com/assets/image/appicns_Firefox.png" style="height:25px;"> 
                                 <img src="https://www.learnsbuy.com/assets/image/500px-Internet_Explorer_4_and_5_logo.svg.png" style="height:25px;"> 
                                 <img src="https://www.learnsbuy.com/assets/image/safari_PNG28.png" style="height:25px;margin-right:10px;">  เวอร์ชั่นล่าสุด
                             </p>
-                            <p class="copyright small" style="padding: 3px 0; color: #ccc;font-size: 13px;">สงวนลิขสิทธิ์ © พ.ศ.๒๕๕๖ กรมทรัพยากรทางทะเลและชายฝั่ง
+                            <p class="copyright small" style="padding: 3px 0; color: #ccc;font-size: 13px;">สงวนลิขสิทธิ์ © พ.ศ.2560 กรมทรัพยากรทางทะเลและชายฝั่ง
                                 <u><a href="<?php echo base_url('sitemap'); ?>" id="sitemap" class="sitemap" style="color:#FFFFFF; margin-left:145px;">sitemap</a></u>
                             </p>
                         </div>
