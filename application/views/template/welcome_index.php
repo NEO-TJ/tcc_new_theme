@@ -32,6 +32,7 @@
         echo css_asset("customize/my-daterange.css");
         echo css_asset("customize/my-anchor.css");
         echo css_asset('customize/input-group.css');
+        echo css_asset('customize/bootstrap.min.my.css');
         if(isset($extendedCss)) echo $extendedCss;
         if($useCssTemplate) {
             $this->load->view('template/welcome_css');

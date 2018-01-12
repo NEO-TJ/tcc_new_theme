@@ -57,6 +57,7 @@
             echo css_asset("customize/my-daterange.css");
             echo css_asset('customize/input-group.css');
             echo css_asset('customize/breadcrumb.css');
+            echo css_asset('customize/bootstrap.min.my.css');
             if(isset($extendedCss)) echo $extendedCss;
         ?>
 
