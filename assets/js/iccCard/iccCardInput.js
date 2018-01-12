@@ -6,7 +6,7 @@ $(document).ready(function() {
 
     initDaterange();
     initialPage();
-    initialGoogleMap();
+    //initialGoogleMap();
 });
 // -------------------------------------------------------------------------------------------- Init DatetimePicker.
 function initDaterange() {
