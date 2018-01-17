@@ -19,11 +19,13 @@
     <title>กรมทรัพยากรทางทะเลและชายฝั่ง</title>
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" 
+    integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" 
+    integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" media="all">
    
     <?php
@@ -74,7 +76,7 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right nav-custom-site">
                     <!-- Authentication Links -->
-                    <li><a class="go-related-website-link green" href="http://www.dmcr.go.th" target="_blank"> กลับสู่เว็บหลัก กช.</a></li>
+                    <li><a class="go-related-website-link green" href="http://www.dmcr.go.th" target="_blank"> กลับสู่เว็บหลัก ทช.</a></li>
                     <li><a class="go-related-website-link red" href="http://marinegiscenter.dmcr.go.th" target="_blank"> ระบบฐานข้อมูลกลาง</a></li>
                     <li><a href="<?php echo base_url('report'); ?>"> ข้อมูลขยะ</a></li>
                     <li class="dropdown">
