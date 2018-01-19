@@ -3,7 +3,7 @@
 class UserAuthentication_m extends CI_Model {
 // Public Property.
     public $id;
-    public $userId;
+    public $userName;
     public $password;
     public $fkIdEmployee;
     public $level;
@@ -22,7 +22,7 @@ class UserAuthentication_m extends CI_Model {
 
 
 // Public function.
-    // ---------------------------------------------------------------------------------------- Validate
+    // ---------------------------------------------------------------------------------------- Get profile
     public function GetProfile($id) {
         $this->load->model('dataclass/users_d');
 		$this->load->model('db_m');
@@ -35,20 +35,16 @@ class UserAuthentication_m extends CI_Model {
     }
 
     // ---------------------------------------------------------------------------------------- Validate
-    public function Validate() {
+    public function Validate($userName, $password) {
 		$this->load->model('dataclass/users_d');
 		$this->load->model('db_m');
 
-        // Create sql string.
-		$sqlStr = "SELECT *"
-            . " FROM " . $this->users_d->tableName
-
-            . " WHERE " . $this->users_d->colStatus . "=1"
-            . " AND " . $this->users_d->colUserId . "='" . $this->userId . "'";
-
-        // Execute sql.
-        $this->load->model('db_m');
-        $result = $this->db_m->GetRow($sqlStr);
+        $this->db_m->tableName = $this->users_d->tableName;
+        $rWhere = array(
+            $this->users_d->colUserId   => $userName,
+            $this->users_d->colPassword => $password
+        );
+        $result = $this->db_m->GetRowWhere($rWhere);
 
         return $result;
     }

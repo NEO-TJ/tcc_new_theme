@@ -1,9 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * User Management class created by CodexWorld
- */
 class Users extends MY_Controller {
-    
     function __construct() {
         parent::__construct();
         $this->load->helper('captcha');
@@ -12,9 +8,7 @@ class Users extends MY_Controller {
         session_start(); 
     }
     
-    /*
-     * User account information
-     */
+// Route method.
     public function account(){
         $data = array();
         if($this->session->userdata('isUserLoggedIn')){
@@ -25,153 +19,7 @@ class Users extends MY_Controller {
             redirect('users/login');
         }
     }
-    
-    /*
-     * User login
-     */
-    public function login(){
-        $data = array();
-        // flash data.
-        if($this->session->userdata('success_msg')){
-            $data['success_msg'] = $this->session->userdata('success_msg');
-            $this->session->unset_userdata('success_msg');
-        }
-        if($this->session->userdata('error_msg')){
-            $data['error_msg'] = $this->session->userdata('error_msg');
-            $this->session->unset_userdata('error_msg');
-        }
 
-        // Check submit post.
-        if($this->input->post('loginSubmit')){
-            $this->form_validation->set_rules('username', 'Username or Email', 'required');
-            $this->form_validation->set_rules('password', 'password', 'required');
-            if ($this->form_validation->run() == true) {
-                /*
-                    $con['returnType'] = 'single';
-                    $con['conditions'] = array(
-                        'name'=>$this->input->post('username'),
-                        'email'=>$this->input->post('username'), // For Where Or Statement
-                        'password' => md5($this->input->post('password')),
-                        'status' => '1'
-                    );
-                    $checkLogin = $this->user->getRows($con);
-                    //var_dump($checkLogin);
-                    if($checkLogin){
-                        $this->session->set_userdata('userdata', $checkLogin);
-                        $user_data = $this->session->userdata('userdata');
-                        $this->session->set_userdata('user_name',$user_data['name']);
-                        $this->session->set_userdata('isUserLoggedIn',TRUE);
-                        $this->session->set_userdata('userId',$checkLogin['id']);
-
-                        if($user_data['is_admin'] == 1){
-                            redirect('/dashboard');
-                        }else{
-                            redirect('/');
-                        }
-                */
-                if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
-                    $this->validate();
-                } else {
-                    $data['error_msg'] = 'รหัส captcha ไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
-                }
-            }else{
-                $data['error_msg'] = 'อีเมล์หรือรหัสผ่านไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
-            }
-        }
-
-        // Set data to view file.
-        $data['image'] = $this->captcha_setting();
-
-        // Load the view.
-        $this->data = $data;
-		$this->body = 'frontend/users/login_v';
-        $this->extendedJs = 'frontend/users/extendedJs_v';
-		$this->renderWithTemplate();
-    }
-    
-    /*
-     * User registration
-     */
-    public function registration(){
-        $data = array();
-        $userData = array();
-        // flash data.
-        if($this->session->userdata('success_msg')){
-            $data['success_msg'] = $this->session->userdata('success_msg');
-            $this->session->unset_userdata('success_msg');
-        }
-        if($this->session->userdata('error_msg')){
-            $data['error_msg'] = $this->session->userdata('error_msg');
-            $this->session->unset_userdata('error_msg');
-        }
-
-        // Check submit post.
-        if($this->input->post('regisSubmit')){
-            $this->form_validation->set_rules('First_Name', 'ชื่อ', 'required');
-            $this->form_validation->set_rules('Email', 'อีเมล์', 'required|valid_email|callback_email_check');
-            $this->form_validation->set_rules('Password', 'password', 'required');
-            $this->form_validation->set_rules('password_confirmation', 'confirm password', 'required|matches[Password]');
-
-            $this->form_validation->set_rules('Last_Name', 'นามสกุล', 'required');
-            $this->form_validation->set_rules('Age', 'อายุ', 'required');
-
-            $this->load->model("dataclass/users_d");
-            $userData = array(
-                $this->users_d->colUserId       => strip_tags($this->input->post('Email')),
-                $this->users_d->colPassword     => strip_tags($this->input->post('Password')),
-                $this->users_d->colEmail        => strip_tags($this->input->post('Email')),
-                $this->users_d->colFirstName    => strip_tags($this->input->post('First_Name')),
-                $this->users_d->colLastName     => strip_tags($this->input->post('Last_Name')),
-                $this->users_d->colGender       => $this->input->post('Gender'),
-                $this->users_d->colAge          => strip_tags($this->input->post('Age')),
-                $this->users_d->colLevel        => 4,
-                $this->users_d->colStatus       => 1,
-            );
-
-            if($this->form_validation->run() == true){
-                if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
-                    $this->load->model("userAuthentication_m");
-                    $result = $this->userAuthentication_m->Save(null, $userData);
-
-                    if($result) {
-                        $this->session->set_userdata('success_msg', 'คุณทำการลงทะเบียน สำเร็จเรียบร้อยแล้ว กรุณา login เข้าสู่ระบบ.');
-                        redirect('users/login');
-//var_dump($result . "<br>" . $this->input->post('Email'));
-/*                        if($this->sendEmail($this->input->post('Email'))){
-                            $this->session->set_userdata('success_msg'
-                                , 'ระบบได้ทำการลงทะเบียนสมาชิกใหม่เรียบร้อยแล้ว<br>'
-                                . 'ทางเราได้จัดส่งอีเมล์ยีนยันการสมัครไปที่อีเมล์ที่คุณลงทะเบียนไว้<br>'
-                                . 'กรุณายืนยันการสมัครจากอีเมล์ที่ทางเราส่งให้ เพื่อดำเนินการสมัครสมาชิกอย่างสมบูรณ์<br>'
-                                . 'ขอบคุณคะ');
-                            redirect('users/login');
-                        } else {
-                            $this->session->set_userdata('error_msg', 'ระบบส่ง Email ผิดพลาด<br>'
-                                . 'กรุณาลองใหม่อีกครั้ง ขอบคุณครับ');
-                        }
-*/                    }else{
-                        $data['error_msg'] = 'มีบางอย่างผิดพลาด โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
-                    }
-
-                } else {
-                    $data['error_msg'] = 'รหัส captcha ไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
-                }
-            }
-        }
-
-        // Set data to view file.
-        $data['image'] = $this->captcha_setting();
-        $data['user'] = $userData;
-
-        // Load the view.
-		$this->data = $data;
-        $this->body = 'frontend/users/registration_v';
-        $this->extendedJs = 'frontend/users/extendedJs_v';
-		$this->renderWithTemplate();
-    }
-
-    /*
-     * User edit profile
-     */
     public function profile(){
         if(!($this->is_logged())) {exit(0);}
         $data = array();
@@ -230,7 +78,7 @@ class Users extends MY_Controller {
         }
 
         // Set data to view file.
-        $data['image'] = $this->captcha_setting();
+        $data['image'] = $this->createCaptcha();
         $data['user'] = $userData;
 
         // Load the view.
@@ -239,156 +87,295 @@ class Users extends MY_Controller {
         $this->extendedJs = 'frontend/users/extendedJs_v';
 		$this->renderWithTemplate();
     }
+    
+    public function login(){
+        $data = array();
+        // flash data.
+        if($this->session->userdata('success_msg')){
+            $data['success_msg'] = $this->session->userdata('success_msg');
+            $this->session->unset_userdata('success_msg');
+        }
+        if($this->session->userdata('info_msg')){
+            $data['info_msg'] = $this->session->userdata('info_msg');
+            $this->session->unset_userdata('info_msg');
+        }
+        if($this->session->userdata('error_msg')){
+            $data['error_msg'] = $this->session->userdata('error_msg');
+            $this->session->unset_userdata('error_msg');
+        }
 
+        // Check submit post.
+        if($this->input->post('loginSubmit')){
+            $this->form_validation->set_rules('username', 'Username or Email', 'required');
+            $this->form_validation->set_rules('password', 'password', 'required');
+            if ($this->form_validation->run() == true) {
+                if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
+                    $data['error_msg'] = $this->userValidate(
+                        $this->input->post('username'), $this->input->post('password'));
+                } else {
+                    $data['error_msg'] = 'รหัส captcha ไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
+                }
+            }else{
+                $data['error_msg'] = 'อีเมล์หรือรหัสผ่านไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้ง';
+            }
+        }
 
-    /*
-     * User logout
-     */
+        // Set data to view file.
+        $data['image'] = $this->createCaptcha();
+
+        // Load the view.
+        $this->data = $data;
+		$this->body = 'frontend/users/login_v';
+        $this->extendedJs = 'frontend/users/extendedJs_v';
+		$this->renderWithTemplate();
+    }
+    
+    public function registration(){
+        $data = array();
+        $userData = array();
+
+        // flash data.
+        if($this->session->userdata('success_msg')){
+            $data['success_msg'] = $this->session->userdata('success_msg');
+            $this->session->unset_userdata('success_msg');
+        }
+        if($this->session->userdata('error_msg')){
+            $data['error_msg'] = $this->session->userdata('error_msg');
+            $this->session->unset_userdata('error_msg');
+        }
+
+        // Check submit post.
+        if($this->input->post('regisSubmit')){
+            $this->form_validation->set_rules('First_Name', 'ชื่อ', 'required');
+            $this->form_validation->set_rules('Email', 'อีเมล์', 'required|valid_email|callback_emailValidate');
+            $this->form_validation->set_rules('Password', 'password', 'required');
+            $this->form_validation->set_rules('password_confirmation', 'confirm password', 'required|matches[Password]');
+
+            $this->form_validation->set_rules('Last_Name', 'นามสกุล', 'required');
+            $this->form_validation->set_rules('Age', 'อายุ', 'required');
+
+            $this->load->model("dataclass/users_d");
+            $userData = array(
+                $this->users_d->colUserId       => strip_tags($this->input->post('Email')),
+                $this->users_d->colPassword     => strip_tags($this->input->post('Password')),
+                $this->users_d->colEmail        => strip_tags($this->input->post('Email')),
+                $this->users_d->colFirstName    => strip_tags($this->input->post('First_Name')),
+                $this->users_d->colLastName     => strip_tags($this->input->post('Last_Name')),
+                $this->users_d->colGender       => $this->input->post('Gender'),
+                $this->users_d->colAge          => strip_tags($this->input->post('Age')),
+                $this->users_d->colLevel        => 4,
+                $this->users_d->colStatus       => 2,
+            );
+
+            if($this->form_validation->run() == true){
+                if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
+                    $this->load->model("userAuthentication_m");
+                    $result = $this->userAuthentication_m->Save(null, $userData);
+
+                    if($result) {
+                        if($this->sendEmail($this->input->post('Email'))){
+                            $this->session->set_userdata('success_msg'
+                                , 'ระบบได้ทำการลงทะเบียนสมาชิกใหม่เรียบร้อยแล้ว<br>'
+                                . 'ทางเราได้จัดส่งอีเมล์ยีนยันการสมัครไปที่อีเมล์ที่คุณลงทะเบียนไว้<br>'
+                                . 'กรุณายืนยันการสมัครจากอีเมล์ที่ทางเราส่งให้ เพื่อดำเนินการสมัครสมาชิกอย่างสมบูรณ์<br>'
+                                . 'ขอบคุณคะ'
+                            );
+                            redirect('users/login');
+                        } else {
+                            $data['error_msg'] = 'ระบบส่ง Email ผิดพลาด<br>'
+                                . 'กรุณาลองใหม่อีกครั้งคะ';
+                        }
+                    }else{
+                        $data['error_msg'] = 'เกิดข้อผิดพลาดในการบันทึกข้อมูลเข้าสู่ระบบ โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้งคะ';
+                    }
+
+                } else {
+                    $data['error_msg'] = 'รหัส captcha ไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้งคะ';
+                }
+            }
+        }
+
+        // Set data to view file.
+        $data['image'] = $this->createCaptcha();
+        $data['user'] = $userData;
+
+        // Load the view.
+		$this->data = $data;
+        $this->body = 'frontend/users/registration_v';
+        $this->extendedJs = 'frontend/users/extendedJs_v';
+		$this->renderWithTemplate();
+    }
+    
+    public function confirmEmail($hashcode){
+        $this->load->model('userAuthentication_m');
+
+        // flash data.
+        if($this->userAuthentication_m->verifyEmail($hashcode)){
+            $this->session->set_userdata('success_msg'
+                , 'อีเมล์ของท่านได้รับการยืนยันในระบบเรียบร้อยแล้ว'
+                . 'ท่านสามารถ Login เข้าสู่ระบบได้'
+            );
+        }else{
+            $this->session->set_userdata('error_msg'
+                , 'ไม่สามารถยืนยันอีเมล์ในระบบได้'
+                . 'กรุณาตรวจสอบอีเมล์ของท่านและ คลิ๊กที่ลิ้งสำหรับยีนยันการลงทะเบียนอีกครั้ง'
+                . 'หรือทำการลงสมัครสมาชิกใหม่อีกครั้ง'
+            );
+        }
+
+        redirect('users/login');
+    }
+
     public function logout(){
         $this->session->unset_userdata('isUserLoggedIn');
         $this->session->unset_userdata('userId');
         $this->session->sess_destroy();
         redirect('/');
     }
-    
+// End Route method.
 
 
-    // Private function.
-    private function validate() {
+// AJAX method.
+    public function captchaRefresh($imgWidth=280){
+        $result = $this->generateCaptcha(280);
+
+        echo $result;
+    }
+// End AJAX method.
+
+// Private function.
+    // ---------- Validate User.
+    private function userValidate($userName, $password) {
 		$this->load->model('userAuthentication_m');
+        $result = '';
 		// get data from db
-        $this->userAuthentication_m->userId = $this->input->post('username');
-		$this->userAuthentication_m->password = $this->input->post('password');
-		$user = $this->userAuthentication_m->Validate();
+        //$this->userAuthentication_m->userName = $this->input->post('username');
+		//$this->userAuthentication_m->password = $this->input->post('password');
+        $dsUser = $this->userAuthentication_m->Validate($userName, $password);
+        $countUser = count($dsUser);
 
-		if(count($user) > 0) {
-            $data = array();
-			foreach ($user as $u) {
-				$data['id']		= $u['id'];
-				$data['userId']	= $u['UserId'];
-                $data['level']	= $u['Level'];
-                $data['isUserLoggedIn'] = TRUE;
-                $data['user_name'] = $u['First_Name'];
-			}
-			// set data to session
-			$this->session->set_userdata($data);
+		if($countUser == 1) {
+            $user = $dsUser[0];
+            if($user['Status'] == 0) {
+                $result = 'รหัสสมาชิกนี้ยังไม่ถูกเปิดให้ใช้งาน<br>'
+                . 'กรุณาติดต่อเจ้าหน้าที่ที่เกี่ยวข้อง';
+            } else if($user['Status'] == 1) {
+                $data = array(
+                    'id'                => $user['id'],
+                    'userId'            => $user['UserId'],
+                    'level'             => $user['Level'],
+                    'isUserLoggedIn'    => TRUE,
+                    'user_name'         => $user['First_Name'],
+                );
 
-			//check level user
-			switch ($data['level']) {
-				case '1':
-					// redirect page to backend page
-					redirect("/iccCard");
-					break;
-				case '2':
-					// redirect page to backend page
-					redirect("/iccCard");
-					break;
-				case '3':
-					// redirect page to backend page
-					redirect("/iccCard");
-					break;
-				default:
-					// redirect page to user page
-					redirect("/");
-					break;
-			}
+                // set data to session
+                $this->session->set_userdata($data);
+
+                //check level user
+                switch ($data['level']) {
+                    case '1':
+                        // redirect page to backend page
+                        redirect("/iccCard");
+                        break;
+                    case '2':
+                        // redirect page to backend page
+                        redirect("/iccCard");
+                        break;
+                    case '3':
+                        // redirect page to backend page
+                        redirect("/iccCard");
+                        break;
+                    default:
+                        // redirect page to user page
+                        redirect("/");
+                        break;
+                }
+            } else if($user['Status'] == 2) {
+                $result = 'รหัสสมาชิกนี้อยู่ในสถานะ รอการยืนยันตัวตน<br>'
+                . 'กรุณาตรวจสอบอีเมล์ที่ท่านลงทะเบียนใว้และทำการยืนยันตามข้อมูลที่แจ้งไว้ในอีเมล์ของท่าน';
+            } else if($user['Status'] == 3) {
+                $result = 'รหัสสมาชิกนี้อยู่ในสถานะถูกล๊อคจากระบบ<br>'
+                . 'กรุณาติดต่อเจ้าหน้าที่ที่เกี่ยวข้อง';
+            } else {
+                $result = 'เกิดข้อขัดข้องกับรหัสสมาชิกในระบบ<br>'
+                . 'กรุณาติดต่อเจ้าหน้าที่ที่เกี่ยวข้อง';
+            }
+        } else if($countUser > 1) {
+            $result = 'เกิดความซ้ำซ้อนของรหัสสมาชิกนี้ในระบบ<br>'
+                . 'กรุณาติดต่อเจ้าหน้าที่ที่เกี่ยวข้อง';
 		} else {
-            $data['error_msg'] = 'Wrong email or password, please try again.';
-            // redirect with session msessage
-			//$this->session->set_flashdata('msg',  'ข้อมูลไม่ถูกต้องกรุณาลองใหม่อีกครั้ง');
-			//header('Location: ../');
+            $result = 'อีเมล์ หรือ รหัสผ่านของท่านไม่ถูกต้อง<br>'
+                . 'โปรดตรวจสอบอีเมล์หรือรหัสผ่านของท่านและลองใหม่อีกครั้ง';
         }
+
+        return $result;
+    }
+    // ---------- End Validate User.
+
+    // ---------- Email management.
+    private function sendEmail($emailReceiver) {
+        $this->load->library('email');
+        $urlConfirmEmail = base_url('Users/confirmEmail') . '/';
+
+        $subject = 'ยืนยันการลงทะเบียน สมาชิกเวป thaicoastalcleanup';
+        $message = 'เรียน ท่านสมาชิก,<br><br> เพื่อความสมบูรณ์ในการสมัครสมาชิก โปรดคลิ๊กปุ่ม activation ด้านล่างนี้<br><br>'
+        . '<a href=' . $urlConfirmEmail
+        . md5($emailReceiver) . '>' . $urlConfirmEmail
+        . md5($emailReceiver) .'</a><br><br>ขอบคุณค่ะ';
+
+        // Get full html:
+        $body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"'
+        . ' "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset='
+            . strtolower(config_item('charset')) . '" />
+            <title>' . html_escape($subject) . '</title>
+            <style type="text/css">
+                body {
+                    font-family: Arial, Verdana, Helvetica, sans-serif;
+                    font-size: 16px;
+                }
+            </style>
+        </head>
+        <body>
+        ' . $message . '
+        </body>
+        </html>';
+
+        $result = $this->email
+            ->from('dmcrtccmaster@gmail.com')
+            ->to($emailReceiver)
+            ->subject($subject)
+            //->message($body)
+            ->message($message)
+            ->send();
+
+        return $result;
     }
 
-
-    // ************************************************************ Email group method
-    public function email_check($str){
+    public function emailValidate($str){
         $this->load->model("userAuthentication_m");
         $checkEmail = $this->userAuthentication_m->ChkEmailDup($str);
 
         if($checkEmail > 0){
-            $this->form_validation->set_message('email_check', 'The given email already exists.');
+            $this->form_validation->set_message('emailValidate', 'อีเมล์นี้มีอยู่ในระบบแล้ว');
             return FALSE;
         } else {
             return TRUE;
         }
     }
-
-    // ----------------------------------------------------------- Send confirm mail
-    private function sendEmail($receiver){
-        $result = false;
-
-        $from = "dmcrtccmaster@gmail.com";    //senders email address
-        $subject = 'ยืนยันการลงทะเบียน สมาชิก thaicoastalcleanup';  //email subject
-        
-        //sending confirmEmail($receiver) function calling link to the user, inside message body
-        $message = 'เรียน ท่านสมาชิก,<br><br> เพื่อความสมบูรณืในการสมัครสมาชิก โปรดคลิ๊กปุ่ม activation ด้านล่างนี้<br><br>
-        <a href=\'http://tcc.dmcr.go.th/thaicoastalcleanup/Users/confirmEmail/'
-        . md5($receiver).'\'>http://tcc.dmcr.go.th/thaicoastalcleanup/Users/confirmEmail/'
-        . md5($receiver) .'</a><br><br>ขอบคุณค่ะ';
-
-        //config email settings
-        $config['protocol'] = 'smtp';
-        $config['smtp_host'] = 'ssl://smtp.gmail.com';
-        $config['smtp_port'] = '465';
-        $config['smtp_user'] = $from;
-        $config['smtp_pass'] = 'admintcc';  //sender's password
-        $config['mailtype'] = 'html';
-        $config['charset'] = 'iso-8859-1';
-        $config['wordwrap'] = 'TRUE';
-        $config['newline'] = "\r\n"; 
-        
-        $this->load->library('email', $config);
-        $this->email->initialize($config);
-        //send email
-        $this->email->from($from);
-        $this->email->to($receiver);
-        $this->email->subject($subject);
-        $this->email->message($message);
-        
-        if($this->email->send()){
-            //for testing
-            echo "sent to: ".$receiver."<br>";
-            echo "from: ".$from. "<br>";
-            echo "protocol: ". $config['protocol']."<br>";
-            echo "message: ".$message;
-            $result = true;
-        }else{
-            //show_error($this->email->print_debugger());
-            echo "เกิดความผิดพลาดในการส่งอีเมล์ยีนยันตนเอง";
-            $result = false;
-        }
-//var_dump($result);
-        return $result;
-    }
-    
-    private function confirmEmail($hashcode){
-        if($this->userAuthentication_m->verifyEmail($hashcode)){
-            $this->session->set_flashdata('verify', '<div class="alert alert-success text-center">Email address is confirmed. Please login to the system</div>');
-            redirect('users/login');
-        }else{
-            $this->session->set_flashdata('verify', '<div class="alert alert-danger text-center">Email address is not confirmed. Please try to re-register.</div>');
-            redirect('users/login');
-        }
-    }
+    // ---------- End Email management.
 
 
-
-    // This function genrate CAPTCHA image and store in "image folder".
-    public function captcha_setting($imgWidth=280){
-        $result = $this->createCaptcha(280);
+    // ---------- Captcha management.
+    private function createCaptcha($imgWidth=280){
+        $result = $this->generateCaptcha(280);
 
         return $result;
     }
 
-    // For new image on click refresh button.
-    public function captcha_refresh($imgWidth=280){
-        $result = $this->createCaptcha(280);
-
-        echo $result;
-    }
-
-    private function createCaptcha($imgWidth=280) {
+    private function generateCaptcha($imgWidth=280) {
         $values = array(
             'word' => '',
             'word_length' => 5,
@@ -405,5 +392,6 @@ class Users extends MY_Controller {
         // image will store in "$rCaptcha['image']" index and its send on view page
         return $rCaptcha['image'];
     }
-    // End private function.
+    // ---------- End Captcha management.
+// End private function.
 }

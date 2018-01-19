@@ -88,15 +88,20 @@
 				<div class="panel-body">
 
 					<?php if(!empty($success_msg)){ ?>
-					<div class="alert alert-success">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-							คุณทำการลงทะเบียน สำเร็จเรียบร้อยแล้ว กรุณา login เข้าสู่ระบบ
-					</div>
+						<div class="alert alert-success">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+								<?php echo $success_msg ?>
+						</div>
+					<?php }elseif(!empty($info_msg)){ ?>
+						<div class="alert alert-info">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+								<?php echo $info_msg ?>
+						</div>
 					<?php }elseif(!empty($error_msg)){ ?>
-					<div class="alert alert-danger">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-							<?php echo $error_msg ?>
-					</div>
+						<div class="alert alert-danger">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+								<?php echo $error_msg ?>
+						</div>
 					<?php }?>
 
 					<div class="col-md-12">
