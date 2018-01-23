@@ -1,4 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+abstract class userStatus {
+    const Inactive = 0;
+    const Active = 1;
+    const Locked = 2;
+    const Deleted = 3;
+}
 
 class Users_d extends CI_Model {
 	// Property.

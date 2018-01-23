@@ -12,6 +12,16 @@ class Helper_m extends CI_Model {
         return $result;
     }
 
+    // ________________________________________________ Random string ____________________________________________
+    public function random_str($length, $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
+    }
 
 
 

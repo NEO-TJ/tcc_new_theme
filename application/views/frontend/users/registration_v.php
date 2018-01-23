@@ -108,7 +108,7 @@
                         </div>
                      <?php } ?>
 
-                    <h4 class="site-titles text-center" > สมัครสมาชิกเข้าสู่ระบบ </h4>
+                    <h4 class="site-titles text-center" > สมัครสมาชิก </h4>
                     <hr style="margin-bottom: 10px;">
 
                     <form class="form-horizontal" method="POST" action="">

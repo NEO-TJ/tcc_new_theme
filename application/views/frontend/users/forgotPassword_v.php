@@ -92,11 +92,6 @@
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 								<?php echo $success_msg ?>
 						</div>
-					<?php }elseif(!empty($info_msg)){ ?>
-						<div class="alert alert-info">
-							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-								<?php echo $info_msg ?>
-						</div>
 					<?php }elseif(!empty($error_msg)){ ?>
 						<div class="alert alert-danger">
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -105,46 +100,20 @@
 					<?php }?>
 
 					<div class="col-md-12">
-						<h3 class="site-titles text-center" > สมาชิกเข้าสู่ระบบ </h3>
-					</div>
-<!--
-					<div class="form-group">
-						<div style="margin-bottom: 16px;">
-							<a href="redirect" class=" ui facebook fluid button">
-								<i class="fa fa-facebook icon-fa " style=""></i> ล็อกอินด้วย Facebook
-							</a>
-						</div>
+						<h3 class="site-titles text-center" > รีเซ็ตรหัสผ่าน </h3>
 					</div>
 
-					<div><p class="t_mid">หรือ</p></div>
--->
 					<form class="form-horizontal" action="" method="post">
 
 						<div class="form-group has-feedback">
 							<div class="col-md-12">
-								<input id="username" type="text" class="form-control" name="username" 
-								placeholder="Username or Email" required>
+								<input id="email" type="email" class="form-control" name="Email" 
+								placeholder="Email" required>
 								<?php echo form_error('email','<span class="help-block">','</span>'); ?>
 							</div>
 						</div>
 
-						<div class="form-group">
-							<div class="col-md-12">
-								<input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
-								<?php echo form_error('password','<span class="help-block">','</span>'); ?>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-12 ">
-								<label>
-									<input type="checkbox" name="remember"> Remember Me 
-								</label>
-								<a class="btn btn-link g_right" href="<?php echo base_url('users/forgotPassword'); ?>">
-									Forgot Password?
-								</a>
-							</div>
-						</div>
+						<hr>
 
 						<div class="form-group">
 							<div class="col-md-10">
@@ -168,19 +137,9 @@
 
 						<div class="form-group">
 							<div class="col-md-12 ">
-								<input type="submit" name="loginSubmit" class="btn btn-primary btn-block" value="เข้าสู่ระบบ"/>
+								<input type="submit" name="forgotPasswordSubmit" class="btn btn-primary btn-block" value="ส่งรหัสผ่าน"/>
 							</div>
 						</div>
-            
-						<hr>
-						
-						<label class="t_gray g_left">
-							หากยังไม่สมัครสมาชิก
-						</label>
-						<a class="btn btn-default" style="float:right" href="<?php echo base_url('users/registration'); ?>">
-							<i class="fa fa-user-plus"></i> สมัครสมาชิก
-						</a>
-
 					</form>
 
 				</div>

@@ -1,5 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Users extends MY_Controller {
+// Member.
+    private $formValidateSetMessage;
+// End Member.
+
+
     function __construct() {
         parent::__construct();
         $this->load->helper('captcha');
@@ -147,7 +152,7 @@ class Users extends MY_Controller {
         // Check submit post.
         if($this->input->post('regisSubmit')){
             $this->form_validation->set_rules('First_Name', 'ชื่อ', 'required');
-            $this->form_validation->set_rules('Email', 'อีเมล์', 'required|valid_email|callback_emailValidate');
+            $this->form_validation->set_rules('Email', 'อีเมล์', 'required|valid_email|callback_emailChkDup');
             $this->form_validation->set_rules('Password', 'password', 'required');
             $this->form_validation->set_rules('password_confirmation', 'confirm password', 'required|matches[Password]');
 
@@ -164,19 +169,19 @@ class Users extends MY_Controller {
                 $this->users_d->colGender       => $this->input->post('Gender'),
                 $this->users_d->colAge          => strip_tags($this->input->post('Age')),
                 $this->users_d->colLevel        => 4,
-                $this->users_d->colStatus       => 2,
+                $this->users_d->colStatus       => userStatus::Inactive,
             );
 
             if($this->form_validation->run() == true){
                 if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
                     $this->load->model("userAuthentication_m");
-                    $result = $this->userAuthentication_m->Save(null, $userData);
+                    $resultSaveNewUser = $this->userAuthentication_m->Save(null, $userData);
 
-                    if($result) {
-                        if($this->sendEmail($this->input->post('Email'))){
+                    if($resultSaveNewUser) {
+                        if($this->sendEmailActivateUser($this->input->post('Email'))){
                             $this->session->set_userdata('success_msg'
                                 , 'ระบบได้ทำการลงทะเบียนสมาชิกใหม่เรียบร้อยแล้ว<br>'
-                                . 'ทางเราได้จัดส่งอีเมล์ยีนยันการสมัครไปที่อีเมล์ที่คุณลงทะเบียนไว้<br>'
+                                . 'ทางเราได้จัดส่งอีเมล์เพื่อยีนยันการสมัครไปยังที่อยู่อีเมล์ที่คุณลงทะเบียนไว้แล้ว<br>'
                                 . 'กรุณายืนยันการสมัครจากอีเมล์ที่ทางเราส่งให้ เพื่อดำเนินการสมัครสมาชิกอย่างสมบูรณ์<br>'
                                 . 'ขอบคุณคะ'
                             );
@@ -188,10 +193,11 @@ class Users extends MY_Controller {
                     }else{
                         $data['error_msg'] = 'เกิดข้อผิดพลาดในการบันทึกข้อมูลเข้าสู่ระบบ โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้งคะ';
                     }
-
                 } else {
                     $data['error_msg'] = 'รหัส captcha ไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้งคะ';
                 }
+            } else {
+                $data['error_msg'] = $this->formValidateSetMessage;
             }
         }
 
@@ -206,21 +212,91 @@ class Users extends MY_Controller {
 		$this->renderWithTemplate();
     }
     
-    public function confirmEmail($hashcode){
-        $this->load->model('userAuthentication_m');
+    public function forgotPassword() {
+        $data = array();
 
         // flash data.
-        if($this->userAuthentication_m->verifyEmail($hashcode)){
-            $this->session->set_userdata('success_msg'
-                , 'อีเมล์ของท่านได้รับการยืนยันในระบบเรียบร้อยแล้ว'
-                . 'ท่านสามารถ Login เข้าสู่ระบบได้'
-            );
+        if($this->session->userdata('success_msg')){
+            $data['success_msg'] = $this->session->userdata('success_msg');
+            $this->session->unset_userdata('success_msg');
+        }
+        if($this->session->userdata('error_msg')){
+            $data['error_msg'] = $this->session->userdata('error_msg');
+            $this->session->unset_userdata('error_msg');
+        }
+
+        // Check submit post.
+        if($this->input->post('forgotPasswordSubmit')){
+            $this->form_validation->set_rules('Email', 'อีเมล์', 'required|valid_email|callback_emailChkReset');
+
+            if($this->form_validation->run() == true){
+                if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
+                    $this->load->model("userAuthentication_m");
+                    $this->load->model('helper_m');
+                    $email = strip_tags($this->input->post('Email'));
+                    $newPassword = $this->helper_m->random_str(8);
+                    $resultResetPassword = $this->userAuthentication_m->ResetPassword($email, $newPassword);
+
+                    if($resultResetPassword) {
+                        if($this->sendEmailResetPassword($email, $newPassword)){
+                            $this->session->set_userdata('success_msg'
+                                , 'ทางเราได้ส่งรหัสผ่านใหม่ผ่านไปยังอีเมล์ที่คุณลงทะเบียนไว้แล้ว<br>'
+                                . 'ท่านสามารถนำรหัสผ่านที่ได้รับใหม่ทางอีเมล์มาใช้ในการเข้าสู่ระบบสมาชิกของเวปไซต์ได้แล้ว ขอบคุณคะ'
+                            );
+                            redirect('users/login');
+                        } else {
+                            $data['error_msg'] = 'ระบบส่ง Email ผิดพลาด<br>'
+                                . 'กรุณาลองใหม่อีกครั้งคะ';
+                        }
+                    } else {
+                        $data['error_msg'] = 'รหัส captcha ไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้งคะ';
+                    }
+                } else {
+                    $data['error_msg'] = 'รหัส captcha ไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้งคะ';
+                }
+            } else {
+                $data['error_msg'] = $this->formValidateSetMessage;
+            }
+        }
+
+        // Set data to view file.
+        $data['image'] = $this->createCaptcha();
+
+        // Load the view.
+        $this->data = $data;
+		$this->body = 'frontend/users/forgotPassword_v';
+        $this->extendedJs = 'frontend/users/extendedJs_v';
+		$this->renderWithTemplate();
+    }
+
+
+    public function confirmEmail($hashcode){
+        $this->load->model('userAuthentication_m');
+        $userStatus = $this->userAuthentication_m->verifyEmail($hashcode);
+
+        // flash data.
+        if($userStatus == userStatus::Active){
+            $this->session->set_userdata('success_msg', 'อีเมล์ของท่านได้รับการยืนยันในระบบเรียบร้อยแล้ว<br>ท่านสามารถเข้าสู่ระบบได้');
+        }else if($userStatus == userStatus::Locked){
+            $this->session->set_userdata('error_msg', 'อีเมล์นี้ถูกระงับการใช้งานชั่วคราว<br>โปรดติดต่อผู้ดูแลเวปไซต์');
         }else{
-            $this->session->set_userdata('error_msg'
-                , 'ไม่สามารถยืนยันอีเมล์ในระบบได้'
-                . 'กรุณาตรวจสอบอีเมล์ของท่านและ คลิ๊กที่ลิ้งสำหรับยีนยันการลงทะเบียนอีกครั้ง'
-                . 'หรือทำการลงสมัครสมาชิกใหม่อีกครั้ง'
-            );
+            $this->session->set_userdata('error_msg', 'เกิดความผิดพลาดในการยืนยันรหัสผู้ใช้งาน<br>โปรดติดต่อผู้ดูแลเวปไซต์');
+        }
+
+        redirect('users/login');
+    }
+
+    public function resetPassword($hashcode){
+        $this->load->model('userAuthentication_m');
+        $userStatus = $this->userAuthentication_m->verifyEmail($hashcode);
+
+        // flash data.
+        if($userStatus == userStatus::Active){
+            $this->session->set_userdata('success_msg', 'ระบบได้ทำการรีเซ็ตรหัสผ่านเรียบร้อยแล้ว<br>ท่านสามารถเข้าสู่ระบบได้ปรกติ');
+        }else if($userStatus == userStatus::Locked){
+            $this->session->set_userdata('error_msg', 'อีเมล์นี้ถูกระงับการใช้งานชั่วคราว<br>โปรดติดต่อผู้ดูแลเวปไซต์');
+        }else{
+            $this->session->set_userdata('error_msg', 'เกิดความผิดพลาดในการรีเซ็ตรหัสผ่าน<br>โปรดติดต่อผู้ดูแลเวปไซต์');
         }
 
         redirect('users/login');
@@ -312,16 +388,41 @@ class Users extends MY_Controller {
     }
     // ---------- End Validate User.
 
-    // ---------- Email management.
-    private function sendEmail($emailReceiver) {
+
+
+    // ---------- Send Email.
+    private function sendEmailActivateUser($emailReceiver) {
         $this->load->library('email');
         $urlConfirmEmail = base_url('Users/confirmEmail') . '/';
 
         $subject = 'ยืนยันการลงทะเบียน สมาชิกเวป thaicoastalcleanup';
-        $message = 'เรียน ท่านสมาชิก,<br><br> เพื่อความสมบูรณ์ในการสมัครสมาชิก โปรดคลิ๊กปุ่ม activation ด้านล่างนี้<br><br>'
+        $message = 'เรียน ท่านสมาชิก,<br><br> เพื่อความสมบูรณ์ในการสมัครสมาชิก โปรดคลิ๊กปุ่ม activation ด้านล่างนี้เพื่อยืนยันการสมัครสมาชิก<br><br>'
         . '<a href=' . $urlConfirmEmail
         . md5($emailReceiver) . '>' . $urlConfirmEmail
         . md5($emailReceiver) .'</a><br><br>ขอบคุณค่ะ';
+
+        $result = $this->email
+            ->from('dmcrtccmaster@gmail.com')
+            ->to($emailReceiver)
+            ->subject($subject)
+            ->message($message)
+            ->send();
+
+        return $result;
+    }
+
+    private function sendEmailResetPassword($emailReceiver, $newPassword) {
+        $this->load->library('email');
+        $urlConfirmEmail = base_url('Users/resetPassword') . '/';
+
+        $subject = 'รหัสผ่านใหม่สำหรับการเข้าใช้งานในระบบสมาชิกของเวปไซต์ thaicoastalcleanup';
+        $message = 'เรียน ท่านสมาชิก,<br><br> เนื่องจากท่านได้ทำการรีเซ็ตรหัสผ่านใหม่ที่เวปไซต์ thaicoastalcleanup'
+            . 'ทางเวปไซต์จึงได้ทำการส่งรหัสผ่านใหม่ เพื่อนำไปใช้ในการเข้าระบบสมาชิกของเวปไซต์ตามข้อมูลด้านล่างนี้<br><hr>'
+            . 'รหัสผ่านใหม่ = ' . $newPassword . '<hr><br>'
+            . 'โปรดคลิ๊กปุ่ม activation ด้านล่างนี้ เพื่อกลับสู่เวปไซต์ thaicoastalcleanup<br><br>'
+            . '<a href=' . $urlConfirmEmail
+            . md5($emailReceiver) . '>' . $urlConfirmEmail
+            . md5($emailReceiver) .'</a><br><br>ขอบคุณค่ะ';
 
         // Get full html:
         $body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"'
@@ -347,25 +448,53 @@ class Users extends MY_Controller {
             ->from('dmcrtccmaster@gmail.com')
             ->to($emailReceiver)
             ->subject($subject)
-            //->message($body)
-            ->message($message)
+            ->message($body)
             ->send();
 
         return $result;
     }
+    // ---------- End Send Email.
 
-    public function emailValidate($str){
+
+    // ---------- Email Validate.
+    public function emailChkDup($email){
         $this->load->model("userAuthentication_m");
-        $checkEmail = $this->userAuthentication_m->ChkEmailDup($str);
+        $blnResult = $this->userAuthentication_m->ChkEmailDup($email);
 
-        if($checkEmail > 0){
-            $this->form_validation->set_message('emailValidate', 'อีเมล์นี้มีอยู่ในระบบแล้ว');
+        if($blnResult){
+            $this->formValidateSetMessage = 'อีเมล์นี้มีอยู่ในระบบแล้ว';
             return FALSE;
         } else {
+            $this->formValidateSetMessage = '';
             return TRUE;
         }
     }
-    // ---------- End Email management.
+
+    public function emailChkReset($email){
+        $this->load->model("userAuthentication_m");
+        $blnResult = $this->userAuthentication_m->ChkEmailReset($email);
+
+        if($blnResult){
+            $this->load->model("dataclass/users_d");
+            $userStatus = $this->userAuthentication_m->status;
+            
+            if(($userStatus == userStatus::Active) || ($userStatus == userStatus::Inactive)) {
+                $this->formValidateSetMessage = '';
+                return TRUE;
+            } else if($userStatus == userStatus::Locked) {
+                $this->formValidateSetMessage = 'อีเมล์นี้ถูกระงับการใช้งานชั่วคราว<br>โปรดติดต่อผู้ดูแลเวปไซต์';
+                return FALSE;
+            } else {
+                $this->formValidateSetMessage = 'เกิดความผิดพลาดในการรีเซ็ตรหัสผ่าน<br>โปรดติดต่อผู้ดูแลเวปไซต์';
+                return FALSE;
+            }
+        } else {
+            $this->formValidateSetMessage = 'อีเมล์นี้ยังไม่มีอยู่ในระบบ';
+            return FALSE;
+        }
+    }
+    // ---------- End Email Validate.
+
 
 
     // ---------- Captcha management.

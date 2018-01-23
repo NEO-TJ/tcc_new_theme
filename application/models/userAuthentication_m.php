@@ -7,9 +7,11 @@ class UserAuthentication_m extends CI_Model {
     public $password;
     public $fkIdEmployee;
     public $level;
-    public $active;
+    public $status;
     public $createDate;
     public $updateDate;
+
+    public $active;
 // End Public Property.
 
 
@@ -54,21 +56,50 @@ class UserAuthentication_m extends CI_Model {
 		$this->load->model('db_m');
 
         $this->db_m->tableName = $this->users_d->tableName;
-        $arrWhere = [
-            $this->users_d->colEmail    => $email,
-            $this->users_d->colStatus   => '1'
+        $rWhere = [
+            $this->users_d->colEmail => $email,
+            $this->users_d->colStatus . ' !=' => userStatus::Deleted
         ];
-		$result = $this->db_m->Find($arrWhere);
+		$result = $this->db_m->Find($rWhere);
+
+        return $result;
+    }
+
+    public function ChkEmailReset($email) {
+		$this->load->model('dataclass/users_d');
+		$this->load->model('db_m');
+
+        $this->db_m->tableName = $this->users_d->tableName;
+        $rWhere = [
+            $this->users_d->colEmail => $email,
+            $this->users_d->colStatus . ' !=' => userStatus::Deleted
+        ];
+        $result = $this->db_m->Find($rWhere);
+        $this->status = ($result ? $this->db_m->dataSet[0]['Status'] : -1);
 
         return $result;
     }
     
     //activate account
-    function verifyEmail($key){
-        $data = array('Status' => 1);
-        $this->db->where('md5(Email)',$key);
+    function verifyEmail($emailEncode){
+        $resultUserStatus = -1;
+        $this->load->model("dataclass/users_d");
+		$this->load->model('db_m');
 
-        return $this->db->update('users', $data);    //update status as 1 to make active user
+        $this->db_m->tableName = $this->users_d->tableName;
+        $rWhere = [
+            'md5(' . $this->users_d->colEmail . ')' => $emailEncode,
+            $this->users_d->colStatus . ' !=' => userStatus::Deleted
+        ];
+        $resultFind = $this->db_m->Find($rWhere);
+        $resultUserStatus = ($resultFind ? $this->db_m->dataSet[0]['Status'] : -1);
+
+        if($resultUserStatus == userStatus::Inactive) {
+            $dsData = array($this->users_d->colStatus => userStatus::Active);
+            $resultUserStatus = ($this->db_m->UpdateRow(null, $dsData, $rWhere) ? userStatus::Active : -1);
+        }
+
+        return ($resultUserStatus);
     }
 
     // ---------------------------------------------------------------------------------------- Save
@@ -79,6 +110,25 @@ class UserAuthentication_m extends CI_Model {
 		// Check custom duplication.
 		$this->db_m->tableName = $this->users_d->tableName;
 		$result = $this->db_m->Save($id, $dsData);
+
+		return $result;
+    }
+
+
+    // ---------------------------------------------------------------------------------------- Reset Password
+    public function ResetPassword($email, $newPassword) {
+        $this->load->model('dataclass/users_d');
+        $this->load->model('db_m');
+
+        // Check custom duplication.
+        $dsData = array($this->users_d->colPassword => $newPassword);
+        $rWhere = array(
+            $this->users_d->colEmail => $email,
+            $this->users_d->colStatus . ' !=' => userStatus::Deleted
+        );
+
+		$this->db_m->tableName = $this->users_d->tableName;
+		$result = $this->db_m->UpdateRow(null, $dsData, $rWhere);
 
 		return $result;
     }
