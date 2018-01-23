@@ -138,13 +138,13 @@
                         <div class="col-md-5">
                             <h4>กรมทรัพยากรทางทะเลและชายฝั่ง<span class="head-line"></span></h4>
                             <p style="font-size:13px;">
-                                ติดต่อ สำนักอนุรักษ์ทรัพยากรทางทะเลและชายฝั่ง กรมทรัพยากรทางทะเลและชายฝั่ง กระทรวงธรรมชาติและสิ่งแวดล้อม
-                                Department Of Marine And Coastal Resources 
+                                กรมทรัพยากรทางทะเลและชายฝั่ง กระทรวงธรรมชาติและสิ่งแวดล้อม<br>
+                                Department Of Marine And Coastal Resources<br>
                                 เลขที่ 120 หมู่ที่ 3 ชั้นที่ 5-9 อาคารรัฐประศาสนภักดี ศูนย์ราชการเฉลิมพระเกียรติ 80 พรรษา 5 ธันวาคม 2550 ถนนแจ้งวัฒนะ แขวงทุ่งสองห้อง เขตหลักสี่ กรุงเทพมหานคร 10210
                             </p>
                             <ul>
                                 <li><span>โทร :</span> 02 142 7400  <span>  โทรสาร :</span> 02 143 9264</li>
-                                <li><span>อีเมล:</span>tcc.dmcr@hotmail.com</li>
+                                <li><span>อีเมล :</span> tcc.dmcr@hotmail.com</li>
                             </ul>
                         </div>
                         <div class="col-md-3">
