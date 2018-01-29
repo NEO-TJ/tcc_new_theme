@@ -4,7 +4,7 @@ class Users extends MY_Controller {
     private $formValidateSetMessage;
 // End Member.
 
-
+// Constructor.
     function __construct() {
         parent::__construct();
         $this->load->helper('captcha');
@@ -12,7 +12,10 @@ class Users extends MY_Controller {
         $this->load->model('user');
         session_start(); 
     }
-    
+// End Constructor.
+
+
+
 // Route method.
     public function account(){
         $data = array();
@@ -42,15 +45,11 @@ class Users extends MY_Controller {
         // Check submit post.
         if($this->input->post('editSubmit')){
             $this->form_validation->set_rules('First_Name', 'ชื่อ', 'required');
-            $this->form_validation->set_rules('Password', 'password', 'required');
-            $this->form_validation->set_rules('password_confirmation', 'confirm password', 'required|matches[Password]');
-
             $this->form_validation->set_rules('Last_Name', 'นามสกุล', 'required');
             $this->form_validation->set_rules('Age', 'อายุ', 'required');
 
             $this->load->model("dataclass/users_d");
             $userData = array(
-                $this->users_d->colUserId       => strip_tags($this->input->post('UserId')),
                 $this->users_d->colFirstName    => strip_tags($this->input->post('First_Name')),
                 $this->users_d->colLastName     => strip_tags($this->input->post('Last_Name')),
                 $this->users_d->colGender       => $this->input->post('Gender'),
@@ -59,9 +58,6 @@ class Users extends MY_Controller {
 
             if($this->form_validation->run() == true){
                 if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
-                    $userData[$this->users_d->colPassword] = strip_tags($this->input->post('Password'));
-                    unset($userData[$this->users_d->colUserId]);
-
                     $this->load->model("userAuthentication_m");
                     $result = $this->userAuthentication_m->Save($this->session->userdata['id'], $userData);
                     
@@ -168,7 +164,7 @@ class Users extends MY_Controller {
                 $this->users_d->colLastName     => strip_tags($this->input->post('Last_Name')),
                 $this->users_d->colGender       => $this->input->post('Gender'),
                 $this->users_d->colAge          => strip_tags($this->input->post('Age')),
-                $this->users_d->colLevel        => 4,
+                $this->users_d->colLevel        => userLevel::Volunteer,
                 $this->users_d->colStatus       => userStatus::Inactive,
             );
 
@@ -239,17 +235,15 @@ class Users extends MY_Controller {
 
                     if($resultResetPassword) {
                         if($this->sendEmailResetPassword($email, $newPassword)){
-                            $this->session->set_userdata('success_msg'
-                                , 'ทางเราได้ส่งรหัสผ่านใหม่ผ่านไปยังอีเมล์ที่คุณลงทะเบียนไว้แล้ว<br>'
-                                . 'ท่านสามารถนำรหัสผ่านที่ได้รับใหม่ทางอีเมล์มาใช้ในการเข้าสู่ระบบสมาชิกของเวปไซต์ได้แล้ว ขอบคุณคะ'
-                            );
-                            redirect('users/login');
+                            $data['success_msg'] = 'ทางเราได้ส่งรหัสผ่านใหม่ผ่านไปยังอีเมล์ที่คุณลงทะเบียนไว้แล้ว<br>'
+                                . 'กรุณาตรวจสอบ email ของท่าน และนำรหัสผ่านใหม่ที่ได้รับทางอีเมล์<br>'
+                                . 'มาใช้ในการเข้าสู่ระบบสมาชิกของเวปไซต์ได้แล้วคะ ขอบคุณคะ';
                         } else {
-                            $data['error_msg'] = 'ระบบส่ง Email ผิดพลาด<br>'
+                            $data['error_msg'] = 'เกิดเหตุขัดข้องในการส่ง Email<br>'
                                 . 'กรุณาลองใหม่อีกครั้งคะ';
                         }
                     } else {
-                        $data['error_msg'] = 'รหัส captcha ไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้งคะ';
+                        $data['error_msg'] = 'ระบบไม่สามารถรีเซ็ตรหัสผ่านได้, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้งคะ';
                     }
                 } else {
                     $data['error_msg'] = 'รหัส captcha ไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้งคะ';
@@ -302,6 +296,86 @@ class Users extends MY_Controller {
         redirect('users/login');
     }
 
+
+        
+    public function changePassword() {
+        $data = array();
+
+        // flash data.
+        if($this->session->userdata('success_msg')){
+            $data['success_msg'] = $this->session->userdata('success_msg');
+            $this->session->unset_userdata('success_msg');
+        }
+        if($this->session->userdata('error_msg')){
+            $data['error_msg'] = $this->session->userdata('error_msg');
+            $this->session->unset_userdata('error_msg');
+        }
+
+        // Check submit post.
+        if($this->input->post('changePasswordSubmit')){
+            $this->form_validation->set_rules('old_password', 'old password', 'required');
+            $this->form_validation->set_rules('new_password', 'new password', 'required');
+            $this->form_validation->set_rules('password_confirmation', 'confirm password', 'required|matches[new_password]');
+
+            if($this->form_validation->run() == true){
+                if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
+                    $this->load->model("userAuthentication_m");
+                    $oldPassword = strip_tags($this->input->post('old_password'));
+                    $newPassword = strip_tags($this->input->post('new_password'));
+
+                    $dsUser = $this->userAuthentication_m->Validate(
+                        $this->session->userdata('userId')
+                        , $oldPassword);
+                    $countUser = count($dsUser);
+                    if($countUser == 1) {
+                        $user = $dsUser[0];
+                        if($user['Status'] == 0) {
+                            $result = 'รหัสสมาชิกนี้ยังไม่ถูกเปิดให้ใช้งาน<br>'
+                            . 'กรุณาติดต่อเจ้าหน้าที่ที่เกี่ยวข้อง';
+                        } else if($user['Status'] == 1) {
+                            if($this->userAuthentication_m->ChangePassword($user['id'], $newPassword)){
+                                $this->session->set_userdata('success_msg'
+                                    , 'ระบบได้ทำการเปลี่ยนรหัสผ่านใหม่เรียบร้อยแล้ว<br>'
+                                    . 'ท่านสามารถเข้าสู่ระบบด้วยรหัสผ่านใหม่ได้ทันที ขอบคุณคะ'
+                                );
+                                redirect('users/login');
+                            } else {
+                                $data['error_msg'] = 'ไม่สามารถเปลี่ยนรหัสผ่านได้<br>'
+                                    . 'กรุณาลองใหม่อีกครั้งคะ';
+                            }    
+                        } else if($user['Status'] == 2) {
+                            $result = 'รหัสสมาชิกนี้อยู่ในสถานะ รอการยืนยันตัวตน<br>'
+                            . 'กรุณาตรวจสอบอีเมล์ที่ท่านลงทะเบียนใว้และทำการยืนยันตามข้อมูลที่แจ้งไว้ในอีเมล์ของท่าน';
+                        } else if($user['Status'] == 3) {
+                            $result = 'รหัสสมาชิกนี้อยู่ในสถานะถูกล๊อคจากระบบ<br>'
+                            . 'กรุณาติดต่อเจ้าหน้าที่ที่เกี่ยวข้อง';
+                        } else {
+                            $result = 'เกิดข้อขัดข้องกับรหัสสมาชิกในระบบ<br>'
+                            . 'กรุณาติดต่อเจ้าหน้าที่ที่เกี่ยวข้อง';
+                        }
+                    } else if($countUser > 1) {
+                        $result = 'เกิดความซ้ำซ้อนของรหัสสมาชิกนี้ในระบบ<br>'
+                            . 'กรุณาติดต่อเจ้าหน้าที่ที่เกี่ยวข้อง';
+                    } else {
+                        $result = 'รหัสผ่านของท่านไม่ถูกต้อง<br>'
+                            . 'โปรดตรวจสอบรหัสผ่านของท่านและลองใหม่อีกครั้ง';
+                    }
+                } else {
+                    $data['error_msg'] = 'รหัส captcha ไม่ถูกต้อง, โปรดตรวจสอบข้อมูลและลองใหม่อีกครั้งคะ';
+                }
+            }
+        }
+
+        // Set data to view file.
+        $data['image'] = $this->createCaptcha();
+
+        // Load the view.
+        $this->data = $data;
+		$this->body = 'frontend/users/changePassword_v';
+        $this->extendedJs = 'frontend/users/extendedJs_v';
+		$this->renderWithTemplate();
+    }
+
     public function logout(){
         $this->session->unset_userdata('isUserLoggedIn');
         $this->session->unset_userdata('userId');
@@ -325,8 +399,6 @@ class Users extends MY_Controller {
 		$this->load->model('userAuthentication_m');
         $result = '';
 		// get data from db
-        //$this->userAuthentication_m->userName = $this->input->post('username');
-		//$this->userAuthentication_m->password = $this->input->post('password');
         $dsUser = $this->userAuthentication_m->Validate($userName, $password);
         $countUser = count($dsUser);
 
@@ -472,7 +544,7 @@ class Users extends MY_Controller {
 
     public function emailChkReset($email){
         $this->load->model("userAuthentication_m");
-        $blnResult = $this->userAuthentication_m->ChkEmailReset($email);
+        $blnResult = $this->userAuthentication_m->ChkEmailExist($email);
 
         if($blnResult){
             $this->load->model("dataclass/users_d");

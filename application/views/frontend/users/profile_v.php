@@ -112,7 +112,7 @@
                     <hr style="margin-bottom: 10px;">
 
                     <form class="form-horizontal" method="POST" action="">
-                        <!-- UserId -->
+                        <!-- UserId (Email) -->
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="col-md-12 ">
@@ -123,6 +123,17 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Change password -->
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <a href="changePassword"><u>เปลี่ยนรหัสผ่าน</u></a>
+                                </div>
+                            </div>
+                        </div>
+
+
 
                         <!-- First Name -->
                         <div class="col-md-6">
@@ -178,6 +189,12 @@
                         </div>
 
 
+
+                        <!-- Bank line -->
+                        <div class="col-md-12">
+                            <br>
+                        </div>
+
                         <!-- Captcha -->
                         <div class="col-md-6">
                             <div class="form-group">
@@ -201,31 +218,14 @@
     						</div>
                         </div>
 
-                        <!-- Password -->
-                        <div class="col-md-6 panel">
-                            <div class="form-group">
-                                <div class="col-md-12 ">
-                                    <label for="password" class=" control-label">รหัสผ่าน</label>
-                                    <input id="password" type="password" class="form-control" name="Password" required>
-                                    <?php echo form_error('password','<span class="help-block"><strong>','</strong></span>'); ?>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-12 ">
-                                    <label for="password-confirm" class=" control-label">ยืนยันรหัสผ่าน</label>
-                                    <?php echo form_error('password_confirmation','<span class="help-block">','</span>'); ?>
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                                </div>
-                            </div>
-                        </div>
 
                         <!-- submit -->
                         <div class="col-md-12">
                             <br>
                             <div class="form-group" style="margin-top: 6px;">
                                 <div class="col-md-12 ">
-                                    <input type="submit" name="editSubmit" class="btn btn-primary btn-block" value="อัพเดทข้อมูล"/>
+                                    <input type="submit" name="editSubmit" class="btn btn-primary btn-block" 
+                                    value="อัพเดทข้อมูล"/>
                                 </div>
                             </div>
                         </div>

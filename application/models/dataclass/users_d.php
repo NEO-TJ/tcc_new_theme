@@ -5,6 +5,12 @@ abstract class userStatus {
     const Locked = 2;
     const Deleted = 3;
 }
+abstract class userLevel {
+    const Admin = 1;
+    const Specialist = 2;
+    const Staff = 3;
+    const Volunteer = 4;
+}
 
 class Users_d extends CI_Model {
 	// Property.

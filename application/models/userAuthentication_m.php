@@ -44,7 +44,8 @@ class UserAuthentication_m extends CI_Model {
         $this->db_m->tableName = $this->users_d->tableName;
         $rWhere = array(
             $this->users_d->colUserId   => $userName,
-            $this->users_d->colPassword => $password
+            $this->users_d->colPassword => $password,
+            $this->users_d->colStatus . ' !=' => userStatus::Deleted
         );
         $result = $this->db_m->GetRowWhere($rWhere);
 
@@ -65,7 +66,7 @@ class UserAuthentication_m extends CI_Model {
         return $result;
     }
 
-    public function ChkEmailReset($email) {
+    public function ChkEmailExist($email) {
 		$this->load->model('dataclass/users_d');
 		$this->load->model('db_m');
 
@@ -102,6 +103,8 @@ class UserAuthentication_m extends CI_Model {
         return ($resultUserStatus);
     }
 
+
+
     // ---------------------------------------------------------------------------------------- Save
     public function Save($id, $dsData) {
         $this->load->model('dataclass/users_d');
@@ -114,7 +117,6 @@ class UserAuthentication_m extends CI_Model {
 		return $result;
     }
 
-
     // ---------------------------------------------------------------------------------------- Reset Password
     public function ResetPassword($email, $newPassword) {
         $this->load->model('dataclass/users_d');
@@ -124,6 +126,24 @@ class UserAuthentication_m extends CI_Model {
         $dsData = array($this->users_d->colPassword => $newPassword);
         $rWhere = array(
             $this->users_d->colEmail => $email,
+            $this->users_d->colStatus . ' !=' => userStatus::Deleted
+        );
+
+		$this->db_m->tableName = $this->users_d->tableName;
+		$result = $this->db_m->UpdateRow(null, $dsData, $rWhere);
+
+		return $result;
+    }
+
+    // ---------------------------------------------------------------------------------------- Reset Password
+    public function ChangePassword($id, $newPassword) {
+        $this->load->model('dataclass/users_d');
+        $this->load->model('db_m');
+
+        // Check custom duplication.
+        $dsData = array($this->users_d->colPassword => $newPassword);
+        $rWhere = array(
+            $this->users_d->colId => $id,
             $this->users_d->colStatus . ' !=' => userStatus::Deleted
         );
 
