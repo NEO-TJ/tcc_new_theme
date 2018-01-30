@@ -19,8 +19,11 @@
     <title>กรมทรัพยากรทางทะเลและชายฝั่ง</title>
 
     <!-- Fonts -->
+    <link rel="stylesheet" href="<?php echo base_url('./assets/admin/assets/vendor/font-awesome/css/font-awesome.css'); ?>" />
+    <!--
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" 
     integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+    -->
     <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
 
     <!-- Styles -->
@@ -110,7 +113,7 @@
                                 <?php } ?>
                                 <li>
                                     <a href="<?php echo base_url('users/profile'); ?>">
-                                        <i class="fa fa-users"></i>ข้อมูลส่วนตัว
+                                        <i class="fa fa-address-card-o"></i>ข้อมูลส่วนตัว
                                     </a>
                                 </li>
                                 <li>

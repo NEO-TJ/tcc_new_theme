@@ -106,8 +106,9 @@
                         <div id="userbox" class="userbox">
                             <a href="#" data-toggle="dropdown">
                                 <figure class="profile-picture">
-                                    <img src="<?php echo base_url('./assets/admin/assets/images/avatar/1483537975.png'); ?>" width="35" height="35"  
-                                    class="img-circle" data-lock-picture="<?php echo base_url('./admin/assets/images/avatar/1483537975.png'); ?>" />
+                                    <img src="<?php echo base_url('./assets/admin/assets/images/avatar/1483537975.png'); ?>"
+                                    width="35" height="35" class="img-circle"
+                                    data-lock-picture="<?php echo base_url('./admin/assets/images/avatar/1483537975.png'); ?>" />
                                 </figure>
                                 <div class="profile-info" data-lock-name="{{ Auth::user()->name }}" >
                                     <span class="name"><?php  echo $this->session->userdata('user_name'); ?></span>
@@ -127,7 +128,7 @@
                                     <li class="divider"></li>
                                     <li>
                                         <a href="<?php echo base_url('users/profile'); ?>">
-                                            <i class="fa fa-users"></i>ข้อมูลส่วนตัว
+                                            <i class="fa fa-address-card-o"></i>ข้อมูลส่วนตัว
                                         </a>
                                     </li>
                                     <li>
@@ -170,12 +171,14 @@
                         <div class="nano-content">
                             <nav id="menu" class="nav-main" role="navigation">
                                 <ul class="nav nav-main">
+                                    <!--
                                     <li <?php if($this->uri->segment(1)=="dashboard"){ echo 'class=nav-expanded'; }?> >
                                         <a href="<?php echo base_url('dashboard'); ?>"  >
                                             <i class="fa fa-home" aria-hidden="true"></i>
                                             <span>Dashboard</span>
                                         </a>
                                     </li>
+                                    -->
 
                                     <li <?php if($this->uri->segment(1)=="iccCard"){ echo 'class=nav-expanded'; }?> >
                                         <a href="<?php echo base_url('iccCard'); ?>"  >
@@ -199,56 +202,69 @@
                                         </li>
                                     <?php } ?>
                                     
-                                    <li>&zwnj;</li>
                                     <?php if($level == 1) { ?>
+                                        <li>&zwnj;</li>
+                                        <li class="menu-divider"></li>
+
                                         <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/1'); ?>"  >
-                                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <i class="fa fa-bullseye" aria-hidden="true"></i>
                                                 <span>บริเวณที่เก็บขยะ</span>
                                             </a>
                                         </li>
                                         
                                         <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/2'); ?>"  >
-                                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <i class="fa fa-road" aria-hidden="true"></i>
                                                 <span>หน่วยของระยะทาง</span>
                                             </a>
                                         </li>
                                         
                                         <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/3'); ?>"  >
-                                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <i class="fa fa-balance-scale" aria-hidden="true"></i>
                                                 <span>หน่วยของน้ำหนัก</span>
                                             </a>
                                         </li>
                                         
                                         <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/4'); ?>"  >
-                                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <i class="fa fa-bug" aria-hidden="true"></i>
                                                 <span>สถานะภาพสัตว์ที่พบ</span>
                                             </a>
                                         </li>
                                         
                                         <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/5'); ?>"  >
-                                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <i class="fa fa-leaf" aria-hidden="true"></i>
                                                 <span>ขยะทะเล</span>
                                             </a>
                                         </li>
                                         
                                         <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/6'); ?>"  >
-                                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <i class="fa fa-book" aria-hidden="true"></i>
                                                 <span>ประเภทขยะทะเล</span>
                                             </a>
                                         </li>
                                         
                                         <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                            <a href="<?php echo base_url('masterdata/view/7'); ?>"  >
+                                                <i class="fa fa-building-o" aria-hidden="true"></i>
+                                                <span>หน่วยงานในสังกัด</span>
+                                            </a>
+                                        </li>
+                                        
+                                        <li class="menu-divider"></li>
+
+                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/0'); ?>"  >
-                                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                                <i class="fa fa-users" aria-hidden="true"></i>
                                                 <span>ทะเบียนผู้ใช้งาน</span>
                                             </a>
                                         </li>
+
+                                        <li class="menu-divider"></li>
                                     <?php } ?>
                                 </ul>
                             </nav>

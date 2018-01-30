@@ -15,7 +15,9 @@ class Masterdata extends MY_Controller {
 		'5' 	=> 'ขยะทะเล',								
 		'6' 	=> 'ประเภทขยะทะเล',
 		
-		'7' 	=> 'Media Type',
+		'7' 	=> 'หน่วยงาน',
+
+		'8' 	=> 'Media Type',
 	];
 	private $dataTypeLink = ['0' 	=> 'User',
 		'1' 	=> 'CleanupType',
@@ -29,7 +31,9 @@ class Masterdata extends MY_Controller {
 		'5' 	=> 'Garbage',								
 		'6' 	=> 'GarbageType',
 		
-		'7' 	=> 'MediaType',
+		'7' 	=> 'Organize',
+
+		'8' 	=> 'Media Type',
 	];
 	private $inputModeName = [ 1 => 'เพิ่มข้อมูลใหม่', 2 => 'แก้ไขข้อมูล' ];
 // End Property.
@@ -188,8 +192,13 @@ class Masterdata extends MY_Controller {
 			$this->load->model('masterdata/masterdataGarbageType_m', 'oMasterdata_m');
 		}
 
+		// Organize.
+		else if($dataType == '7') {
+			$this->load->model('masterdata/masterdataOrganize_m', 'oMasterdata_m');
+		}
+
 		// Media Type.
-		else if($dataType == '7') {		// ID & Name #.
+		else if($dataType == '8') {		// ID & Name #.
 			$this->load->model('masterdata/masterdataCommonName_m', 'oMasterdata_m');
 			$this->load->model('dataclass/mediaType_d');
 			$this->oMasterdata_m->tableName = $this->mediaType_d->tableName;

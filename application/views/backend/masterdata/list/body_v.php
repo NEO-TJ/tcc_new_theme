@@ -29,7 +29,7 @@
 						<br><br>
 					<!-- Form Choose table -->
 						<?php echo form_open(base_url("masterdata/edit/".$dataType), array("id" => "formChoose")); ?>
-							<input type='hidden' name='dataType' value=<?php echo($dataType); ?> />
+							<input type='hidden' name='dataType' id='dataType' value=<?php echo($dataType); ?> />
 							<input type='hidden' name='rowId' value='0' />
 						<!-- Tabel view display -->	
 							<table id="view" class="table table-bordered table-components 
