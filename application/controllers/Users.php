@@ -48,20 +48,26 @@ class Users extends MY_Controller {
             $this->form_validation->set_rules('Last_Name', 'นามสกุล', 'required');
             $this->form_validation->set_rules('Age', 'อายุ', 'required');
 
-            $this->load->model("dataclass/users_d");
-            $userData = array(
-                $this->users_d->colFirstName    => strip_tags($this->input->post('First_Name')),
-                $this->users_d->colLastName     => strip_tags($this->input->post('Last_Name')),
-                $this->users_d->colGender       => $this->input->post('Gender'),
-                $this->users_d->colAge          => strip_tags($this->input->post('Age')),
-            );
-
+            // Check validate input.
             if($this->form_validation->run() == true){
                 if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
+                    // Prepare data to update in database.
+                    $this->load->model("dataclass/users_d");
+                    $userData = array(
+                        $this->users_d->colFirstName    => strip_tags($this->input->post('First_Name')),
+                        $this->users_d->colLastName     => strip_tags($this->input->post('Last_Name')),
+                        $this->users_d->colGender       => $this->input->post('Gender'),
+                        $this->users_d->colAge          => strip_tags($this->input->post('Age')),
+                    );
+                    if( ($this->session->userdata['level'] == userLevel::Admin)
+                    || ($this->session->userdata['level'] == userLevel::Specialist)
+                    || ($this->session->userdata['level'] == userLevel::Staff)) {
+                        $userData[$this->users_d->colEmail] = strip_tags($this->input->post('Email'));
+                    }
+
+                    // Update profile in database.
                     $this->load->model("userAuthentication_m");
-                    $result = $this->userAuthentication_m->Save($this->session->userdata['id'], $userData);
-                    
-                    if($result) {
+                    if($this->userAuthentication_m->Save($this->session->userdata['id'], $userData)) {
                         $dsProfile = $this->userAuthentication_m->GetProfile($this->session->userdata['id']);
                         $userData = ((count($dsProfile) > 0) ? $dsProfile[0] : NULL);
                         $data['success_msg'] = 'คุณทำการแก้ไขข้อมูลส่วนตัว เรียบร้อยแล้ว.';
@@ -155,25 +161,25 @@ class Users extends MY_Controller {
             $this->form_validation->set_rules('Last_Name', 'นามสกุล', 'required');
             $this->form_validation->set_rules('Age', 'อายุ', 'required');
 
-            $this->load->model("dataclass/users_d");
-            $userData = array(
-                $this->users_d->colUserId       => strip_tags($this->input->post('Email')),
-                $this->users_d->colPassword     => strip_tags($this->input->post('Password')),
-                $this->users_d->colEmail        => strip_tags($this->input->post('Email')),
-                $this->users_d->colFirstName    => strip_tags($this->input->post('First_Name')),
-                $this->users_d->colLastName     => strip_tags($this->input->post('Last_Name')),
-                $this->users_d->colGender       => $this->input->post('Gender'),
-                $this->users_d->colAge          => strip_tags($this->input->post('Age')),
-                $this->users_d->colLevel        => userLevel::Volunteer,
-                $this->users_d->colStatus       => userStatus::Inactive,
-            );
-
             if($this->form_validation->run() == true){
                 if (strcasecmp($_SESSION['captchaWord'], $_POST['captcha']) == 0) {
-                    $this->load->model("userAuthentication_m");
-                    $resultSaveNewUser = $this->userAuthentication_m->Save(null, $userData);
+                    // Prepare data to insert in database.
+                    $this->load->model("dataclass/users_d");
+                    $userData = array(
+                        $this->users_d->colUserId       => strip_tags($this->input->post('Email')),
+                        $this->users_d->colPassword     => strip_tags($this->input->post('Password')),
+                        $this->users_d->colEmail        => strip_tags($this->input->post('Email')),
+                        $this->users_d->colFirstName    => strip_tags($this->input->post('First_Name')),
+                        $this->users_d->colLastName     => strip_tags($this->input->post('Last_Name')),
+                        $this->users_d->colGender       => $this->input->post('Gender'),
+                        $this->users_d->colAge          => strip_tags($this->input->post('Age')),
+                        $this->users_d->colLevel        => userLevel::Volunteer,
+                        $this->users_d->colStatus       => userStatus::Inactive,
+                    );
 
-                    if($resultSaveNewUser) {
+                    // Insert profile in database.
+                    $this->load->model("userAuthentication_m");
+                    if($this->userAuthentication_m->Save(null, $userData)) {
                         if($this->sendEmailActivateUser($this->input->post('Email'))){
                             $this->session->set_userdata('success_msg'
                                 , 'ระบบได้ทำการลงทะเบียนสมาชิกใหม่เรียบร้อยแล้ว<br>'
