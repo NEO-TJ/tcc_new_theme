@@ -79,12 +79,12 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right nav-custom-site">
                     <!-- Authentication Links -->
-                    <li><a class="go-related-website-link green" href="http://www.dmcr.go.th" target="_blank"> กลับสู่เว็บหลัก ทช.</a></li>
-                    <li><a class="go-related-website-link red" href="http://marinegiscenter.dmcr.go.th" target="_blank"> ระบบฐานข้อมูลกลาง</a></li>
-                    <li><a href="<?php echo base_url('report'); ?>"> ข้อมูลขยะ</a></li>
+                    <li><a class="go-related-website-link green" href="http://www.dmcr.go.th" target="_blank">กลับสู่เว็บหลัก ทช.</a></li>
+                    <li><a class="go-related-website-link red" href="http://marinegiscenter.dmcr.go.th" target="_blank">ระบบฐานข้อมูลกลาง</a></li>
+                    <li><a href="<?php echo base_url('report'); ?>">ข้อมูลขยะ</a></li>
                     <li class="dropdown">
                         <a href="#" data-toggle="dropdown" role="button" aria-expanded="false">
-                            ข่าวสาร <span class="caret"></span>
+                            ข่าวสาร<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="<?php echo base_url('publicRelations/content_list/'); ?>">ข่าวสาร</a></li>
@@ -93,13 +93,15 @@
                             <li><a href="<?php echo base_url('publicRelations/content_list/'); ?>">ความรู้เกี่ยวกับที่มาของขยะทะเล</a></li>
                         </ul>
                     </li>
-                    <li><a href="<?php echo base_url('mapPlace'); ?>"> แผนที่</a></li>
-                    <li><a href="<?php echo base_url('eventImageGallery'); ?>"> รวมภาพกิจกรรม</a></li>
-                    <li><a href="#"> เกี่ยวกับเรา </a></li>
+                    <li><a href="<?php echo base_url('mapPlace'); ?>">แผนที่</a></li>
+                    <li><a href="<?php echo base_url('eventImageGallery'); ?>">ภาพกิจกรรม</a></li>
+                    <li><a href="#">เกี่ยวกับเรา</a></li>
                     <li class="dropdown">
                         <?php if ( $this->session->userdata('isUserLoggedIn') ) : ?>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <i class="fa fa-user"></i> <?php  echo $this->session->userdata('user_name'); ?>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                            role="button" aria-expanded="false">
+                                <i class="fa fa-user"></i>
+                                <?php echo(mb_substr($this->session->userdata('user_name'), 0, 8) . '..'); ?>
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
@@ -123,7 +125,9 @@
                                 </li>
                             </ul>
                         <?php else : ?>
-                            <a href="<?php echo base_url('users/login'); ?>"><i class="fa fa-user"></i> เข้าสุ่ระบบ</a>
+                            <a href="<?php echo base_url('users/login'); ?>">
+                                <i class="fa fa-sign-in"></i> เข้าสุ่ระบบ
+                            </a>
                         <?php endif; ?>
                     </li>
                 </ul>
@@ -182,7 +186,13 @@
                                 <img src="https://www.learnsbuy.com/assets/image/safari_PNG28.png" style="height:25px;margin-right:10px;">  เวอร์ชั่นล่าสุด
                             </p>
                             <p class="copyright small" style="padding: 3px 0; color: #ccc;font-size: 13px;">สงวนลิขสิทธิ์ © พ.ศ.2560 กรมทรัพยากรทางทะเลและชายฝั่ง
-                                <u><a href="<?php echo base_url('sitemap'); ?>" id="sitemap" class="sitemap" style="color:#FFFFFF; margin-left:145px;">sitemap</a></u>
+                                <u>
+                                    <a href="<?php echo base_url('sitemap'); ?>"
+                                    id="sitemap" class="sitemap"
+                                    style="color:#FFFFFF; margin-left:145px;">
+                                        <i class="fa fa-sitemap"></i> sitemap <i class="fa fa-sitemap"></i>
+                                    </a>
+                                </u>
                             </p>
                         </div>
                         <div>
