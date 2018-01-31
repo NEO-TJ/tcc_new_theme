@@ -38,13 +38,14 @@ class UserAuthentication_m extends CI_Model {
 
     // ---------------------------------------------------------------------------------------- Validate
     public function Validate($userName, $password) {
+        $encryptPassword = md5($password);
 		$this->load->model('dataclass/users_d');
 		$this->load->model('db_m');
 
         $this->db_m->tableName = $this->users_d->tableName;
         $rWhere = array(
             $this->users_d->colUserId   => $userName,
-            $this->users_d->colPassword => $password,
+            $this->users_d->colPassword => $encryptPassword,
             $this->users_d->colStatus . ' !=' => userStatus::Deleted
         );
         $result = $this->db_m->GetRowWhere($rWhere);
@@ -82,14 +83,14 @@ class UserAuthentication_m extends CI_Model {
     }
     
     //activate account
-    function verifyEmail($emailEncode){
+    function verifyEmail($encryptEmail){
         $resultUserStatus = -1;
         $this->load->model("dataclass/users_d");
 		$this->load->model('db_m');
 
         $this->db_m->tableName = $this->users_d->tableName;
         $rWhere = [
-            'md5(' . $this->users_d->colEmail . ')' => $emailEncode,
+            'md5(' . $this->users_d->colEmail . ')' => $encryptEmail,
             $this->users_d->colStatus . ' !=' => userStatus::Deleted
         ];
         $resultFind = $this->db_m->Find($rWhere);
@@ -108,7 +109,11 @@ class UserAuthentication_m extends CI_Model {
     // ---------------------------------------------------------------------------------------- Save
     public function Save($id, $dsData) {
         $this->load->model('dataclass/users_d');
-		$this->load->model('db_m');
+        $this->load->model('db_m');
+        // Encrypt password.
+        if (array_key_exists($this->users_d->colPassword, $dsData)) {
+            $dsData[$this->users_d->colPassword] = md5($dsData[$this->users_d->colPassword]);
+        }
 
 		// Check custom duplication.
 		$this->db_m->tableName = $this->users_d->tableName;
@@ -119,11 +124,12 @@ class UserAuthentication_m extends CI_Model {
 
     // ---------------------------------------------------------------------------------------- Reset Password
     public function ResetPassword($email, $newPassword) {
+        $encryptNewPassword = md5($newPassword);
         $this->load->model('dataclass/users_d');
         $this->load->model('db_m');
 
         // Check custom duplication.
-        $dsData = array($this->users_d->colPassword => $newPassword);
+        $dsData = array($this->users_d->colPassword => $encryptNewPassword);
         $rWhere = array(
             $this->users_d->colEmail => $email,
             $this->users_d->colStatus . ' !=' => userStatus::Deleted
@@ -137,11 +143,12 @@ class UserAuthentication_m extends CI_Model {
 
     // ---------------------------------------------------------------------------------------- Reset Password
     public function ChangePassword($id, $newPassword) {
+        $encryptNewPassword = md5($newPassword);
         $this->load->model('dataclass/users_d');
         $this->load->model('db_m');
 
         // Check custom duplication.
-        $dsData = array($this->users_d->colPassword => $newPassword);
+        $dsData = array($this->users_d->colPassword => $encryptNewPassword);
         $rWhere = array(
             $this->users_d->colId => $id,
             $this->users_d->colStatus . ' !=' => userStatus::Deleted
