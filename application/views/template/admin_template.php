@@ -163,7 +163,8 @@
                             Navigation
                         </div>
                         <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
-                            <i class="fa fa-bars" aria-label="Toggle sidebar" ></i>
+                            <i class="fa fa-angle-left" aria-label="Toggle sidebar" ></i>
+                            <i class="fa fa-angle-right" aria-label="Toggle sidebar" ></i>
                         </div>
                     </div>
 
@@ -171,21 +172,26 @@
                         <div class="nano-content">
                             <nav id="menu" class="nav-main" role="navigation">
                                 <ul class="nav nav-main">
-                                    <!--
-                                    <li <?php if($this->uri->segment(1)=="dashboard"){ echo 'class=nav-expanded'; }?> >
-                                        <a href="<?php echo base_url('dashboard'); ?>"  >
-                                            <i class="fa fa-home" aria-hidden="true"></i>
-                                            <span>Dashboard</span>
-                                        </a>
-                                    </li>
-                                    -->
-
-                                    <li <?php if($this->uri->segment(1)=="iccCard"){ echo 'class=nav-expanded'; }?> >
+                                    <li class="menu-divider"></li>
+                                    <li <?php if(($this->uri->segment(1) == 'iccCard')
+                                    && ($this->uri->segment(2) != 'log')){ echo 'class=nav-expanded'; }?> >
                                         <a href="<?php echo base_url('iccCard'); ?>"  >
-                                            <i class="fa fa-flag" aria-hidden="true"></i>
-                                            <span>จัดการ iccCard</span>
+                                            <i class="fa fa-file-text-o"></i>
+                                            <span>แบบบันทึกข้อมูลไอซีซี</span>
                                         </a>
                                     </li>
+                                    <?php if($level == 1) { ?>
+                                        <li <?php if(($this->uri->segment(1) == 'iccCard')
+                                        && ($this->uri->segment(2) == 'log')){ echo 'class=nav-expanded'; }?> >
+                                            <a href="<?php echo base_url('iccCard/log'); ?>"  >
+                                                <i class="fa fa-tasks" aria-hidden="true"></i>
+                                                <span>รายงานข้อมูลไอซีซี</span>
+                                            </a>
+                                        </li>
+                                        <li class="menu-divider"></li>
+                                    <?php } ?>
+
+
                                     <?php if( ($level == 1) || ($level == 2) ) { ?>
                                         <li <?php if($this->uri->segment(1)=="blog"){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('blog'); ?>"  >
@@ -205,59 +211,69 @@
                                     <?php if($level == 1) { ?>
                                         <li>&zwnj;</li>
                                         <li class="menu-divider"></li>
+                                        <li class="menu-divider"></li>
+                                        <li class="menu-divider"></li>
 
-                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                        <li <?php if(($this->uri->segment(1) == 'masterdata')
+                                        && ($this->uri->segment(3) == 1)){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/1'); ?>"  >
                                                 <i class="fa fa-bullseye" aria-hidden="true"></i>
                                                 <span>บริเวณที่เก็บขยะ</span>
                                             </a>
                                         </li>
                                         
-                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                        <li <?php if(($this->uri->segment(1) == 'masterdata')
+                                        && ($this->uri->segment(3) == 2)){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/2'); ?>"  >
                                                 <i class="fa fa-road" aria-hidden="true"></i>
                                                 <span>หน่วยของระยะทาง</span>
                                             </a>
                                         </li>
                                         
-                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                        <li <?php if(($this->uri->segment(1) == 'masterdata')
+                                        && ($this->uri->segment(3) == 3)){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/3'); ?>"  >
-                                                <i class="fa fa-balance-scale" aria-hidden="true"></i>
+                                                <i class="fa fa-tachometer" aria-hidden="true"></i>
                                                 <span>หน่วยของน้ำหนัก</span>
                                             </a>
                                         </li>
                                         
-                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                        <li <?php if(($this->uri->segment(1) == 'masterdata')
+                                        && ($this->uri->segment(3) == 4)){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/4'); ?>"  >
                                                 <i class="fa fa-bug" aria-hidden="true"></i>
                                                 <span>สถานะภาพสัตว์ที่พบ</span>
                                             </a>
                                         </li>
                                         
-                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                        <li <?php if(($this->uri->segment(1) == 'masterdata')
+                                        && ($this->uri->segment(3) == 5)){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/5'); ?>"  >
                                                 <i class="fa fa-leaf" aria-hidden="true"></i>
                                                 <span>ขยะทะเล</span>
                                             </a>
                                         </li>
                                         
-                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                        <li <?php if(($this->uri->segment(1) == 'masterdata')
+                                        && ($this->uri->segment(3) == 6)){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/6'); ?>"  >
                                                 <i class="fa fa-book" aria-hidden="true"></i>
                                                 <span>ประเภทขยะทะเล</span>
                                             </a>
                                         </li>
                                         
-                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                        <li <?php if(($this->uri->segment(1) == 'masterdata')
+                                        && ($this->uri->segment(3) == 7)){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/7'); ?>"  >
-                                                <i class="fa fa-building-o" aria-hidden="true"></i>
+                                                <i class="fa fa-university" aria-hidden="true"></i>
                                                 <span>หน่วยงานในสังกัด</span>
                                             </a>
                                         </li>
                                         
                                         <li class="menu-divider"></li>
 
-                                        <li <?php if($this->uri=="masterdata/view/1"){ echo 'class=nav-expanded'; }?> >
+                                        <li <?php if(($this->uri->segment(1) == 'masterdata')
+                                        && ($this->uri->segment(3) == 0)){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/0'); ?>"  >
                                                 <i class="fa fa-users" aria-hidden="true"></i>
                                                 <span>ทะเบียนผู้ใช้งาน</span>

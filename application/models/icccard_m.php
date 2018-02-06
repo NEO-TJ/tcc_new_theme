@@ -16,6 +16,7 @@ class IccCard_m extends CI_Model {
 	public function GetIccCardList($rFilter=null, $limit=null, $offset=null) {
 		$this->load->model('dataclass/iccCard_d');
 		$this->load->model('dataclass/cleanupType_d');
+		$this->load->model('dataclass/ecology_d');
 		$this->load->model('dataclass/iccCardStatus_d');
 		$this->load->model('dataclass/province_d');
 		$this->load->model('dataclass/amphur_d');
@@ -67,11 +68,128 @@ class IccCard_m extends CI_Model {
 
 		return $result;
 	}
+
+	public function GetIccCardLogList($rFilter=null, $limit=null, $offset=null) {
+		$this->load->model('dataclass/iccCard_d');
+		$this->load->model('dataclass/cleanupType_d');
+		$this->load->model('dataclass/ecology_d');
+		$this->load->model('dataclass/iccCardStatus_d');
+		$this->load->model('dataclass/province_d');
+		$this->load->model('dataclass/amphur_d');
+		$this->load->model('dataclass/users_d');
+
+    // Prepare Filter.
+		$sqlExtend = $this->CreateSqlWhereAndJoinTbl($rFilter, TRUE);
+		// Prepare Limit (Pagination).
+		$sqlLimit = "";
+		if(($limit !== NULL) && ($limit > 0)) {
+			$offset = ( (($offset !== NULL) && ($offset >= 0)) ? $offset : 0);
+			$sqlLimit = " LIMIT " . $offset . ", " . $limit;
+		}
+
+		// Create sql string.
+		$sqlStr = "SELECT DISTINCT c." . $this->iccCard_d->colId
+				. ", c." . $this->iccCard_d->colProjectName . " ชื่อโครงการ"
+				. ", c." . $this->iccCard_d->colEventPlaceName . " ชื่อสถานที่ทำกิจกรรม"
+				. ", a." . $this->amphur_d->colAmphurName . " อำเภอ"
+				. ", p." . $this->province_d->colProvinceName . " จังหวัด"
+				. ", DATE_FORMAT(c." . $this->iccCard_d->colEventDate . ",'%Y-%b-%d') วันที่ทำกิจกรรม"
+
+			// Icc card Status
+				. ", cs." . $this->iccCardStatus_d->colName . " สถานะของโครงการ"
+
+				. ", IF(c." . $this->iccCard_d->colFkIccCardStatus . ">1"
+				. " && !ISNULL(c." . $this->iccCard_d->colApproveBy . ")"
+				. ", ua." . $this->users_d->colFirstName . ", '-') อนุมัติโดย"
+				. ", IF(c." . $this->iccCard_d->colFkIccCardStatus . ">1"
+				. " && !ISNULL(c." . $this->iccCard_d->colApproveBy . ")"
+				. ", DATE_FORMAT(c." . $this->iccCard_d->colApproveDate . ",'%Y-%b-%d'), '-') วันที่อนุมัติ"
+
+				. ", IF(c." . $this->iccCard_d->colFkIccCardStatus . "=3"
+				. " && !ISNULL(c." . $this->iccCard_d->colDoneBy . ")"
+				. ", un." . $this->users_d->colFirstName . ", '-') ปิดโดย"
+				. ", IF(c." . $this->iccCard_d->colFkIccCardStatus . "=3"
+				. " && !ISNULL(c." . $this->iccCard_d->colDoneBy . ")"
+				. ", DATE_FORMAT(c." . $this->iccCard_d->colDoneDate . ",'%Y-%b-%d'), '-') วันที่ปิด"
+			// End Icc card Status
+
+			// Log
+				. ", IF(ISNULL(c." . $this->iccCard_d->colCreateBy . ")"
+				. ", '-', uc." . $this->users_d->colFirstName . ") เพิ่มโดย"
+				. ", IF(ISNULL(c." . $this->iccCard_d->colCreateBy . ")"
+				. ", '-', DATE_FORMAT(c." . $this->iccCard_d->colCreateDate . ",'%Y-%b-%d')) วันที่เพิ่ม"
+
+				. ", IF(ISNULL(c." . $this->iccCard_d->colUpdateBy . ")"
+				. ", '-', ue." . $this->users_d->colFirstName . ") แก้ไขโดย"
+				. ", IF(ISNULL(c." . $this->iccCard_d->colUpdateBy . ")"
+				. ", '-', DATE_FORMAT(c." . $this->iccCard_d->colUpdateDate . ",'%Y-%b-%d')) วันที่แก้ไข"
+
+				. ", IF(c." . $this->iccCard_d->colActive . "=0"
+				. " && !ISNULL(c." . $this->iccCard_d->colDeleteBy . ")"
+				. ", ud." . $this->users_d->colFirstName . ", '-') ลบโดย"
+				. ", IF(c." . $this->iccCard_d->colActive . "=0"
+				. " && !ISNULL(c." . $this->iccCard_d->colDeleteBy . ")"
+				. ", DATE_FORMAT(c." . $this->iccCard_d->colDeleteDate . ",'%Y-%b-%d'), '-') วันที่ลบ"
+			// End Log				
+
+				. " FROM " . $this->iccCard_d->tableName . " AS c"
+
+				. " LEFT JOIN " . $this->iccCardStatus_d->tableName . " AS cs"
+				. " ON c." . $this->iccCard_d->colFkIccCardStatus
+				. "=cs." . $this->iccCardStatus_d->colId
+
+				. " LEFT JOIN " . $this->province_d->tableName . " AS p"
+				. " ON c." . $this->iccCard_d->colFkProvinceCode
+				. "=p." . $this->province_d->colProvinceCode
+
+				. " LEFT JOIN " . $this->amphur_d->tableName . " AS a"
+				. " ON c." . $this->iccCard_d->colFkAmphurCode
+				. "=a." . $this->amphur_d->colAmphurCode
+
+			// Icc card Status
+				. " LEFT JOIN " . $this->users_d->tableName . " AS ua"
+				. " ON c." . $this->iccCard_d->colApproveBy
+				. "=ua." . $this->users_d->colId
+
+				. " LEFT JOIN " . $this->users_d->tableName . " AS un"
+				. " ON c." . $this->iccCard_d->colDoneBy
+				. "=un." . $this->users_d->colId
+			// End Icc card Status
+
+			// Log
+				. " LEFT JOIN " . $this->users_d->tableName . " AS uc"
+				. " ON c." . $this->iccCard_d->colCreateBy
+				. "=uc." . $this->users_d->colId
+
+				. " LEFT JOIN " . $this->users_d->tableName . " AS ue"
+				. " ON c." . $this->iccCard_d->colUpdateBy
+				. "=ue." . $this->users_d->colId
+
+				. " LEFT JOIN " . $this->users_d->tableName . " AS ud"
+				. " ON c." . $this->iccCard_d->colDeleteBy
+				. "=ud." . $this->users_d->colId
+			// End Log
+
+				. $sqlExtend
+				
+				. " ORDER BY c." . $this->iccCard_d->colEventDate . " desc"
+				. ", p." . $this->province_d->colProvinceName
+				. ", a." . $this->amphur_d->colAmphurName
+				. ", c." . $this->iccCard_d->colProjectName
+				
+				. $sqlLimit;
+
+		// Execute sql.
+		$this->load->model('db_m');
+		$result = $this->db_m->GetRow($sqlStr);
+
+		return $result;
+	}
 // +++ End To list view +++++++++++++++++++++++++++++++++++++++++++++
 
 // +++ To input +++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// ///////////////// From Database ///////////////////////////////////
-    public function GetDataForInputDisplay($id=null) {
+	public function GetDataForInputDisplay($id=null) {
 		$result['dsIccCardMaster'] = $this->GetIccCardMasterForInputDisplay($id);
 		$result['dsContactInfo'] = $this->GetIccCardContactInfoForInputDisplay($id);
 		$result['dsEntangeledAnimal'] = $this->GetEntangeledAnimalForInputDisplay($id);
@@ -89,6 +207,7 @@ class IccCard_m extends CI_Model {
 		$sqlStr = "SELECT c." . $this->iccCard_d->colId
 					. ", c." . $this->iccCard_d->colProjectName
 					. ", c." . $this->iccCard_d->colFkCleanupType
+					. ", c." . $this->iccCard_d->colFkEcology
 					. ", c." . $this->iccCard_d->colEventPlaceName
 					. ", c." . $this->iccCard_d->colFkAmphurCode
 					. ", c." . $this->iccCard_d->colFkProvinceCode
@@ -192,27 +311,28 @@ class IccCard_m extends CI_Model {
 
 
 	// ///////////////// From Template ///////////////////////////////////
-    public function GetTemplateForInputDisplay() {
+	public function GetTemplateForInputDisplay() {
 		// ICC Card - Master.
 		$this->load->model('dataclass/iccCard_d');
 		$result['dsIccCardMaster'][0] = [
-				$this->iccCard_d->colId						=> 0,
-				$this->iccCard_d->colProjectName			=> '',
+				$this->iccCard_d->colId									=> 0,
+				$this->iccCard_d->colProjectName				=> '',
 				$this->iccCard_d->colFkCleanupType			=> 1,
+				$this->iccCard_d->colFkEcology					=> 1,
 				$this->iccCard_d->colEventPlaceName			=> '',
-				$this->iccCard_d->colFkAmphurCode			=> 0,
+				$this->iccCard_d->colFkAmphurCode				=> 0,
 				$this->iccCard_d->colFkProvinceCode			=> 0,
-				$this->iccCard_d->colEventDate				=> 0,
-				$this->iccCard_d->colFkOrg					=> 0,
+				$this->iccCard_d->colEventDate					=> 0,
+				$this->iccCard_d->colFkOrg							=> 0,
 				$this->iccCard_d->colCoordinatorName		=> '',
-				$this->iccCard_d->colVolunteerQty			=> 0,
+				$this->iccCard_d->colVolunteerQty				=> 0,
 
-				$this->iccCard_d->colEventTime				=> '',
+				$this->iccCard_d->colEventTime					=> '',
 				$this->iccCard_d->colEventDistance			=> 0.25,		// Minimum.
 				$this->iccCard_d->colFkDistanceUnit			=> '',
 				$this->iccCard_d->colGarbageBagQty			=> 0,
 				$this->iccCard_d->colGarbageWeight			=> 0,
-				$this->iccCard_d->colFkWeightUnit			=> '',
+				$this->iccCard_d->colFkWeightUnit				=> '',
 				$this->iccCard_d->colFkIccCardStatus		=> 1,
     	];
 		// ICC Card - Contact Info.
@@ -231,9 +351,9 @@ class IccCard_m extends CI_Model {
 		// ICC Card - Contact Info
 		$this->load->model('dataclass/contactInfo_d');
 		$result = [
-			$this->contactInfo_d->colId			=> 0,
-			$this->contactInfo_d->colName		=> '',
-			$this->contactInfo_d->colEmail		=> '',
+			$this->contactInfo_d->colId					=> 0,
+			$this->contactInfo_d->colName				=> '',
+			$this->contactInfo_d->colEmail			=> '',
 			$this->contactInfo_d->colFkIccCard	=> 0,
 		];
 
@@ -242,12 +362,12 @@ class IccCard_m extends CI_Model {
 	private function GetTemplateEntangledAnimalForInputDisplay() {
 		$this->load->model('dataclass/entangledAnimal_d');
 		$result = [
-			$this->entangledAnimal_d->colId					=> 0,
-			$this->entangledAnimal_d->colName				=> '',
+			$this->entangledAnimal_d->colId								=> 0,
+			$this->entangledAnimal_d->colName							=> '',
 			$this->entangledAnimal_d->colFkAnimalStatus		=> 0,
 			$this->entangledAnimal_d->colEntangledFlag		=> 0,
 			$this->entangledAnimal_d->colEntangledDebris	=> '',
-			$this->entangledAnimal_d->colFkIccCard			=> 0,
+			$this->entangledAnimal_d->colFkIccCard				=> 0,
 		];
 
 		return $result;
@@ -256,8 +376,8 @@ class IccCard_m extends CI_Model {
 		// ICC Card - Contact Info
 		$this->load->model('dataclass/geoLocation_d');
 		$result = [
-			$this->geoLocation_d->colId			=> 0,
-			$this->geoLocation_d->colLatitude	=> '',
+			$this->geoLocation_d->colId					=> 0,
+			$this->geoLocation_d->colLatitude		=> '',
 			$this->geoLocation_d->colLongitude	=> '',
 			$this->geoLocation_d->colFkIccCard	=> 0,
 		];
@@ -271,6 +391,7 @@ class IccCard_m extends CI_Model {
 	// +++ To input ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	public function GetDataForComboBox($fkProvinceCode=null) {
 		$result['dsCleanupType'] = $this->GetDsCleanupType();
+		$result['dsEcology'] = $this->GetDsEcology();
 		$result['dsOrg'] = $this->GetDsOrg();
 		$result['dsDistanceUnit'] = $this->GetDsDistanceUnit();
 		$result['dsWeightUnit'] = $this->GetDsWeightUnit();
@@ -333,6 +454,12 @@ class IccCard_m extends CI_Model {
 
 		return count($dsIccCardList);
 	}
+
+	public function GetIccCardLogRecordCount($rFilter=null) {
+		$dsIccCardList = $this->GetIccCardLogList($rFilter);
+
+		return count($dsIccCardList);
+	}
 // -------------------------------------------------------------------------------------------- End Get Count record.
 // -------------------------------------------------------------------------------------------- End Get
 
@@ -340,7 +467,7 @@ class IccCard_m extends CI_Model {
 
 // -------------------------------------------------------------------------------------------- Save
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Process Save
-    public function Save($idMaster, $dsData) {
+	public function Save($idMaster, $dsData) {
 		$dsMaster = $this->PrepareDataMasterTable($dsData['dsIccCardMaster']);
 
 		$dsDetail[0] = $this->PrepareDataContactInfoDetailTable($dsData['dsContactInfo']);
@@ -530,7 +657,6 @@ class IccCard_m extends CI_Model {
 		return $dsResult;
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ End Prepare Data
-
 // -------------------------------------------------------------------------------------------- End Save
 
 
@@ -668,6 +794,17 @@ class IccCard_m extends CI_Model {
 		$dataSet = $this->db_m->GetRowById($id, null);
     
     	return $dataSet;
+	}
+	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cleanup_Type table
+  private function GetDsEcology($id=null) {
+		$this->load->model("dataclass/ecology_d");
+		$this->load->model("db_m");
+
+		$this->db_m->tableName = $this->ecology_d->tableName;
+		$this->db_m->sequenceColumn = $this->ecology_d->colName;
+		$dataSet = $this->db_m->GetRowById($id, null);
+    
+		return $dataSet;
 	}
 	// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Icc Card Status table
 	private function GetDsIccCardStatus($id=null) {
@@ -942,7 +1079,7 @@ class IccCard_m extends CI_Model {
 
 
 // -------------------------------------------------------------------------------------------- Gen Sql
-	private function CreateSqlWhereAndJoinTbl($rFilter=null) {
+	private function CreateSqlWhereAndJoinTbl($rFilter=null, $allowShowDeleted=false) {
 		$this->load->model('dataclass/iccCard_d');
 		$this->load->model('dataclass/garbageTransaction_d');
 		$this->load->model('dataclass/garbage_d');
@@ -962,8 +1099,18 @@ class IccCard_m extends CI_Model {
 				. "=gy." . $this->garbageType_d->colId;
 
 		// Create sql string where.
-		$sqlWhere = " WHERE c." . $this->iccCard_d->colActive . "=1";
+		if($allowShowDeleted) {
+			$sqlWhere = "";
+			$sqlWhereConjunction = " WHERE";
+		} else {
+			$sqlWhere = " WHERE c." . $this->iccCard_d->colActive . "=1";
+			$sqlWhereConjunction = " AND";
+		}
+
 		if($rFilter !== NULL) {
+			$sqlWhere .= $sqlWhereConjunction . " c." . $this->iccCard_d->colEventDate;
+			$sqlWhere .= " BETWEEN '" . $rFilter['strDateStart'] . "%' AND '" . $rFilter['strDateEnd'] . "%'";
+
 			$sqlWhere .= (isset($rFilter['provinceCode']) && ($rFilter['provinceCode'] > 0)
 					? " AND c." . $this->iccCard_d->colFkProvinceCode . "=" . $rFilter['provinceCode']
 					: NULL );
@@ -982,8 +1129,6 @@ class IccCard_m extends CI_Model {
 			$sqlWhere .= (isset($rFilter['iccCardStatusCode']) && ($rFilter['iccCardStatusCode'] > 0)
 					? " AND c." . $this->iccCard_d->colFkIccCardStatus . "=" . $rFilter['iccCardStatusCode']
 					: NULL );
-			$sqlWhere .= " AND c." . $this->iccCard_d->colEventDate;
-			$sqlWhere .= " BETWEEN '" . $rFilter['strDateStart'] . "%' AND '" . $rFilter['strDateEnd'] . "%'";
 		}
 
 		return ($sqlJoin . $sqlWhere);

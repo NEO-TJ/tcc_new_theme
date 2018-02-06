@@ -26,7 +26,7 @@ class IccCard extends MY_Controller {
 
 
 // Routing function.
-  // ---------------------------------------------------------------------------------------- For display
+	// ---------------------------------------------------------------------------------------- For display
 	private function view() {
 		if(!($this->is_logged())) {exit(0);}
 
@@ -59,6 +59,22 @@ class IccCard extends MY_Controller {
 			$this->SetInputDisplay($inputMode, $iccCardId);
 		}
 	}
+
+	public function log() {
+		if(!($this->is_logged())) {exit(0);}
+
+		$this->load->model('dataclass/users_d');
+		if($this->session->userdata('level') == userLevel::Admin) {
+			// Prepare data of view.
+			$this->data = $this->GetDataForlogDisplay();
+			
+			// Prepare Template.
+			$this->extendedCss = 'backend/iccCard/log/extendedCss_v';
+			$this->body = 'backend/iccCard/log/body_v';
+			$this->extendedJs = 'backend/iccCard/log/extendedJs_v';
+			$this->renderWithTemplate();
+		}
+	}
 // End Routing function.
 
 
@@ -73,7 +89,7 @@ class IccCard extends MY_Controller {
 
 			$this->load->model('iccCard_m');
 			$dataRender = $this->iccCard_m->GetDataForComboBoxAjaxListView();
-			$dataPagination = $this->setPagination($rDataFilter, $pageCode);
+			$dataPagination = $this->getIccCardWithPagination($rDataFilter, $pageCode);
 			$dataRender["dsIccCardList"] = $dataPagination["dsIccCardList"];
 			$dataRender["numRecordStart"] = $pageCode;
 
@@ -83,7 +99,27 @@ class IccCard extends MY_Controller {
 			echo json_encode($dsData);
 		}
 	}
-  // ---------------------------------------------------------------------------------------- Save data to DB 
+
+	public function ajaxGetIccCardLogList() {
+		if(!($this->is_logged())) {exit(0);}
+
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$rDataFilter = $this->input->post('rDataFilter');
+			$pageCode = $this->input->post('pageCode');
+
+			$this->load->model('iccCard_m');
+			$dataRender = $this->iccCard_m->GetDataForComboBoxAjaxListView();
+			$dataPagination = $this->getIccCardLogWithPagination($rDataFilter, $pageCode);
+			$dataRender["dsIccCardList"] = $dataPagination["dsIccCardList"];
+			$dataRender["numRecordStart"] = $pageCode;
+
+			$dsData["htmlTableBody"] = $this->load->view("backend/iccCard/log/bodyTableBody_v", $dataRender, TRUE);
+			$dsData["paginationLinks"] = $dataPagination["paginationLinks"];
+
+			echo json_encode($dsData);
+		}
+	}
+	// ---------------------------------------------------------------------------------------- Save data to DB 
 	public function ajaxSaveInputData() {
 		if(!($this->is_logged())) {exit(0);}
 
@@ -153,8 +189,8 @@ class IccCard extends MY_Controller {
 
 
 // Private function.
-	// ---------------------------------------------------------------------------------------- Set pagination.
-	private function setPagination($rFilter=null, $pageCode=0) {
+	// ---------------------------------------------------------------------------------------- Get dataset & Set pagination.
+	private function getIccCardWithPagination($rFilter=null, $pageCode=0) {
 		$this->load->library("pagination");
 		$this->load->model('iccCard_m');
 
@@ -192,6 +228,40 @@ class IccCard extends MY_Controller {
 		return $data;
 	}
 
+	private function getIccCardLogWithPagination($rFilter=null, $pageCode=0) {
+		$this->load->library("pagination");
+		$this->load->model('iccCard_m');
+
+		$config = array();
+		$config['full_tag_open'] = "<ul class='pagination'>";
+		$config['full_tag_close'] ="</ul>";
+		$config['num_tag_open'] = "<li>";
+		$config['num_tag_close'] = "</li>";
+		$config['cur_tag_open'] = "<li class='disabled'><li class='active'><a href='#'>";
+		$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+		$config['next_tag_open'] = "<li>";
+		$config['next_tagl_close'] = "</li>";
+		$config['prev_tag_open'] = "<li>";
+		$config['prev_tagl_close'] = "</li>";
+		$config['first_tag_open'] = "<li>";
+		$config['first_tagl_close'] = "</li>";
+		$config['last_tag_open'] = "<li>";
+		$config['last_tagl_close'] = "</li>";
+		$config["base_url"] = "";
+		$config["first_url"] = "#/0";
+		$config["total_rows"] = $this->iccCard_m->GetIccCardLogRecordCount($rFilter);
+		$config["per_page"] = $this->paginationLimit;
+		$config["uri_segment"] = 3;
+
+		$config['setCurPage'] = $pageCode;									// My modify code at system library.
+		$this->pagination->initialize($config);
+
+		$startRecord = ($pageCode) ? $pageCode : 0;
+		$data["dsIccCardList"] = $this->iccCard_m->GetIccCardLogList($rFilter, $config["per_page"], $startRecord);
+		$data["paginationLinks"] = $this->pagination->create_links();
+
+		return $data;
+	}
 
   // ---------------------------------------------------------------------------------------- Initial view mode
 	private function GetDataForViewDisplay() {
@@ -199,7 +269,21 @@ class IccCard extends MY_Controller {
 		
 		$rDsData = $this->iccCard_m->GetDataForComboBoxListView();
 
-		$result = $this->setPagination();
+		$result = $this->getIccCardWithPagination();
+		$rDsData["dsIccCardList"] = $result["dsIccCardList"];
+		$rDsData["paginationLinks"] = $result["paginationLinks"];
+		$dataRender["numRecordStart"] = 0;
+
+		return $rDsData;
+	}
+
+  // ---------------------------------------------------------------------------------------- Initial log view mode
+	private function GetDataForlogDisplay() {
+		$this->load->model("iccCard_m");
+		
+		$rDsData = $this->iccCard_m->GetDataForComboBoxListView();
+
+		$result = $this->getIccCardLogWithPagination();
 		$rDsData["dsIccCardList"] = $result["dsIccCardList"];
 		$rDsData["paginationLinks"] = $result["paginationLinks"];
 		$dataRender["numRecordStart"] = 0;

@@ -7,6 +7,7 @@ class IccCard_d extends CI_Model {
     public $colId = "id";
     public $colProjectName = "Project_Name";
     public $colFkCleanupType = "FK_Cleanup_Type";
+    public $colFkEcology = "FK_Ecology";
     public $colEventPlaceName = "Event_Place_Name";
     public $colFkAmphurCode = "FK_Amphur_Code";
     public $colFkProvinceCode = "FK_Province_Code";
@@ -35,8 +36,9 @@ class IccCard_d extends CI_Model {
     public $colDeleteBy = "Delete_By";
 // End Property
 
-    // Constructor.
+// Constructor.
 	public function __construct() {
         parent::__construct();
     }
+// End Constructor.
 }

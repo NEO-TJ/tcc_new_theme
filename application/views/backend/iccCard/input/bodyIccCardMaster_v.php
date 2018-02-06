@@ -87,6 +87,29 @@
 								value=<?php echo($dsInput['dsGeoLocation'][0]['id']); ?>>
 							</div>
 						</div>
+					<!-- Ecology -->
+						<div class="row">
+							<div class="col-xs-2 col-md-2 col-lg-2 text-left margin-input">
+								<div>พื้นที่ระบบนิเวศ</div>
+							</div>
+							<div class="col-xs-10 col-md-10 col-lg-10 margin-input">
+								<?php
+									foreach($dsEcology as $row) {
+									$rbEcologySelected = (
+															($dsInput['dsIccCardMaster'][0]['FK_Ecology']
+															== $row['id']) ? ' checked' : '');
+										echo(
+											'<label class="radio-inline">'
+											. '<input type="radio" class="input-require"'
+											. ' id="ecologyId" name="FK_Ecology"'
+											. ' value="' . $row['id'] . '"' . $rbEcologySelected . '>'
+											. $row['Name']
+											. '</label>'
+										);
+									}
+								?>
+							</div>
+						</div>
 					<!-- Province & Latitude -->
 						<div class="row">
 							<div class="col-xs-2 col-md-2 col-lg-2 text-left margin-input">
