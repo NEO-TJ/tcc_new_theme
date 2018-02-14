@@ -17,7 +17,7 @@
         if(opt.left == 'center'){
             opt.left=(screen.width/2)-(opt.width/2);
         }
-        // Edited by Koravit.
+    // Edited by Koravit.
         /*
         $(opt.obj2print+" input").each(function(){
             $(this).attr('value',$(this).val());
@@ -26,9 +26,9 @@
             $(this).html($(this).val());
         });
         */
-        // End Edited by Koravit.
+    // End Edited by Koravit.
         return elem.bind("click.printPreview", function () {
-            // Edited by Koravit.
+        // Edited by Koravit.
             $(opt.obj2print+" input").each(function(){
                 if(!$(this).val()) {
                     $(this).attr("placeholder", "");
@@ -42,7 +42,7 @@
                 let elemSelected = $(this).prop("id");
                 $("#" + elemSelected + " :first").html("");
             });
-            // End Edited by Koravit.
+        // End Edited by Koravit.
 
             let btnCode = elem[0].outerHTML;
             let headString = '';
