@@ -14,7 +14,8 @@ function ChangeDaterange(picker) {
 
     let data = {
         'strDateStart'  : strDateStart,
-        'strDateEnd'    : strDateEnd
+        'strDateEnd'    : strDateEnd,
+        'filterOrg'     : 0,
     };
 
     // Filter with daterange by ajax.
@@ -30,7 +31,7 @@ function ChangeDaterange(picker) {
         complete: function() {},
         success: function(result) {
             setSelectElementOfProvince(result.dsProvince, $('select#provinceCode'));
-            setSelectElementOfProjectName(result.dsProjectName, $('select#projectName'));
+            setSelectElementOfProjectName(result.dsProject, $('select#projectName'));
         }
     });
 }
@@ -45,7 +46,8 @@ function changeProvinceWithDateRange(e) {
     let data = {
         'strDateStart'  : strDateStart,
         'strDateEnd'    : strDateEnd,
-        'provinceCode'  : provinceCode
+        'provinceCode'  : provinceCode,
+        'filterOrg'     : 0,
     };
 
     // Filter with province code by ajax.
@@ -60,7 +62,7 @@ function changeProvinceWithDateRange(e) {
         },
         complete: function() {},
         success: function(result) {
-            setSelectElementOfProjectName(result.dsProjectName, $('select#projectName'));
+            setSelectElementOfProjectName(result.dsProject, $('select#projectName'));
         }
     });
 }
@@ -73,14 +75,14 @@ function changeProvinceWithDateRange(e) {
 function setSelectElementOfProvince(dataSet, $selector) {
     $selector.empty();
     $selector.append('<option value="0">เลือกทั้งหมด</option>');
-    for (var i = 0; i < dataSet.length; i++) {
+    for (let i = 0; i < dataSet.length; i++) {
         $selector.append('<option value="' + dataSet[i].ProvinceCode + '">' + dataSet[i].ProvinceName + '</option>');
     }
 }
 function setSelectElementOfProjectName(dataSet, $selector) {
     $selector.empty();
     $selector.append('<option value="0">เลือกทั้งหมด</option>');
-    for (var i = 0; i < dataSet.length; i++) {
+    for (let i = 0; i < dataSet.length; i++) {
         $selector.append('<option value="' + dataSet[i].id + '">' + dataSet[i].Project_Name + '</option>');
     }
 }

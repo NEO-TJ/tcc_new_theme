@@ -411,12 +411,16 @@ class Users extends MY_Controller {
                 $result = 'รหัสสมาชิกนี้ยังไม่ถูกเปิดให้ใช้งาน<br>'
                 . 'กรุณาติดต่อเจ้าหน้าที่ที่เกี่ยวข้อง';
             } else if($user['Status'] == 1) {
+                $this->load->model('dataclass/users_d');
                 $data = array(
-                    'id'                => $user['id'],
-                    'userId'            => $user['UserId'],
-                    'level'             => $user['Level'],
+                    'id'                => $user[$this->users_d->colId],
+                    'userId'            => $user[$this->users_d->colUserId],
+                    'level'             => $user[$this->users_d->colLevel],
+                    'org'               => ($user[$this->users_d->colFkOrg] > 0) 
+                                            ? $user[$this->users_d->colFkOrg]
+                                            : 0,
                     'isUserLoggedIn'    => TRUE,
-                    'user_name'         => $user['First_Name'],
+                    'user_name'         => $user[$this->users_d->colFirstName],
                 );
 
                 // set data to session

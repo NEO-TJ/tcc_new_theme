@@ -16,23 +16,33 @@ class AjaxService extends MY_Controller {
 	// ---------------------------------------------------------------------------------------- Get data to ComboBox
 	public function ajaxGetPlaceByDaterange() {
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$this->load->model("dataclass/users_d");
+
 			$strDateStart = $this->input->post('strDateStart');
 			$strDateEnd = $this->input->post('strDateEnd');
+			$blnFilterOrg = ( (($this->input->post('filterOrg') == 1)
+										&& ($this->session->userdata('level') != userLevel::Admin))
+										? TRUE : FALSE);
 
 			$this->load->model("iccCard_m");
-			$dsData = $this->iccCard_m->GetPlaceByDaterange($strDateStart, $strDateEnd);
+			$dsData = $this->iccCard_m->GetPlaceByDaterange($strDateStart, $strDateEnd, $blnFilterOrg);
 
 			echo json_encode($dsData);
 		}
 	}
 	public function ajaxGetFullSubProvince() {
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$this->load->model("dataclass/users_d");
+
 			$strDateStart = $this->input->post('strDateStart');
 			$strDateEnd = $this->input->post('strDateEnd');
 			$provinceCode = $this->input->post('provinceCode');
+			$blnFilterOrg = ( (($this->input->post('filterOrg') == 1)
+										&& ($this->session->userdata('level') != userLevel::Admin))
+										? TRUE : FALSE);
 
 			$this->load->model("iccCard_m");
-			$dsData = $this->iccCard_m->GetFullSubProvince($strDateStart, $strDateEnd, $provinceCode);
+			$dsData = $this->iccCard_m->GetFullSubProvince($strDateStart, $strDateEnd, $provinceCode, $blnFilterOrg);
 
 			echo json_encode($dsData);
 		}

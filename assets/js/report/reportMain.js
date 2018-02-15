@@ -7,8 +7,8 @@ $(document).ready(function() {
 
 // -------------------------------------------------------------------------------------------- Init DatetimePicker.
 function initDaterange() {
-    var start = moment().subtract(1, 'year').startOf('year');
-    var end = moment();
+    let start = moment().subtract(1, 'year').startOf('year');
+    let end = moment();
 
     function cb(start, end) {
         $('#daterange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -161,7 +161,7 @@ function renderChart(rDsData) {
         chartCaption = "กราฟเส้น";
     }
     FusionCharts.ready(function () {
-        var marineDebrisSinglePlaceChart = new FusionCharts({
+        let marineDebrisSinglePlaceChart = new FusionCharts({
             "type": chartTypeJSName,
             "renderAt": "marineDebrisSinglePlaceChart",
             "width": "100%",
@@ -211,7 +211,7 @@ function renderChart(rDsData) {
             }
         }).render();
 
-        var marineDebrisGroupingPlaceChart = new FusionCharts({
+        let marineDebrisGroupingPlaceChart = new FusionCharts({
             "type": "stackedcolumn3d",
             "renderAt": "marineDebrisPlaceGroupChart",
             "width": "100%",

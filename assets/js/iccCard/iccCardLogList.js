@@ -112,7 +112,7 @@ function filterThenRenderIccCardLogList(pageCode) {
 
 // ____________________________________________________________________________________________ Initial Page load.
 function initPageLoad() {
-    changeProvinceWithDateRange();
+    ChangeDaterange($('#daterange').data('daterangepicker'));
     filterThenRenderIccCardLogList();
 }
 // ____________________________________________________________________________________________ End Initial Page load.

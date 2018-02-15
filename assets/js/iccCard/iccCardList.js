@@ -6,8 +6,8 @@ $(document).ready(function() {
 });
 // -------------------------------------------------------------------------------------------- Init DatetimePicker.
 function initDaterange() {
-    var start = moment().subtract(10, 'year').startOf('year');
-    var end = moment();
+    let start = moment().subtract(10, 'year').startOf('year');
+    let end = moment();
 
     function cb(start, end) {
         $('#daterange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -157,7 +157,7 @@ function getConfirmInfo(e) {
 
 // ____________________________________________________________________________________________ Initial Page load.
 function initPageLoad() {
-    changeProvinceWithDateRange();
+    ChangeDaterange($('#daterange').data('daterangepicker'));
     filterThenRenderIccCardList();
 }
 // ____________________________________________________________________________________________ End Initial Page load.

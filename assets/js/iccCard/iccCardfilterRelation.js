@@ -20,7 +20,8 @@ function ChangeDaterange(picker) {
 
     let data = {
         'strDateStart'  : strDateStart,
-        'strDateEnd'    : strDateEnd
+        'strDateEnd'    : strDateEnd,
+        'filterOrg'     : 1,
     };
 
     // Filter with daterange by ajax.
@@ -38,7 +39,7 @@ function ChangeDaterange(picker) {
             setSelectElementOfProvince(result.dsProvince, $('select#provinceCode'));            
             setSelectElementOfAmphur(result.dsAmphur, $('select#amphurCode'));
             ( ($('select#projectName').length > 0) 
-                ? setSelectElementOfProjectName(result.dsProjectName, $('select#projectName')) 
+                ? setSelectElementOfProjectName(result.dsProject, $('select#projectName')) 
                 : null );
         }
     });
@@ -54,7 +55,8 @@ function changeProvinceWithDateRange(e) {
     let data = {
         'strDateStart'  : strDateStart,
         'strDateEnd'    : strDateEnd,
-        'provinceCode'  : provinceCode
+        'provinceCode'  : provinceCode,
+        'filterOrg'     : 1,
     };
 
     // Filter with province code by ajax.
@@ -70,7 +72,7 @@ function changeProvinceWithDateRange(e) {
         complete: function() {},
         success: function(result) {
             setSelectElementOfAmphur(result.dsAmphur, $('select#amphurCode'));
-            setSelectElementOfProjectName(result.dsProjectName, $('select#projectName'));
+            setSelectElementOfProjectName(result.dsProject, $('select#projectName'));
         }
     });
 }
@@ -78,7 +80,10 @@ function changeProvinceToAmphur(e) {
     let baseUrl = window.location.origin + "/" + window.location.pathname.split('/')[1] + "/";
     let provinceCode = $('select#provinceCode :selected').val();
 
-    let data = { 'provinceCode'  : provinceCode };
+    let data = { 
+        'provinceCode'  : provinceCode,
+        'filterOrg'     : 1,
+    };
 
     // Filter with province code by ajax.
     $.ajax({
@@ -92,7 +97,7 @@ function changeProvinceToAmphur(e) {
         },
         complete: function() {},
         success: function(result) {
-            setSelectElementOfAmphur(result.dsAmphur, $('select#amphurCode'));
+            setSelectElementOfAmphur(result.dsPlace, $('select#amphurCode'));
         }
     });
 }
@@ -105,21 +110,21 @@ function changeProvinceToAmphur(e) {
 function setSelectElementOfProvince(dataSet, $selector) {
     $selector.empty();
     $selector.append('<option value="0">เลือกทั้งหมด</option>');
-    for (var i = 0; i < dataSet.length; i++) {
+    for (let i = 0; i < dataSet.length; i++) {
         $selector.append('<option value="' + dataSet[i].ProvinceCode + '">' + dataSet[i].ProvinceName + '</option>');
     }
 }
 function setSelectElementOfAmphur(dataSet, $selector) {
     $selector.empty();
     $selector.append('<option value="0">เลือกทั้งหมด</option>');
-    for (var i = 0; i < dataSet.length; i++) {
+    for (let i = 0; i < dataSet.length; i++) {
         $selector.append('<option value="' + dataSet[i].AmphurCode + '">' + dataSet[i].AmphurName + '</option>');
     }
 }
 function setSelectElementOfProjectName(dataSet, $selector) {
     $selector.empty();
     $selector.append('<option value="0">เลือกทั้งหมด</option>');
-    for (var i = 0; i < dataSet.length; i++) {
+    for (let i = 0; i < dataSet.length; i++) {
         $selector.append('<option value="' + dataSet[i].id + '">' + dataSet[i].Project_Name + '</option>');
     }
 }

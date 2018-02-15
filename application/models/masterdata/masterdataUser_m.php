@@ -48,7 +48,7 @@ class MasterdataUser_m extends CI_Model {
 
 			. " FROM " . $this->users_d->tableName . " u"
 			. " LEFT JOIN " . $this->org_d->tableName . " o"
-			. " ON u." . $this->users_d->colFkDepartment . "=o." . $this->org_d->colId
+			. " ON u." . $this->users_d->colFkOrg . "=o." . $this->org_d->colId
 
 			. $criteria
 			. " ORDER BY u." . $this->users_d->colLevel
@@ -93,7 +93,7 @@ class MasterdataUser_m extends CI_Model {
 				$this->users_d->colAge					=> 0,
 				$this->users_d->colIdCardNumber	=> '',
 				$this->users_d->colLevel				=> 3,
-				$this->users_d->colFkDepartment	=> 0,
+				$this->users_d->colFkOrg				=> 0,
 				$this->users_d->colStatus				=> 1,
 		];
 
@@ -162,7 +162,7 @@ class MasterdataUser_m extends CI_Model {
 			$this->users_d->colPassword			=> $dsData[$this->users_d->colPassword],
 			$this->users_d->colEmail				=> $dsData[$this->users_d->colEmail],
 			$this->users_d->colLevel				=> $dsData[$this->users_d->colLevel],
-			$this->users_d->colFkDepartment	=> $dsData[$this->users_d->colFkDepartment],
+			$this->users_d->colFkOrg				=> $dsData[$this->users_d->colFkOrg],
 			$this->users_d->colStatus				=> 1,
 			$this->users_d->colFirstName		=> $dsData[$this->users_d->colFirstName],
 			$this->users_d->colLastName			=> $dsData[$this->users_d->colLastName],

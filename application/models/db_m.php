@@ -106,7 +106,6 @@ class Db_m extends CI_Model {
 
 	public function GetRowById($id=null, $rWhere=null, $strSelect=null) {
 		$this->db->select( (($strSelect !== NULL) ? $strSelect : '*') );
-
 		$this->db->from($this->tableName);
 
 		if($id != null){
@@ -117,7 +116,6 @@ class Db_m extends CI_Model {
 				$this->db->where($rWhere);
 			}
 		}
-
 		if ($this->sequenceOrder) {
 			$this->db->order_by($this->sequenceOrder);
 		} else if(($this->sequenceColumn) && ($this->sequenceType)){
@@ -127,11 +125,10 @@ class Db_m extends CI_Model {
 		$query = $this->db->get();
 
 		return $query->result_array();
-    }
+  }
 
-    public function GetRowLimit($searchColumn=null, $searchString=null, $sequenceColumn=null
-                        , $sequenceType=null, $limitStart=null, $limitEnd=null) {
-	    
+  public function GetRowLimit($searchColumn=null, $searchString=null, $sequenceColumn=null
+	, $sequenceType=null, $limitStart=null, $limitEnd=null) {
 		$this->db->select('*');
 		$this->db->from($this->tableName);
 
@@ -146,16 +143,15 @@ class Db_m extends CI_Model {
 			$this->db->order_by($this->sequenceColumn, $sequenceType);
 		}
 
-        if($limitStart && $limitEnd){
-          $this->db->limit($limitStart, $limitEnd);	
-        }
+		if($limitStart && $limitEnd){
+			$this->db->limit($limitStart, $limitEnd);	
+		}
+		if($limitStart != null){
+			$this->db->limit($limitStart, $limitEnd);    
+		}
 
-        if($limitStart != null){
-          $this->db->limit($limitStart, $limitEnd);    
-        }
-        
 		$query = $this->db->get();
-		
+
 		return $query->result_array(); 	
 	}
 

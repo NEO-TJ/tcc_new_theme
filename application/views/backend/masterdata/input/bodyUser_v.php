@@ -112,11 +112,11 @@
 		<span class="input-group-btn">
 			<button class="btn btn-primary disabled" type="button">แผนก : </button>
 		</span>
-		<select class="form-control startFocus" id="department" name="FK_Department">
+		<select class="form-control startFocus" id="department" name="FK_Org">
 			<option value="0" selected>กรุณาเลือกหน่วยงานที่สังกัด</option>
 			<?php 
 				foreach($dsDepartment as $row) {
-					$selected = (($dsInput['FK_Department'] == $row['id']) 
+					$selected = (($dsInput['FK_Org'] == $row['id']) 
 								? ' selected' : '');
 					echo '<option value='.$row['id'].$selected.'>'.$row['department'].'</option>';
 				}
