@@ -946,12 +946,14 @@ class IccCard_m extends CI_Model {
 			asort($rProvince);
 			$dsProvince = array();
 			foreach($rProvince as $key => $value) {
-				array_push($dsProvince
-					, array(
-						$this->province_d->colProvinceCode => $key,
-						$this->province_d->colProvinceName => $value
-					)
-				);
+				if($key > 0) {
+					array_push($dsProvince
+						, array(
+							$this->province_d->colProvinceCode => $key,
+							$this->province_d->colProvinceName => $value
+						)
+					);
+				}
 			}
 			$result['dsProvince'] = $dsProvince;
 		// End Create dsProvince.
@@ -960,12 +962,14 @@ class IccCard_m extends CI_Model {
 			asort($rAmphur);
 			$dsAmphur = array();
 			foreach($rAmphur as $key => $value) {
-				array_push($dsAmphur
-					, array(
-						$this->amphur_d->colAmphurCode => $key,
-						$this->amphur_d->colAmphurName => $value
-					)
-				);
+				if($key > 0) {
+					array_push($dsAmphur
+						, array(
+							$this->amphur_d->colAmphurCode => $key,
+							$this->amphur_d->colAmphurName => $value
+						)
+					);
+				}
 			}
 			$result['dsAmphur'] = $dsAmphur;
 		// End Create dsAmphur.

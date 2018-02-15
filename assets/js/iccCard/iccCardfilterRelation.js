@@ -3,8 +3,10 @@ $('#daterange').on('apply.daterangepicker', function(ev, picker) { ChangeDateran
 // -------------------------------------------------------------------------------------------- Province filter
 $('select#provinceCode').on('change', function(e) {
     if($('select#projectName').length > 0) {
+        // In case filter datetime, province, amphur and project.
         changeProvinceWithDateRange(e);
     } else {
+        // In case filter just only province and amphur.
         changeProvinceToAmphur(e);
     }
 });
@@ -76,18 +78,17 @@ function changeProvinceWithDateRange(e) {
         }
     });
 }
+
+// In case filter just only province and amphur.
 function changeProvinceToAmphur(e) {
     let baseUrl = window.location.origin + "/" + window.location.pathname.split('/')[1] + "/";
     let provinceCode = $('select#provinceCode :selected').val();
 
-    let data = { 
-        'provinceCode'  : provinceCode,
-        'filterOrg'     : 1,
-    };
+    let data = { 'provinceCode'  : provinceCode };
 
     // Filter with province code by ajax.
     $.ajax({
-        url: baseUrl + 'ajaxService/ajaxGetFullSubProvince',
+        url: baseUrl + 'ajaxService/ajaxGetAmphurByProvince',
         type: 'post',
         data: data,
         dataType: 'json',
@@ -97,7 +98,7 @@ function changeProvinceToAmphur(e) {
         },
         complete: function() {},
         success: function(result) {
-            setSelectElementOfAmphur(result.dsPlace, $('select#amphurCode'));
+            setSelectElementOfAmphur(result.dsAmphur, $('select#amphurCode'));
         }
     });
 }
