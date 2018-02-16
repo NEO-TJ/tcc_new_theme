@@ -1,5 +1,6 @@
 // ******************************************************************************************** Global Variable.
 let rDataSinglePlaceChart = Array();
+let rCaptionSinglePlaceChart = Array();
 // ******************************************************************************************** End Global Variable.
 
 
@@ -115,6 +116,12 @@ function filterThenRenderMainReport() {
         },
         complete: function(){},
         success: function(result) {
+            // Set Global MarineDebrisSinglePlace data.
+            rDataSinglePlaceChart = result.dsMarineDebrisSinglePlace;
+            // Set Global Caption.
+            rCaptionSinglePlaceChart = prepareChartMarineDebrisSinglePlace();
+
+            // Render all elements.
             renderMarkerMapPlace(result.dsMarineDebrisEventMapPlace);
             renderChart(result);
             renderTable(result.dsMarineDebrisSinglePlace, result.dsMarineDebrisGroupingPlace);
@@ -174,20 +181,35 @@ function renderMarkerMapPlace(data) {
 // ____________________________________________________________________________________________ Render Charts.
 function renderChart(rDsData) {
     // Render Marin debrise single place chart.
-    rDataSinglePlaceChart = rDsData.dsMarineDebrisSinglePlace;
-    //singlePlaceTableCaption
     renderChartMarineDebrisSinglePlace();
-    // End Render Marin debrise single place chart.
-
-    // Render Marin debrise group place chart.
+    // Render Marin debrise grouping place chart.
     renderChartMarineDebrisGroupingPlace(rDsData);
-    // Render Marin debrise group place chart.
 }
+
+function prepareChartMarineDebrisSinglePlace() {
+    $result = Array();
+    // Prepare set chart type
+    $result['chartTypeJSName'] = ($("input[name='chartType']:checked").val() == 1) ? "pie3d" : "line";
+    // Prepare project name caption.
+    $result['placeName'] = (($('select#projectName :selected').val() > 0)
+        ? $('select#projectName :selected').html()
+        : (
+            ($('select#provinceCode :selected').val() > 0)
+            ? "จังหวัด" + $('select#provinceCode :selected').html()
+            : "ประเทศไทย"
+        )
+    );
+    // Prepare period time caption.
+    let d1 = $('#daterange').data('daterangepicker').startDate;
+    let d2 = moment("10-01-2017", "MM-DD-YYYY");
+    let years = moment(d1).diff(d2, 'years');
+    $result['periodTime'] = Number("2561") + Number(years);
+
+    return $result;
+}
+
 // ============================================================================================ Single Place Charts.
 function renderChartMarineDebrisSinglePlace() {
-    // Prepare caption.
-    let rCaptionSinglePlaceChart = prepareChartMarineDebrisSinglePlace();
-    
     // Render chart.
     FusionCharts.ready(function () {
         let marineDebrisSinglePlaceChart = new FusionCharts({
@@ -204,8 +226,8 @@ function renderChartMarineDebrisSinglePlace() {
                         + "JPG=Export As JPG|"
                         + "PDF=Export As PDF|"
                         + "SVG=Export As SVG|",
-                    "caption": "ข้อมูลปริมาณขยะทะเล"
-                        + "ใน" + rCaptionSinglePlaceChart['placeName']
+                    "caption": "ข้อมูลปริมาณขยะทะเลใน"
+                        + rCaptionSinglePlaceChart['placeName']
                         + " (ปีงบประมาณ " + rCaptionSinglePlaceChart['periodTime'] + ")",
                     "subCaption": "โดยกรมทรัพยากรทางทะเลและชายฝั่ง",
                     "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
@@ -243,27 +265,7 @@ function renderChartMarineDebrisSinglePlace() {
         }).render();
     });
 }
-function prepareChartMarineDebrisSinglePlace() {
-    $result = Array();
-    // Prepare set chart type
-    $result['chartTypeJSName'] = ($("input[name='chartType']:checked").val() == 1) ? "pie3d" : "line";
-    // Prepare project name caption.
-    $result['placeName'] = (($('select#projectName :selected').val() > 0)
-        ? $('select#projectName :selected').html()
-        : (
-            ($('select#provinceCode :selected').val() > 0)
-            ? "จังหวัด" + $('select#provinceCode :selected').html()
-            : "ประเทศไทย"
-        )
-    );
-    // Prepare period time caption.
-    let d1 = $('#daterange').data('daterangepicker').startDate;
-    let d2 = moment("10-01-2017", "MM-DD-YYYY");
-    let years = moment(d1).diff(d2, 'years');
-    $result['periodTime'] = Number("2561") + Number(years);
 
-    return $result;
-}
 // ============================================================================================ Grouping Place Charts.
 function renderChartMarineDebrisGroupingPlace(rDsData) {
     // Prepare data and caption.
@@ -286,8 +288,10 @@ function renderChartMarineDebrisGroupingPlace(rDsData) {
                                     + "JPG=Export As JPG|"
                                     + "PDF=Export As PDF|"
                                     + "SVG=Export As SVG|",
-                    "caption": "รายงานแผนภูมิแท่ง เปรียบเทียบชนิดและปริมาณขยะทะเลในแต่ละสถานที่",
-                    "subCaption": "",
+                    "caption": "รายงานแผนภูมิแท่ง เปรียบเทียบชนิดและปริมาณขยะทะเลใน"
+                        + rCaptionSinglePlaceChart['placeName']
+                        + " (ปีงบประมาณ " + rCaptionSinglePlaceChart['periodTime'] + ")",
+                    "subCaption": "โดยกรมทรัพยากรทางทะเลและชายฝั่ง",
                     "xAxisName": "สถานที่",
                     "yAxisName": "จำนวน",
                     "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
@@ -374,10 +378,13 @@ function PrepareGroupingPlaceDataToChart(dsMarineDebrisGroupingPlace, placeCount
 
 // ____________________________________________________________________________________________ Table.
 function renderTable(dsMarineDebrisSinglePlace, dsMarineDebrisGroupingPlace) {
-    let rCaptionSinglePlaceChart = prepareChartMarineDebrisSinglePlace();
-    $('u#singlePlaceTableCaption').html("ตาราง แสดงข้อมูลปริมาณขยะทะเล"
-        + "ใน" + rCaptionSinglePlaceChart['placeName']
+    $('u#singlePlaceTableCaption').html("ตาราง แสดงข้อมูลปริมาณขยะทะเลใน"
+        + rCaptionSinglePlaceChart['placeName']
         + " (ปีงบประมาณ " + rCaptionSinglePlaceChart['periodTime'] + ")");
+    $('u#groupingPlaceTableCaption').html("เปรียบเทียบชนิดและปริมาณขยะทะเลใน"
+        + rCaptionSinglePlaceChart['placeName']
+        + " (ปีงบประมาณ " + rCaptionSinglePlaceChart['periodTime'] + ")");
+
 
     $('table#marineDebrisSinglePlaceTable > tbody').html(genTableSinglePlace(dsMarineDebrisSinglePlace));
     $('table#marineDebrisGroupingPlaceTable > tbody').html(genTableGroupPlace(dsMarineDebrisGroupingPlace));

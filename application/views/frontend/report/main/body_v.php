@@ -216,7 +216,9 @@
 															<a data-toggle="collapse" 
 															data-parent="#collapseMarineDebrisPlaceCompareReportParent" 
 															href="#collapseMarineDebrisPlaceCompareReport">
-																<u class="u-caption">ตาราง เปรียบเทียบชนิดและปริมาณขยะทะเลในแต่ละสถานที่</u>
+																<u class="u-caption" id="groupingPlaceTableCaption">
+																	ตาราง เปรียบเทียบชนิดและปริมาณขยะทะเลในแต่ละสถานที่
+																</u>
 															</a>
 															: 
 															<a href="#" id="marineDebrisGroupingPlaceExport">
