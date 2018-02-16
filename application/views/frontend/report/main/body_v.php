@@ -158,7 +158,9 @@
 															<a data-toggle="collapse" 
 															data-parent="#collapseMarineDebrisSinglePlaceReportParent" 
 															href="#collapseMarineDebrisSinglePlaceReport">
-																<u class="u-caption">ตาราง แสดงข้อมูลปริมาณขยะทะเลในประเทศไทย</u>
+																<u class="u-caption" id="singlePlaceTableCaption">
+																	ตาราง แสดงข้อมูลปริมาณขยะทะเลในประเทศไทย
+																</u>
 															</a>
 															 : 
 															<a href="#" id="marineDebrisSinglePlaceExport">

@@ -1,3 +1,8 @@
+// ******************************************************************************************** Global Variable.
+let rDataSinglePlaceChart = Array();
+// ******************************************************************************************** End Global Variable.
+
+
 // ******************************************************************************************** Event.
 // -------------------------------------------------------------------------------------------- Page Load.
 $(document).ready(function() {
@@ -47,6 +52,11 @@ function initDaterange() {
 }
 
 
+
+// -------------------------------------------------------------------------------------------- radio button.
+$("input#chartPie3").on("click", renderChartMarineDebrisSinglePlace);
+$("input#chartLine").on("click", renderChartMarineDebrisSinglePlace);
+
 // -------------------------------------------------------------------------------------------- Click Export table to csv
 $("a#marineDebrisSinglePlaceExport").click(function(e){
     e.preventDefault();
@@ -66,11 +76,11 @@ $("a#marineDebrisGroupingPlaceExport").click(function(e){
         filename: "MarinDebris_ByPlace.xls" //do not include extension
     });
 });
+
 // ____________________________________________________________________________________________ Force AJAX.
 // -------------------------------------------------------------------------------------------- Click Render main report
 $('button#genReport').on('click', function(e) { filterThenRenderMainReport(); });
 // ******************************************************************************************** End Event.
-
 
 
 
@@ -117,6 +127,9 @@ function filterThenRenderMainReport() {
 
 
 
+
+
+
 // ******************************************************************************************** Method.
 // ____________________________________________________________________________________________ Initial Page load.
 function initPageLoad() {
@@ -154,23 +167,31 @@ function renderMarkerMapPlace(data) {
 // ____________________________________________________________________________________________ End Map.
 
 
+
+
+
+
 // ____________________________________________________________________________________________ Render Charts.
 function renderChart(rDsData) {
-    let rDataChart = PrepareDataToChart(rDsData.dsMarineDebrisGroupingPlace
-                                    , rDsData.placeCount, rDsData.rankingLimit);
+    // Render Marin debrise single place chart.
+    rDataSinglePlaceChart = rDsData.dsMarineDebrisSinglePlace;
+    //singlePlaceTableCaption
+    renderChartMarineDebrisSinglePlace();
+    // End Render Marin debrise single place chart.
 
-    let chartType = $("input[name='chartType']:checked").val();
-    let chartTypeJSName, chartCaption;
-    if(chartType == 1) {
-        chartTypeJSName = "pie3d";
-        chartCaption = "แผนภาพวงกลม";
-    } else {
-        chartTypeJSName = "line";
-        chartCaption = "กราฟเส้น";
-    }
+    // Render Marin debrise group place chart.
+    renderChartMarineDebrisGroupingPlace(rDsData);
+    // Render Marin debrise group place chart.
+}
+// ============================================================================================ Single Place Charts.
+function renderChartMarineDebrisSinglePlace() {
+    // Prepare caption.
+    let rCaptionSinglePlaceChart = prepareChartMarineDebrisSinglePlace();
+    
+    // Render chart.
     FusionCharts.ready(function () {
         let marineDebrisSinglePlaceChart = new FusionCharts({
-            "type": chartTypeJSName,
+            "type": rCaptionSinglePlaceChart['chartTypeJSName'],
             "renderAt": "marineDebrisSinglePlaceChart",
             "width": "100%",
             "height": "450",
@@ -178,13 +199,15 @@ function renderChart(rDsData) {
             "dataSource": {
                 "chart": {
                     "exportEnabled": "1",
-                    "exportFileName": "marinDebris_" + chartTypeJSName + "Chart",
+                    "exportFileName": "marinDebris_" + rCaptionSinglePlaceChart['chartTypeJSName'] + "Chart",
                     "exportFormats": "PNG=Export As PNG|"
-                                    + "JPG=Export As JPG|"
-                                    + "PDF=Export As PDF|"
-                                    + "SVG=Export As SVG|",
-                    "caption": chartCaption + " ข้อมูลปริมาณขยะทะเลในประเทศไทย",
-                    "subCaption": "",
+                        + "JPG=Export As JPG|"
+                        + "PDF=Export As PDF|"
+                        + "SVG=Export As SVG|",
+                    "caption": "ข้อมูลปริมาณขยะทะเล"
+                        + "ใน" + rCaptionSinglePlaceChart['placeName']
+                        + " (ปีงบประมาณ " + rCaptionSinglePlaceChart['periodTime'] + ")",
+                    "subCaption": "โดยกรมทรัพยากรทางทะเลและชายฝั่ง",
                     "paletteColors": "#0075c2,#1aaf5d,#f2c500,#f45b00,#8e0000",
                     "bgColor": "#ffffff",
                     "showBorder": "0",
@@ -215,10 +238,40 @@ function renderChart(rDsData) {
                     "legendItemFontColor": "#666666",
                     "useDataPlotColorForLabels": "1",
                 },
-                "data": rDsData.dsMarineDebrisSinglePlace
+                "data": rDataSinglePlaceChart
             }
         }).render();
+    });
+}
+function prepareChartMarineDebrisSinglePlace() {
+    $result = Array();
+    // Prepare set chart type
+    $result['chartTypeJSName'] = ($("input[name='chartType']:checked").val() == 1) ? "pie3d" : "line";
+    // Prepare project name caption.
+    $result['placeName'] = (($('select#projectName :selected').val() > 0)
+        ? $('select#projectName :selected').html()
+        : (
+            ($('select#provinceCode :selected').val() > 0)
+            ? "จังหวัด" + $('select#provinceCode :selected').html()
+            : "ประเทศไทย"
+        )
+    );
+    // Prepare period time caption.
+    let d1 = $('#daterange').data('daterangepicker').startDate;
+    let d2 = moment("10-01-2017", "MM-DD-YYYY");
+    let years = moment(d1).diff(d2, 'years');
+    $result['periodTime'] = Number("2561") + Number(years);
 
+    return $result;
+}
+// ============================================================================================ Grouping Place Charts.
+function renderChartMarineDebrisGroupingPlace(rDsData) {
+    // Prepare data and caption.
+    let rDataGroupingPlaceChart = PrepareGroupingPlaceDataToChart(
+        rDsData.dsMarineDebrisGroupingPlace, rDsData.placeCount, rDsData.rankingLimit);
+
+    // Render chart.
+    FusionCharts.ready(function () {
         let marineDebrisGroupingPlaceChart = new FusionCharts({
             "type": "stackedcolumn3d",
             "renderAt": "marineDebrisPlaceGroupChart",
@@ -268,13 +321,13 @@ function renderChart(rDsData) {
                     "legendItemFontColor": "#666666",
                     "useDataPlotColorForLabels": "1"
                 },
-                "categories": [{"category" : rDataChart.category}],
-                "dataset" : rDataChart.dataset
+                "categories": [{"category" : rDataGroupingPlaceChart.category}],
+                "dataset" : rDataGroupingPlaceChart.dataset
             }
         }).render();
     });
 }
-function PrepareDataToChart(dsMarineDebrisGroupingPlace, placeCount, rankingLimit) {
+function PrepareGroupingPlaceDataToChart(dsMarineDebrisGroupingPlace, placeCount, rankingLimit) {
     let dataset = new Array();
     let rCategory = new Array();
     let rDataRanking = new Array();
@@ -315,8 +368,17 @@ function PrepareDataToChart(dsMarineDebrisGroupingPlace, placeCount, rankingLimi
 // ____________________________________________________________________________________________ End Render Charts.
 
 
+
+
+
+
 // ____________________________________________________________________________________________ Table.
 function renderTable(dsMarineDebrisSinglePlace, dsMarineDebrisGroupingPlace) {
+    let rCaptionSinglePlaceChart = prepareChartMarineDebrisSinglePlace();
+    $('u#singlePlaceTableCaption').html("ตาราง แสดงข้อมูลปริมาณขยะทะเล"
+        + "ใน" + rCaptionSinglePlaceChart['placeName']
+        + " (ปีงบประมาณ " + rCaptionSinglePlaceChart['periodTime'] + ")");
+
     $('table#marineDebrisSinglePlaceTable > tbody').html(genTableSinglePlace(dsMarineDebrisSinglePlace));
     $('table#marineDebrisGroupingPlaceTable > tbody').html(genTableGroupPlace(dsMarineDebrisGroupingPlace));
 }
