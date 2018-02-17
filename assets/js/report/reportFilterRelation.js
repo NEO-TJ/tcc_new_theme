@@ -1,7 +1,14 @@
+// -------------------------------------------------------------------------------------------- Binding multiselect element.
+function bindingMultiselectProvinceCode() {
+    $('select#provinceCode').multiselect({
+        header: true,
+        noneSelectedText: 'เลือกทั้งหมด',
+        close: function(event, ui) { changeProvinceWithDateRange(); }
+    }).multiselectfilter();
+}
+
 // -------------------------------------------------------------------------------------------- Daterange filter.
 $('#daterange').on('apply.daterangepicker', function(ev, picker) { ChangeDaterange(picker); });
-// -------------------------------------------------------------------------------------------- Province filter
-$('select#provinceCode').on('change', function(e) { changeProvinceWithDateRange(e); });
 
 
 // ******************************************************************************************** Method
@@ -30,29 +37,31 @@ function ChangeDaterange(picker) {
         },
         complete: function() {},
         success: function(result) {
-            setSelectElementOfProvince(result.dsProvince, $('select#provinceCode'));
+            setSelectElementOfProvince(result.dsProvince);
             setSelectElementOfProjectName(result.dsProject, $('select#projectName'));
         }
     });
 }
 // ____________________________________________________________________________________________ Province
-function changeProvinceWithDateRange(e) {
+function changeProvinceWithDateRange() {
     let baseUrl = window.location.origin + "/" + window.location.pathname.split('/')[1] + "/";
     picker = $('#daterange').data('daterangepicker');
     let strDateStart = picker.startDate.format('YYYY-MM-DD');
     let strDateEnd = picker.endDate.format('YYYY-MM-DD');
-    let provinceCode = $('select#provinceCode :selected').val();
+    let rProvinceCode = $('select#provinceCode').multiselect("getChecked").map(function() {
+        return this.value;
+    }).get();
 
     let data = {
         'strDateStart'  : strDateStart,
         'strDateEnd'    : strDateEnd,
-        'provinceCode'  : provinceCode,
+        'rProvinceCode' : rProvinceCode,
         'filterOrg'     : 0,
     };
 
     // Filter with province code by ajax.
     $.ajax({
-        url: baseUrl + 'ajaxService/ajaxGetFullSubProvince',
+        url: baseUrl + 'ajaxService/ajaxGetPlaceByMultiProvince',
         type: 'post',
         data: data,
         dataType: 'json',
@@ -72,12 +81,17 @@ function changeProvinceWithDateRange(e) {
 // ____________________________________________________________________________________________ End Province
 // -------------------------------------------------------------------------------------------- Tool
 // ____________________________________________________________________________________________ Set Select Elecment
-function setSelectElementOfProvince(dataSet, $selector) {
-    $selector.empty();
-    $selector.append('<option value="0">เลือกทั้งหมด</option>');
+function setSelectElementOfProvince(dataSet) {
+    elementId = 'provinceCode';
+    let elementTagInputSelecter = '<select class="form-control multi-select input-require"'
+        + ' id="' + elementId + '" multiple="multiple">';
     for (let i = 0; i < dataSet.length; i++) {
-        $selector.append('<option value="' + dataSet[i].ProvinceCode + '">' + dataSet[i].ProvinceName + '</option>');
+        elementTagInputSelecter += '<option value="' + dataSet[i].ProvinceCode + '">';
+        elementTagInputSelecter += dataSet[i].ProvinceName + '</option>';
     }
+
+    $('div#' + elementId).html(elementTagInputSelecter);
+    bindingMultiselectProvinceCode();
 }
 function setSelectElementOfProjectName(dataSet, $selector) {
     $selector.empty();

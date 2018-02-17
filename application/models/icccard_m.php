@@ -434,7 +434,8 @@ class IccCard_m extends CI_Model {
 
 		return $result;
 	}
-	public function GetFullSubProvince($strDateStart=null, $strDateEnd=null, $provinceCode=null, $blnFilterOrg=FALSE) {
+	public function GetPlaceByProvince($strDateStart=null
+	, $strDateEnd=null, $provinceCode=null, $blnFilterOrg=FALSE) {
 		$sqlWhere = $this->CreateSqlWhereDaterangeFilter($strDateStart, $strDateEnd, $provinceCode);
 		$dsPlaceFull = $this->GetDsPlaceDataByDaterange($sqlWhere, $blnFilterOrg);
 		$dsPlace = $this->CreatePlaceComboBox($dsPlaceFull);
@@ -444,8 +445,20 @@ class IccCard_m extends CI_Model {
 
 		return $result;
 	}
-	public function GetOnlyAmphurSubProvince($provinceCode=null) {
+	public function GetOnlyAmphurByProvince($provinceCode=null) {
 		$result['dsAmphur'] = $this->GetDsAmphurByProvinceCode($provinceCode);
+
+		return $result;
+	}
+	// +++ To view : AJAX - Multiselected+++++++++++++++++++++++++++++++++
+	public function GetPlaceByMultiProvince($strDateStart=null
+	, $strDateEnd=null, $rProvinceCode=[], $blnFilterOrg=FALSE) {
+		// Start function.
+		$sqlWhere = $this->CreateSqlWhereDaterangeFilterWithMultiProvince($strDateStart, $strDateEnd, $rProvinceCode);
+		$dsPlaceFull = $this->GetDsPlaceDataByDaterange($sqlWhere, $blnFilterOrg);
+		$dsPlace = $this->CreatePlaceComboBox($dsPlaceFull);
+
+		$result['dsProject'] = $dsPlace['dsProject'];
 
 		return $result;
 	}
@@ -1176,6 +1189,25 @@ class IccCard_m extends CI_Model {
 			. (($provinceCode !== NULL) && ($provinceCode > 0)
 				? " AND c." . $this->iccCard_d->colFkProvinceCode . "=" . $provinceCode 
 				: NULL )
+			. " AND c." . $this->iccCard_d->colEventDate
+			. " BETWEEN '" . $strDateStart . "%' AND '" . $strDateEnd . "%'";
+
+		return $sqlWhere;
+	}
+
+	private function CreateSqlWhereDaterangeFilterWithMultiProvince(
+	$strDateStart=null, $strDateEnd=null, $rProvinceCode=[]) {
+		// Start function.
+		$this->load->model('dataclass/iccCard_d');
+
+		// Prepare Criteria.
+		$this->load->model('helper_m');
+		$criteriaArrProvinceCode = $this->helper_m->GenSqlCriteriaIn('c.'.$this->iccCard_d->colFkProvinceCode
+			, $rProvinceCode, ' AND ');
+
+		// Create sql string where.
+		$sqlWhere = " WHERE c." . $this->iccCard_d->colActive . "=1"
+			. $criteriaArrProvinceCode
 			. " AND c." . $this->iccCard_d->colEventDate
 			. " BETWEEN '" . $strDateStart . "%' AND '" . $strDateEnd . "%'";
 

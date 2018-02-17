@@ -1,10 +1,5 @@
 <?php
 class Report extends MY_Controller {
-// Property.
-	private $captionPage = [1 => "รายงานข้อมูลขยะทะเลในประเทศไทย"];
-// End Property.
-
-
 // Constructor.
 	public function __construct() {
 		parent::__construct();
@@ -15,15 +10,8 @@ class Report extends MY_Controller {
 
 
 // Method start.
+	// Routing function : Main report.
 	public function index() {
-		$this->mainReport();
-	}
-// End Method start.
-
-
-
-// Routing function.
-	private function mainReport() {
 		// Prepare data of view.
 		$this->data = $this->GetInitialMainReportData();
 
@@ -34,23 +22,25 @@ class Report extends MY_Controller {
 		$this->footer = 'frontend/report/main/footer_v';
 		$this->renderWithTemplate();
 	}
-// End Routing function.
+// End Method start.
 
 
 // AJAX function.
 	// ---------------------------------------------------------------------------------------- Get Data for Combobox report and map.
 	public function ajaxGetMainReportData() {
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$this->load->model("helper_m");
+
 			$rankingLimit = $this->input->post('rankingLimit');
 			$strDateStart = $this->input->post('strDateStart');
 			$strDateEnd = $this->input->post('strDateEnd');
-			$provinceCode = $this->input->post('provinceCode');
-			$provinceCode = ( ($provinceCode > 0 ) ? $provinceCode : null);
+			$rProvinceCode = $this->helper_m->getPostArrayHelper($this->input->post('rProvinceCode'));
 			$iccCardId = $this->input->post('iccCardId');
 			$iccCardId = ((($iccCardId == "0" ) || ($iccCardId == 0 )) ? null : $iccCardId);
 
 			$this->load->model("report_m");
-			$result = $this->report_m->GetMainReportData($rankingLimit, $strDateStart, $strDateEnd, $provinceCode, $iccCardId);
+			$result = $this->report_m->GetMainReportData($rankingLimit
+				, $strDateStart, $strDateEnd, $rProvinceCode, $iccCardId);
 
 			echo json_encode($result);
 		}

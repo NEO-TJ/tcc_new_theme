@@ -7,7 +7,11 @@ let rCaptionSinglePlaceChart = Array();
 // ******************************************************************************************** Event.
 // -------------------------------------------------------------------------------------------- Page Load.
 $(document).ready(function() {
+    // Multiselect element.
+    bindingMultiselectProvinceCode();
+    // Daterange element.
     initDaterange();
+    
     initPageLoad();
 });
 
@@ -52,6 +56,12 @@ function initDaterange() {
     cb(start, end);
 }
 
+// ____________________________________________________________________________________________ Initial Page load.
+function initPageLoad() {
+    ChangeDaterange($('#daterange').data('daterangepicker'));
+    filterThenRenderMainReport();
+}
+
 
 
 // -------------------------------------------------------------------------------------------- radio button.
@@ -93,14 +103,16 @@ function filterThenRenderMainReport() {
     let rankingLimit = $("input[name='rankingLimit']:checked").val();
     let strDateStart = picker.startDate.format('YYYY-MM-DD');
     let strDateEnd = picker.endDate.format('YYYY-MM-DD');
-    let provinceCode = $('select#provinceCode :selected').val();
     let iccCardId = $('select#projectName :selected').val();
+    let rProvinceCode = $('select#provinceCode').multiselect("getChecked").map(function() {
+        return this.value;
+    }).get();
 
     let data = {
         'rankingLimit'  : rankingLimit,
         'strDateStart'  : strDateStart,
         'strDateEnd'    : strDateEnd,
-        'provinceCode'  : provinceCode,
+        'rProvinceCode' : rProvinceCode,
         'iccCardId'     : iccCardId
     }
 
@@ -119,7 +131,7 @@ function filterThenRenderMainReport() {
             // Set Global MarineDebrisSinglePlace data.
             rDataSinglePlaceChart = result.dsMarineDebrisSinglePlace;
             // Set Global Caption.
-            rCaptionSinglePlaceChart = prepareChartMarineDebrisSinglePlace();
+            rCaptionSinglePlaceChart = createCaptionReportByFilter();
 
             // Render all elements.
             renderMarkerMapPlace(result.dsMarineDebrisEventMapPlace);
@@ -138,12 +150,63 @@ function filterThenRenderMainReport() {
 
 
 // ******************************************************************************************** Method.
-// ____________________________________________________________________________________________ Initial Page load.
-function initPageLoad() {
-    ChangeDaterange($('#daterange').data('daterangepicker'));
-    filterThenRenderMainReport();
+// ____________________________________________________________________________________________ MultiSelect.
+function getMultiProvinceName() {
+    let selText = "";
+    $("select#provinceCode :selected").each(function () {
+        let $this = $(this);
+        if ($this.length) {
+            selText += $this.text() + ", ";
+        }
+    });
+    if(selText.length > 3) {
+        selText = selText.substring(0, selText.length - 2)
+    }
+
+    return selText;
 }
-// ____________________________________________________________________________________________ End Initial Page load.
+function createReportCaptionMultiProvince() {
+    let rProvinceCode = $('select#provinceCode').multiselect("getChecked").map(function() {
+        return this.value;
+    }).get();
+
+    let strPlaceName = (($('select#projectName :selected').val() > 0)
+        ? $('select#projectName :selected').html()
+        : (
+            (rProvinceCode.length == 0)
+            ? "ประเทศไทย"
+            : (
+                (rProvinceCode.length == 1)
+                ? "จังหวัด" + $('select#provinceCode :selected').html()
+                : " " + rProvinceCode.length + " จังหวัด"
+            )
+        )
+    );
+
+    return strPlaceName;
+}
+function createTableCaptionMultiProvince() {
+    let rProvinceCode = $('select#provinceCode').multiselect("getChecked").map(function() {
+        return this.value;
+    }).get();
+
+    let strPlaceName = (($('select#projectName :selected').val() > 0)
+        ? $('select#projectName :selected').html()
+        : (
+            (rProvinceCode.length == 0)
+            ? "ในประเทศไทย"
+            : (
+                (rProvinceCode.length == 1)
+                ? $('select#provinceCode :selected').html()
+                : getMultiProvinceName()
+            )
+        )
+    );
+
+    return strPlaceName;
+}
+
+
 
 
 // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Render.
@@ -179,6 +242,19 @@ function renderMarkerMapPlace(data) {
 
 
 // ____________________________________________________________________________________________ Render Charts.
+function createCaptionReportByFilter(){
+    result = Array();
+    // Prepare project name caption.
+    result['placeName'] = createReportCaptionMultiProvince();
+    // Prepare period time caption.
+    let d1 = $('#daterange').data('daterangepicker').startDate;
+    let d2 = moment("10-01-2017", "MM-DD-YYYY");
+    let years = moment(d1).diff(d2, 'years');
+    result['periodTime'] = Number("2561") + Number(years);
+
+    return result;
+}
+
 function renderChart(rDsData) {
     // Render Marin debrise single place chart.
     renderChartMarineDebrisSinglePlace();
@@ -186,34 +262,14 @@ function renderChart(rDsData) {
     renderChartMarineDebrisGroupingPlace(rDsData);
 }
 
-function prepareChartMarineDebrisSinglePlace() {
-    $result = Array();
-    // Prepare set chart type
-    $result['chartTypeJSName'] = ($("input[name='chartType']:checked").val() == 1) ? "pie3d" : "line";
-    // Prepare project name caption.
-    $result['placeName'] = (($('select#projectName :selected').val() > 0)
-        ? $('select#projectName :selected').html()
-        : (
-            ($('select#provinceCode :selected').val() > 0)
-            ? "จังหวัด" + $('select#provinceCode :selected').html()
-            : "ประเทศไทย"
-        )
-    );
-    // Prepare period time caption.
-    let d1 = $('#daterange').data('daterangepicker').startDate;
-    let d2 = moment("10-01-2017", "MM-DD-YYYY");
-    let years = moment(d1).diff(d2, 'years');
-    $result['periodTime'] = Number("2561") + Number(years);
-
-    return $result;
-}
-
 // ============================================================================================ Single Place Charts.
 function renderChartMarineDebrisSinglePlace() {
+    // Get chart type.
+    let chartTypeJSName = ($("input[name='chartType']:checked").val() == 1) ? "pie3d" : "line";
     // Render chart.
     FusionCharts.ready(function () {
         let marineDebrisSinglePlaceChart = new FusionCharts({
-            "type": rCaptionSinglePlaceChart['chartTypeJSName'],
+            "type": chartTypeJSName,
             "renderAt": "marineDebrisSinglePlaceChart",
             "width": "100%",
             "height": "450",
@@ -221,7 +277,7 @@ function renderChartMarineDebrisSinglePlace() {
             "dataSource": {
                 "chart": {
                     "exportEnabled": "1",
-                    "exportFileName": "marinDebris_" + rCaptionSinglePlaceChart['chartTypeJSName'] + "Chart",
+                    "exportFileName": "marinDebris_" + chartTypeJSName + "Chart",
                     "exportFormats": "PNG=Export As PNG|"
                         + "JPG=Export As JPG|"
                         + "PDF=Export As PDF|"
@@ -374,8 +430,6 @@ function PrepareGroupingPlaceDataToChart(dsMarineDebrisGroupingPlace, placeCount
 
 
 
-
-
 // ____________________________________________________________________________________________ Table.
 function renderTable(dsMarineDebrisSinglePlace, dsMarineDebrisGroupingPlace) {
     $('u#singlePlaceTableCaption').html("ตาราง แสดงข้อมูลปริมาณขยะทะเลใน"
@@ -395,23 +449,22 @@ function genTableSinglePlace(data) {
 	let htmlTable = "";
     
     let rankingLimit = $("input[name='rankingLimit']:checked").val();
-    let placeName = ( ($('select#provinceCode :selected').val() == 0) 
-        ? "ประเทศไทย" : $('select#provinceCode :selected').text());
+    let placeName = createTableCaptionMultiProvince();
     let summaryMarineDebrisQty = 0;
     let row;
 
     for(let i=0; i<data.length; i++) {
         row = data[i];
 
-        htmlTable += genData(placeName, row["label"], row["value"], "", i+1);
+        htmlTable += genData(placeName, row["label"], row["value"], null, i+1);
         summaryMarineDebrisQty = parseInt(summaryMarineDebrisQty) + parseInt(row["value"]);
 
         placeName = "";
     }
 
     htmlTable += ( (rankingLimit == 10) 
-        ? genSummary(summaryMarineDebrisQty, false)
-        : genSummary(false, summaryMarineDebrisQty) );
+        ? genSummary(summaryMarineDebrisQty, false, null)
+        : genSummary(false, summaryMarineDebrisQty, null) );
     
     return htmlTable;
 }
@@ -439,7 +492,7 @@ function genTableGroupPlace(data) {
         } else {
             if(iRanking > 0) {
                 htmlTable += genSummary( ((rankingLimit == 10) ? totalTopTenMarineDebrisQty : false)
-                    , totalMarineDebrisQty);
+                    , totalMarineDebrisQty, true);
                 totalMarineDebrisQty = 0;
                 totalTopTenMarineDebrisQty = 0;
             }
@@ -454,7 +507,8 @@ function genTableGroupPlace(data) {
         iRanking++;
     }
     if(iRanking > 0) {
-        htmlTable += genSummary( ((rankingLimit == 10) ? totalTopTenMarineDebrisQty : false), totalMarineDebrisQty);
+        htmlTable += genSummary( ((rankingLimit == 10) ? totalTopTenMarineDebrisQty : false)
+            , totalMarineDebrisQty, true);
     }
 
     return htmlTable;
@@ -466,7 +520,7 @@ function genData(placeName, marineDebrisName, marineDebrisQty, placeOrder, marin
 	let htmlTable;
 
     htmlTable +='<tr>';
-    htmlTable +='<td class="text-right">' + placeOrder + '</td>';
+    htmlTable +=((placeOrder === null) ? '' : '<td class="text-right">' + placeOrder + '</td>');
     htmlTable +='<td class="text-left">' + placeName + '</td>';
     htmlTable +='<td class="text-right">' + marineDebrisOrder + '.</td>';
     htmlTable +='<td class="text-left">' + marineDebrisName + '</td>';
@@ -475,12 +529,12 @@ function genData(placeName, marineDebrisName, marineDebrisQty, placeOrder, marin
 
 	return htmlTable;
 }
-function genSummary(summaryTopTenMarineDebrisQty, summaryMarineDebrisQty) {
+function genSummary(summaryTopTenMarineDebrisQty, summaryMarineDebrisQty, showPlaceOrder) {
 	let htmlTable;
     // Top 10 marine debris.
     if(summaryTopTenMarineDebrisQty != false) {
         htmlTable +='<tr class="bg-warning color-table-sum">';
-        htmlTable +='<td class="text-right"></td>';
+        htmlTable +=((showPlaceOrder) ? '<td class="text-right"></td>' : '');
         htmlTable +='<td class="text-left"></td>';
         htmlTable +='<td class="text-right"></td>';
         htmlTable +='<td class="text-left">';
@@ -502,7 +556,7 @@ function genSummary(summaryTopTenMarineDebrisQty, summaryMarineDebrisQty) {
     // Top 10 marine debris.
     if(summaryMarineDebrisQty != false) {
         htmlTable +='<tr class="bg-warning color-table-sum">';
-        htmlTable +='<td class="text-right"></td>';
+        htmlTable +=((showPlaceOrder) ? '<td class="text-right"></td>' : '');
         htmlTable +='<td class="text-left"></td>';
         htmlTable +='<td class="text-right"></td>';
         htmlTable +='<td class="text-left">';

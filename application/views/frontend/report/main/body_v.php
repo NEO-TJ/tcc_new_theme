@@ -44,9 +44,8 @@
 									<div class="col-xs-1 col-md-1 col-lg-1 text-left margin-input">
 										<div>จังหวัด : </div>
 									</div>
-									<div class="col-xs-5 col-md-5 col-lg-5 margin-input">
-										<select class="form-control input-require" 
-										id="provinceCode">
+									<div class="col-xs-5 col-md-5 col-lg-5 margin-input" id="provinceCode">
+										<select class="form-control multi-select input-require" id="provinceCode" multiple="multiple">
 										</select>
 									</div>
 								<!-- Daterange Sub Section -->
@@ -176,9 +175,6 @@
 															id="marineDebrisSinglePlaceTable" style="width: 100%;">
 																<thead>
 																	<tr class="bg-info-detail-1">
-																		<th class="text-center header-border-report">
-																			<h4><strong></strong></h4>
-																		</th>
 																		<th class="text-center header-border-report">
 																			<h4><strong>สถานที่</strong></h4>
 																		</th>

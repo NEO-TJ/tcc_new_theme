@@ -30,7 +30,7 @@ class AjaxService extends MY_Controller {
 			echo json_encode($dsData);
 		}
 	}
-	public function ajaxGetFullSubProvince() {
+	public function ajaxGetPlaceByProvince() {
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$this->load->model("dataclass/users_d");
 
@@ -42,7 +42,7 @@ class AjaxService extends MY_Controller {
 										? TRUE : FALSE);
 
 			$this->load->model("iccCard_m");
-			$dsData = $this->iccCard_m->GetFullSubProvince($strDateStart, $strDateEnd, $provinceCode, $blnFilterOrg);
+			$dsData = $this->iccCard_m->GetPlaceByProvince($strDateStart, $strDateEnd, $provinceCode, $blnFilterOrg);
 
 			echo json_encode($dsData);
 		}
@@ -52,12 +52,30 @@ class AjaxService extends MY_Controller {
 			$provinceCode = $this->input->post('provinceCode');
 
 			$this->load->model("iccCard_m");
-			$dsData = $this->iccCard_m->GetOnlyAmphurSubProvince($provinceCode);
+			$dsData = $this->iccCard_m->GetOnlyAmphurByProvince($provinceCode);
 
 			echo json_encode($dsData);
 		}
 	}
+	// ---------------------------------------------------------------------------------------- Get data from Multiselect ComboBox
+	public function ajaxGetPlaceByMultiProvince() {
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$this->load->model("dataclass/users_d");
+			$this->load->model("helper_m");
 
+			$strDateStart = $this->input->post('strDateStart');
+			$strDateEnd = $this->input->post('strDateEnd');
+			$rProvinceCode = $this->helper_m->getPostArrayHelper($this->input->post('rProvinceCode'));
+			$blnFilterOrg = ( (($this->input->post('filterOrg') == 1)
+										&& ($this->session->userdata('level') != userLevel::Admin))
+										? TRUE : FALSE);
+
+			$this->load->model("iccCard_m");
+			$dsData = $this->iccCard_m->GetPlaceByMultiProvince($strDateStart, $strDateEnd, $rProvinceCode, $blnFilterOrg);
+
+			echo json_encode($dsData);
+		}
+	}
 
 
 	// ---------------------------------------------------------------------------------------- Get data for comment

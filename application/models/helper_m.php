@@ -5,12 +5,23 @@ class Helper_m extends CI_Model {
 
 
     // *************************************************** Helper ************************************************
+    // ________________________________________________ String Tool ______________________________________________
+    public function IsNullOrEmptyString($strValue){
+        return (!isset($strValue) || trim($strValue)==='');
+    }
     // _________________________________________________ Array Tool ______________________________________________
-    public function myJsonDecode($serializeArray) {     // convertSerializeArrayToPairArray
+    // +++ Convert Serialize Array To Pair Array +++++++++++++++++++++++++
+    public function myJsonDecode($serializeArray) {
         $result = array_combine(array_column($serializeArray, 'name'), array_column($serializeArray, 'value'));
 
         return $result;
     }
+    // +++ Check post ajax value from array to array +++++++++++++++++++++
+	public function getPostArrayHelper($arrayData) {
+		return (((count($arrayData) == 1) && ($arrayData[0] == '')) ? $arrayData = [] : $arrayData);
+	}
+
+
 
     // ________________________________________________ Random string ____________________________________________
     public function random_str($length, $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
@@ -44,29 +55,39 @@ class Helper_m extends CI_Model {
 
 
     // __________________________________________________ Criteria _______________________________________________
-    public function CreateCriteriaIn($columnName, $arrayDataIN, $criteria, $criteriaPrefix) {
-        if(count($arrayDataIN) > 0) {
-            $criteria = $this->GenSqlCriteriaIn($columnName, $arrayDataIN, $criteria);
+    public function CreateCriteriaIn($columnName, $rDataIN, $criteria, $criteriaPrefix) {
+        if(count($rDataIN) > 0) {
+            $criteria = $criteria . ' && ' . $columnName . ' IN (';
+    	 
+            for($i=0 ; $i < count($rDataIN) ; $i++) {
+                $criteria = $criteria . $rDataIN[$i] . ',';
+            }
+            $criteria = substr($criteria, 0, strlen($criteria) - 1);
+            $criteria = $criteria . ')';
         
             if(strlen($criteria) > 4) {
                 $criteria = substr($criteria, 4, strlen($criteria) - 4);
         
-                $criteria = $criteriaPrefix.$criteria;
+                $criteria = $criteriaPrefix . $criteria;
             }
         }
     	
         return $criteria;
     }
 
-    public function GenSqlCriteriaIn($columnName, $arrayDataIN, $criteria) {
-    	$criteria = $criteria.' && '.$columnName.' IN (';
-    	 
-    	for($i=0 ; $i < count($arrayDataIN) ; $i++) {
-    		$criteria = $criteria.$arrayDataIN[$i].',';
-    	}
-    	$criteria = substr($criteria, 0, strlen($criteria) - 1);
-    	$criteria = $criteria.')';
-    	 
+    public function GenSqlCriteriaIn($columnName, $rDataIN, $criteriaPrefix) {
+        $criteria = "";
+        if(count($rDataIN) > 0) {
+            $criteria = $columnName . ' IN (';
+            
+            for($i=0 ; $i < count($rDataIN) ; $i++) {
+                $criteria .= $rDataIN[$i] . ',';
+            }
+            $criteria = substr($criteria, 0, strlen($criteria) - 1);
+            $criteria = $criteria . ')';
+        }
+        $criteria = ($this->IsNullOrEmptyString($criteria) ? "" : ($criteriaPrefix . $criteria));
+
     	return $criteria;
 	}
 

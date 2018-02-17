@@ -63,7 +63,7 @@ function changeProvinceWithDateRange(e) {
 
     // Filter with province code by ajax.
     $.ajax({
-        url: baseUrl + 'ajaxService/ajaxGetFullSubProvince',
+        url: baseUrl + 'ajaxService/ajaxGetPlaceByProvince',
         type: 'post',
         data: data,
         dataType: 'json',

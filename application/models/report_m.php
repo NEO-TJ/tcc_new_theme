@@ -13,14 +13,14 @@ class Report_m extends CI_Model {
 // Public function.
 	// ________________________________________________________________________________________ Get data for report.
 	// ---------------------------------------------------------------------------------------- Get all report data.
-	public function GetMainReportData($rankingLimit=10, $strDateStart=null, $strDateEnd=null
-		, $provinceCode=null, $iccCardId=null) {
+	public function GetMainReportData($rankingLimit=10
+	, $strDateStart=null, $strDateEnd=null, $rProvinceCode=[], $iccCardId=null) {
 
-		$sqlStrWhere = $this->CreateSqlWhere($strDateStart, $strDateEnd, $provinceCode, $iccCardId);
+		$sqlStrWhere = $this->CreateSqlWhere($strDateStart, $strDateEnd, $rProvinceCode, $iccCardId);
 
 		$result["dsMarineDebrisSinglePlace"] = $this->GetMarineDebrisSinglePlace($sqlStrWhere, $rankingLimit);
 		$result["dsMarineDebrisEventMapPlace"] = $this->GetMarineDebrisEventMapPlace($sqlStrWhere);
-		$rResult = ( ($provinceCode === NULL) 
+		$rResult = ( (count($rProvinceCode) == 0) 
 			? $this->GetMarineDebrisProvinceGroup($sqlStrWhere, $rankingLimit) 
 			: $this->GetMarineDebrisEventGroup($sqlStrWhere, $rankingLimit));
 		$result["dsMarineDebrisGroupingPlace"] = $rResult["dataset"];
@@ -306,15 +306,20 @@ class Report_m extends CI_Model {
 
 // Private function.
 	// ---------------------------------------------------------------------------------------- Gen Sql
-	private function CreateSqlWhere($strDateStart=null, $strDateEnd=null, $provinceCode=null, $iccCardId=null) {
+	private function CreateSqlWhere($strDateStart=null, $strDateEnd=null, $rProvinceCode=[], $iccCardId=null) {
 		$this->load->model('dataclass/iccCard_d');
 		$this->load->model('dataclass/garbageTransaction_d');
 		$this->load->model('dataclass/garbage_d');
 
+		// Prepare Criteria.
+		$this->load->model('helper_m');
+		$criteriaArrProvinceCode = $this->helper_m->GenSqlCriteriaIn('c.'.$this->iccCard_d->colFkProvinceCode
+			, $rProvinceCode, ' AND ');
+
 		// Create sql string where.
 		$sqlWhere = " WHERE c." . $this->iccCard_d->colActive . "=1"
 			. " AND gt." . $this->garbageTransaction_d->colActive . "=1"
-			. (($provinceCode!==NULL) ? " AND c." . $this->iccCard_d->colFkProvinceCode . "=" . $provinceCode : NULL )
+			. $criteriaArrProvinceCode
 			. (($iccCardId!==NULL) ? " AND c." . $this->iccCard_d->colId . "=" . $iccCardId : NULL )
 			. ((($strDateStart!==NULL) && ($strDateEnd!==NULL)) ?
 			" AND c." . $this->iccCard_d->colEventDate
