@@ -3,7 +3,7 @@ function bindingMultiselectProvinceCode() {
     $('select#provinceCode').multiselect({
         header: true,
         noneSelectedText: 'เลือกทั้งหมด',
-        close: function(event, ui) { changeProvinceWithDateRange(); }
+        close: function(event, ui) { changeProvinceToPlaceWithDateRange(); }
     }).multiselectfilter();
 }
 
@@ -43,7 +43,7 @@ function ChangeDaterange(picker) {
     });
 }
 // ____________________________________________________________________________________________ Province
-function changeProvinceWithDateRange() {
+function changeProvinceToPlaceWithDateRange() {
     let baseUrl = window.location.origin + "/" + window.location.pathname.split('/')[1] + "/";
     picker = $('#daterange').data('daterangepicker');
     let strDateStart = picker.startDate.format('YYYY-MM-DD');

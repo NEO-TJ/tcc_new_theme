@@ -81,22 +81,42 @@
                     <!-- Authentication Links -->
                     <li><a class="go-related-website-link green" href="http://www.dmcr.go.th" target="_blank">กลับสู่เว็บหลัก ทช.</a></li>
                     <li><a class="go-related-website-link red" href="http://marinegiscenter.dmcr.go.th" target="_blank">ระบบฐานข้อมูลกลาง</a></li>
-                    <li><a href="<?php echo base_url('report'); ?>">ข้อมูลขยะ</a></li>
-                    <li class="dropdown">
+                    <li <?php if($this->uri->segment(1) == 'report'){echo 'class="my-active"';}?>>
+                        <a href="<?php echo base_url('report'); ?>">ข้อมูลขยะ</a>
+                    </li>
+                    <li class="dropdown<?php if($this->uri->segment(1) == 'publicRelations'){echo ' my-active';}?>">
                         <a href="#" data-toggle="dropdown" role="button" aria-expanded="false">
                             ข่าวสาร<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="<?php echo base_url('publicRelations/content_list/'); ?>">ข่าวสาร</a></li>
-                            <li><a href="<?php echo base_url('publicRelations/content_list/'); ?>">บทความ</a></li>
-                            <li><a href="<?php echo base_url('publicRelations/content_list/'); ?>">ข่าวสารโครงการ</a></li>
-                            <li><a href="<?php echo base_url('publicRelations/content_list/'); ?>">ความรู้เกี่ยวกับที่มาของขยะทะเล</a></li>
+                            <li <?php if(($this->uri->segment(1) == 'publicRelations') 
+                            && ($this->uri->segment(2) == 'content_list')){echo 'class="my-active"';}?>>
+                                <a href="<?php echo base_url('publicRelations/content_list/'); ?>">ข่าวสาร</a>
+                            </li>
+                            <li <?php if(($this->uri->segment(1) == 'publicRelations') 
+                            && ($this->uri->segment(2) == 'content_list2')){echo 'class="my-active"';}?>>
+                                <a href="<?php echo base_url('publicRelations/content_list/'); ?>">บทความ</a>
+                            </li>
+                            <li <?php if(($this->uri->segment(1) == 'publicRelations') 
+                            && ($this->uri->segment(2) == 'content_list3')){echo 'class="my-active"';}?>>
+                                <a href="<?php echo base_url('publicRelations/content_list/'); ?>">ข่าวสารโครงการ</a>
+                            </li>
+                            <li <?php if(($this->uri->segment(1) == 'publicRelations') 
+                            && ($this->uri->segment(2) == 'content_list4')){echo 'class="my-active"';}?>>
+                                <a href="<?php echo base_url('publicRelations/content_list/'); ?>">ความรู้เกี่ยวกับที่มาของขยะทะเล</a>
+                            </li>
                         </ul>
                     </li>
-                    <li><a href="<?php echo base_url('mapPlace'); ?>">แผนที่</a></li>
-                    <li><a href="<?php echo base_url('eventImageGallery'); ?>">ภาพกิจกรรม</a></li>
-                    <li><a href="#">เกี่ยวกับเรา</a></li>
-                    <li class="dropdown">
+                    <li <?php if($this->uri->segment(1) == 'mapPlace'){echo 'class="my-active"';}?>>
+                        <a href="<?php echo base_url('mapPlace'); ?>">แผนที่</a>
+                    </li>
+                    <li <?php if($this->uri->segment(1) == 'eventImageGallery'){echo 'class="my-active"';}?>>
+                        <a href="<?php echo base_url('eventImageGallery'); ?>">ภาพกิจกรรม</a>
+                    </li>
+                    <li <?php if($this->uri->segment(1) == 'aboutUs'){echo 'class="my-active"';}?>>
+                        <a href="#">เกี่ยวกับเรา</a>
+                    </li>
+                    <li class="dropdown<?php if($this->uri->segment(1) == 'users'){echo ' my-active';}?>">
                         <?php if ( $this->session->userdata('isUserLoggedIn') ) : ?>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                             role="button" aria-expanded="false">
@@ -113,7 +133,8 @@
                                 </li>
                                 <li class="divider"></li>
                                 <?php } ?>
-                                <li>
+                                <li <?php if(($this->uri->segment(1) == 'users') 
+                                && ($this->uri->segment(2) == 'profile')){echo 'class="my-active"';}?>>
                                     <a href="<?php echo base_url('users/profile'); ?>">
                                         <i class="fa fa-address-card-o"></i>ข้อมูลส่วนตัว
                                     </a>

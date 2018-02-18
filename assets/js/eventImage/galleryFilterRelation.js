@@ -1,15 +1,7 @@
 // -------------------------------------------------------------------------------------------- Daterange filter.
 $('#daterange').on('apply.daterangepicker', function(ev, picker) { ChangeDaterange(picker); });
 // -------------------------------------------------------------------------------------------- Province filter
-$('select#provinceCode').on('change', function(e) {
-    if($('select#projectName').length > 0) {
-        // In case filter datetime, province, amphur and project.
-        changeProvinceToPlaceWithDateRange(e);
-    } else {
-        // In case filter just only province and amphur.
-        changeProvinceToAmphur(e);
-    }
-});
+$('select#provinceCode').on('change', function(e) { changeProvinceToPlaceWithDateRange(e); });
 
 
 // ******************************************************************************************** Method
@@ -23,7 +15,7 @@ function ChangeDaterange(picker) {
     let data = {
         'strDateStart'  : strDateStart,
         'strDateEnd'    : strDateEnd,
-        'filterOrg'     : 1,
+        'filterOrg'     : 0,
     };
 
     // Filter with daterange by ajax.
@@ -58,7 +50,7 @@ function changeProvinceToPlaceWithDateRange(e) {
         'strDateStart'  : strDateStart,
         'strDateEnd'    : strDateEnd,
         'provinceCode'  : provinceCode,
-        'filterOrg'     : 1,
+        'filterOrg'     : 0,
     };
 
     // Filter with province code by ajax.
@@ -75,30 +67,6 @@ function changeProvinceToPlaceWithDateRange(e) {
         success: function(result) {
             setSelectElementOfAmphur(result.dsAmphur, $('select#amphurCode'));
             setSelectElementOfProjectName(result.dsProject, $('select#projectName'));
-        }
-    });
-}
-
-// In case filter just only province and amphur.
-function changeProvinceToAmphur(e) {
-    let baseUrl = window.location.origin + "/" + window.location.pathname.split('/')[1] + "/";
-    let provinceCode = $('select#provinceCode :selected').val();
-
-    let data = { 'provinceCode'  : provinceCode };
-
-    // Filter with province code by ajax.
-    $.ajax({
-        url: baseUrl + 'ajaxService/ajaxGetAmphurByProvince',
-        type: 'post',
-        data: data,
-        dataType: 'json',
-        beforeSend: function() {},
-        error: function(xhr, textStatus) {
-            swal("Error", textStatus, "error");
-        },
-        complete: function() {},
-        success: function(result) {
-            setSelectElementOfAmphur(result.dsAmphur, $('select#amphurCode'));
         }
     });
 }

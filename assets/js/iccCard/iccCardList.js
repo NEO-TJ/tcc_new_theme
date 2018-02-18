@@ -5,37 +5,12 @@ $(document).ready(function() {
     initPageLoad();
 });
 
-// -------------------------------------------------------------------------------------------- Init DatetimePicker.
-function initDaterange() {
-    let start = moment("10-01-2017", "MM-DD-YYYY");
-    let end = moment("09-30-2018", "MM-DD-YYYY");
-
-    function cb(start, end) {
-        $('#daterange span').html(start.format('MMMM D, YYYY') + '  ---  ' + end.format('MMMM D, YYYY'));
-    }
-
-    $('#daterange').daterangepicker({
-        startDate: start,
-        endDate: end,
-        ranges: {
-            'วันนี้': [moment(), moment()],
-            'เดือนนี้': [moment().startOf('month'), moment().endOf('month')],
-
-            'ปีงบประมาณ 2561'
-                : [moment("10-01-2017", "MM-DD-YYYY"), moment("09-30-2018", "MM-DD-YYYY")],
-            'ปีงบประมาณ 2560'
-                : [moment("10-01-2016", "MM-DD-YYYY"), moment("09-30-2017", "MM-DD-YYYY")],
-            'ปีงบประมาณ 2559'
-                : [moment("10-01-2015", "MM-DD-YYYY"), moment("09-30-2016", "MM-DD-YYYY")],
-            'ปีงบประมาณ 2558'
-                : [moment("10-01-2014", "MM-DD-YYYY"), moment("09-30-2015", "MM-DD-YYYY")],
-            'ปีงบประมาณ 2557'
-                : [moment("10-01-2013", "MM-DD-YYYY"), moment("09-30-2014", "MM-DD-YYYY")],
-        }
-    }, cb);
-
-    cb(start, end);
+// ____________________________________________________________________________________________ Initial Page load.
+function initPageLoad() {
+    ChangeDaterange($('#daterange').data('daterangepicker'));
+    filterThenRenderIccCardList();
 }
+// ____________________________________________________________________________________________ End Initial Page load.
 // -------------------------------------------------------------------------------------------- End Page Load.
 
 
@@ -154,11 +129,4 @@ function getConfirmInfo(e) {
     return rData;
 }
 // -------------------------------------------------------------------------------------------- End Tool.
-
-// ____________________________________________________________________________________________ Initial Page load.
-function initPageLoad() {
-    ChangeDaterange($('#daterange').data('daterangepicker'));
-    filterThenRenderIccCardList();
-}
-// ____________________________________________________________________________________________ End Initial Page load.
 // ******************************************************************************************** End Method.

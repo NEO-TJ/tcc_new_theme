@@ -11,5 +11,6 @@
     // My Java Script.
     echo $map['js'];
     echo js_asset('report/reportMain.js');
+    echo js_asset('customize/initialDaterange.js');
     echo js_asset('report/reportFilterRelation.js');
 ?>

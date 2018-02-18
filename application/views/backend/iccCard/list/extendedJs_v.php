@@ -5,6 +5,7 @@
 
     // My Java Script.
     echo js_asset('iccCard/iccCardList.js');
+    echo js_asset('customize/initialDaterange.js');
     echo js_asset('iccCard/iccCardFilterRelation.js');
     echo js_asset('iccCard/iccCardStatus.js');
 ?>

@@ -4,38 +4,13 @@ $(document).ready(function() {
     initDaterange();
     initPageLoad();
 });
-// -------------------------------------------------------------------------------------------- Init DatetimePicker.
-function initDaterange() {
-    var start = moment().subtract(10, 'year').startOf('year');
-    var end = moment();
 
-    function cb(start, end) {
-        $('#daterange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-    }
-
-    $('#daterange').daterangepicker({
-        startDate: start,
-        endDate: end,
-        ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month')
-            , moment().subtract(1, 'month').endOf('month')],
-
-            'This Year': [moment().startOf('year'), moment().endOf('year')],
-            'Last Year': [moment().subtract(1, 'year').startOf('year')
-            , moment().subtract(1, 'year').endOf('year')],
-
-            '2 Year': [moment().subtract(1, 'year').startOf('year'), moment().endOf('year')],
-            '5 Year': [moment().subtract(5, 'year').startOf('year'), moment().endOf('year')],
-            '10 Year': [moment().subtract(10, 'year').startOf('year'), moment().endOf('year')]
-        }
-    }, cb);
-
-    cb(start, end);
+// ____________________________________________________________________________________________ Initial Page load.
+function initPageLoad() {
+    ChangeDaterange($('#daterange').data('daterangepicker'));
+    filterThenRenderIccCardList();
 }
+// ____________________________________________________________________________________________ End Initial Page load.
 // -------------------------------------------------------------------------------------------- End Page Load.
 
 
@@ -102,13 +77,4 @@ function filterThenRenderIccCardList(pageCode) {
     });
 }
 // -------------------------------------------------------------------------------------------- End AJAX.
-
-
-
-// ____________________________________________________________________________________________ Initial Page load.
-function initPageLoad() {
-    changeProvinceWithDateRange();
-    filterThenRenderIccCardList();
-}
-// ____________________________________________________________________________________________ End Initial Page load.
 // ******************************************************************************************** End Method.

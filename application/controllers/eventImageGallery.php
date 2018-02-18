@@ -25,7 +25,6 @@ class EventImageGallery extends MY_Controller {
 	private function listView() {
 		// Prepare data of view.
 		$this->data = $this->GetDataForListView();
-
 		// Prepare Template.
 		$this->extendedCss = 'frontend/eventImageGallery/list/extendedCss_v';
 		$this->body = 'frontend/eventImageGallery/list/body_v';

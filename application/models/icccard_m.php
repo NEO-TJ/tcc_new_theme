@@ -842,9 +842,10 @@ class IccCard_m extends CI_Model {
 		$this->db_m->tableName = $this->org_d->tableName;
 		$this->db_m->sequenceColumn = $this->org_d->colDepartment;
 		$strSelect = $this->org_d->colId . ', ' . $this->org_d->colDepartment;
-		$strWhere = (($this->session->userdata('level') != userLevel::Admin)
-								? array($this->org_d->colId => $this->session->userdata('org'))
-								: null);
+		$strWhere = (($this->session->userdata('level') == userLevel::Specialist) 
+								|| ($this->session->userdata('level') == userLevel::Staff)
+									? array($this->org_d->colId => $this->session->userdata('org'))
+									: null);
 		$dataSet = $this->db_m->GetRowById($id, $strWhere, $strSelect);
     
 		return $dataSet;
@@ -1173,7 +1174,8 @@ class IccCard_m extends CI_Model {
 					: NULL );
 		}
 
-		if($this->session->userdata('level') != userLevel::Admin) {
+		if(($this->session->userdata('level') == userLevel::Specialist) 
+		|| ($this->session->userdata('level') == userLevel::Staff)) {
 			$sqlWhere .= ((count($sqlWhere) > 0) ? " AND " : " WHERE");
 			$sqlWhere .= " c." . $this->iccCard_d->colFkOrg . " = " . $this->session->userdata('org');
 		}
