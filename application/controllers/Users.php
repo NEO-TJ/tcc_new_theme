@@ -179,7 +179,7 @@ class Users extends MY_Controller {
 
                     // Insert profile in database.
                     $this->load->model("userAuthentication_m");
-                    if($this->userAuthentication_m->Save(null, $userData)) {
+                    if($this->userAuthentication_m->SaveRegister($userData)) {
                         if($this->sendEmailActivateUser($this->input->post('Email'))){
                             $this->session->set_userdata('success_msg'
                                 , 'ระบบได้ทำการลงทะเบียนสมาชิกใหม่เรียบร้อยแล้ว<br>'

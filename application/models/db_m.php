@@ -63,6 +63,20 @@ class Db_m extends CI_Model {
 
 		return $result;
 	}
+
+	public function SaveCustomChkDup($rWhere=[], $data) {
+		$result = false;
+ 
+		// check in database
+		if($this->Find($rWhere)) {
+			$id = $this->dataSet["id"];
+			$result = $this->UpdateRow($id, $data);
+		} else {
+			$result = $this->CreateRow($data);
+		}
+
+		return $result;
+	}
 // End Save.
 
 

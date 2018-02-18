@@ -60,7 +60,8 @@ class UserAuthentication_m extends CI_Model {
         $this->db_m->tableName = $this->users_d->tableName;
         $rWhere = [
             $this->users_d->colEmail => $email,
-            $this->users_d->colStatus . ' !=' => userStatus::Deleted
+            $this->users_d->colStatus . ' !=' => userStatus::Deleted,
+            $this->users_d->colStatus . ' !=' => userStatus::Inactive
         ];
 		$result = $this->db_m->Find($rWhere);
 
@@ -118,6 +119,21 @@ class UserAuthentication_m extends CI_Model {
 		// Check custom duplication.
 		$this->db_m->tableName = $this->users_d->tableName;
 		$result = $this->db_m->Save($id, $dsData);
+
+		return $result;
+    }
+    public function SaveRegister($dsData) {
+        $this->load->model('dataclass/users_d');
+        $this->load->model('db_m');
+        // Encrypt password.
+        if (array_key_exists($this->users_d->colPassword, $dsData)) {
+            $dsData[$this->users_d->colPassword] = md5($dsData[$this->users_d->colPassword]);
+        }
+
+		// Check custom duplication.
+        $this->db_m->tableName = $this->users_d->tableName;
+        $rWhere = array($this->users_d->colUserId => $dsData[$this->users_d->colUserId]);
+		$result = $this->db_m->SaveCustomChkDup($rWhere, $dsData);
 
 		return $result;
     }
