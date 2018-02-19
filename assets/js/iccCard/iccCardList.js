@@ -13,6 +13,16 @@ function initPageLoad() {
 // ____________________________________________________________________________________________ End Initial Page load.
 // -------------------------------------------------------------------------------------------- End Page Load.
 
+// -------------------------------------------------------------------------------------------- Download Icc card.
+$(document).on("click", "a#iccCardDownload", function () {
+    $.fileDownload($(this).prop('href'), {
+        failMessageHtml: "<center>พบข้อผิดพลาดบางอย่างการดาว์นโหลด</center>"
+            + "<center>Icc card file</center><br><center>กรุณาลองใหม่อีกครั้ง</center>"
+    })
+    .done(function () { alert('เสร็จสิ้นการดาว์นโหลด!'); });
+    return false; //this is critical to stop the click event which will trigger a normal file download!
+});
+// -------------------------------------------------------------------------------------------- End Download Icc card.
 
 
 // -------------------------------------------------------------------------------------------- Submit.
