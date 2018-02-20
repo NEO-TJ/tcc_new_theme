@@ -15,6 +15,7 @@ class Db_m extends CI_Model {
 	private $colFkTransaction = "FK_ICC_Card";
 	private $colActive = "Active";
 	private $colDeleteBy = "Delete_By";
+	private $colDeleteDate = "Delete_Date";
 // End Property.
 
 
@@ -345,8 +346,13 @@ class Db_m extends CI_Model {
 	public function InactiveTransactionRow($fkId, $rId=[0]) {
 		$this->db->where($this->colFkTransaction, $fkId);
 		$this->db->where_not_in($this->colId, $rId);
-		$this->db->update($this->tableName
-						, [$this->colActive => 0, $this->colDeleteBy => $this->session->userdata['id']]);
+		$this->db->update($this->tableName,
+			[
+				$this->colActive => 0,
+				$this->colDeleteBy => $this->session->userdata['id'],
+				$this->colDeleteDate => date('Y-m-d H:i:s')
+			]
+		);
 		
 		$report = array();
 		$report['error'] = $this->db->_error_number();

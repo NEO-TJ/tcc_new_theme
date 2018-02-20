@@ -54,6 +54,59 @@ class EventImageAdmin extends MY_Controller {
 // End Routing function.
 
 
+// AJAX function.
+	// ---------------------------------------------------------------------------------------- Delete files from disk and DB.
+	public function ajaxDeleteImage() {
+		if(!($this->is_logged())) {exit(0);}
+
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$resultThumb = FALSE;
+			$resultOriginal = FALSE;
+			$rResult["response"] = 0;
+			$rResult["htmlTable"] = "";
+
+			$iccCardId = $this->input->post('iccCardId');
+			$eventImageId = $this->input->post('eventImageId');
+			$fileName = $this->input->post('fileName');
+			$pathFileThumb = './uploads/Event_Images/thumbs/' . $fileName;
+			$pathFileOriginal = './uploads/Event_Images/' . $fileName;
+
+			// Check file exist or not : thumb
+			if(file_exists($pathFileThumb)) {
+				unlink($pathFileThumb);
+				$resultThumb = !file_exists($pathFileThumb);
+			} else {
+				$resultThumb = TRUE;
+			}
+
+			// Check file exist or not : original
+			if(file_exists($pathFileOriginal)) {
+				unlink($pathFileOriginal);
+				$resultOriginal = !file_exists($pathFileOriginal);
+			} else {
+				$resultOriginal = TRUE;
+			}
+
+			if($resultThumb && $resultOriginal) {
+				$this->load->model("eventImage_m");
+
+				if($this->eventImage_m->InactiveImage($eventImageId)) {
+					// Generate html table.
+					$data['dsImage'] = $this->eventImage_m->GetDsEventImage($iccCardId);
+		
+					$rResult["htmlTable"] = $this->load->view("backend/eventImageAdmin/bodyTableImage_v", $data, TRUE);
+					$rResult["response"] = 1;
+				}
+			}
+
+			echo json_encode($rResult);
+		}
+	}
+// End AJAX function.
+
+
+
+
 
 // Private function.
 	private function GetDataForRenderMainPage($iccCardId=null) {
@@ -121,8 +174,8 @@ class EventImageAdmin extends MY_Controller {
 					$configi['source_image'] = $path;
 					$configi['new_image'] = $target_path;
 					$configi['maintain_ratio'] = TRUE;
-					$configi['width'] = 80; // new size
-					$configi['height'] = 80;
+					$configi['width'] = 120; // new size
+					$configi['height'] = 120;
 				// Thumpnail : Push Config to library.
 					$this->load->library('image_lib');
 					$this->image_lib->initialize($configi);

@@ -1,0 +1,19 @@
+.content-img{
+    width: 130px;
+    float: left;
+    margin-right: 5px;
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding: 5px;
+    float: center;
+}
+
+/* Delete */
+.content-img span{
+    border: 2px solid red;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    color: red;
+}
+.content-img span:hover{ cursor: pointer; }

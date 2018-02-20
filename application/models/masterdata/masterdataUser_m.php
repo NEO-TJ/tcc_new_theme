@@ -142,6 +142,7 @@ class MasterdataUser_m extends CI_Model {
 		$this->db_m->tableName = $this->users_d->tableName;
 		$data = array(
 			$this->users_d->colStatus => 0,
+			$this->users_d->colDeleteDate => date('Y-m-d H:i:s'),
 			$this->users_d->colDeleteBy => $this->session->userdata['id']
 		);
 

@@ -694,8 +694,11 @@ class IccCard_m extends CI_Model {
 
 		// Update at Master tbl (Icc_Card).
 		$this->db_m->tableName = $this->iccCard_d->tableName;
-		$data = array($this->iccCard_d->colActive => 0
-				, $this->iccCard_d->colDeleteBy => $this->session->userdata['id']);
+		$data = array(
+			$this->iccCard_d->colActive => 0,
+			$this->iccCard_d->colDeleteBy => $this->session->userdata['id'],
+			$this->iccCard_d->colDeleteDate => date('Y-m-d H:i:s')
+		);
 		if( $this->db_m->UpdateRow($iccCardId, $data, null) ) {
 			// Start update detail tbl.
 

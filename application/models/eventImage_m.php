@@ -38,29 +38,29 @@ class EventImage_m extends CI_Model {
 		$this->load->model("db_m");
 
 		$sqlStr = "SELECT c." . $this->iccCard_d->colId
-				. ", c." .$this->iccCard_d->colProjectName
-				. ", c." .$this->iccCard_d->colEventDate
-				. ", p." .$this->province_d->colProvinceName
-				. ", a." .$this->amphur_d->colAmphurName
+			. ", c." .$this->iccCard_d->colProjectName
+			. ", c." .$this->iccCard_d->colEventDate
+			. ", p." .$this->province_d->colProvinceName
+			. ", a." .$this->amphur_d->colAmphurName
 
-				. " FROM " . $this->iccCard_d->tableName . " c"
+			. " FROM " . $this->iccCard_d->tableName . " c"
 
-				. " LEFT JOIN " . $this->province_d->tableName . " AS p"
-				. " ON c." . $this->iccCard_d->colFkProvinceCode
-				. "=p." . $this->province_d->colProvinceCode
+			. " LEFT JOIN " . $this->province_d->tableName . " AS p"
+			. " ON c." . $this->iccCard_d->colFkProvinceCode
+			. "=p." . $this->province_d->colProvinceCode
 
-				. " LEFT JOIN " . $this->amphur_d->tableName . " AS a"
-				. " ON c." . $this->iccCard_d->colFkAmphurCode
-				. "=a." . $this->amphur_d->colAmphurCode
-				
-				. " WHERE c." . $this->iccCard_d->colActive . "=1"
-				. ( (($id !== NULL) || ($id > 0)) 
-					? " AND " . $this->iccCard_d->colId . "=" . $id : "");
+			. " LEFT JOIN " . $this->amphur_d->tableName . " AS a"
+			. " ON c." . $this->iccCard_d->colFkAmphurCode
+			. "=a." . $this->amphur_d->colAmphurCode
+			
+			. " WHERE c." . $this->iccCard_d->colActive . "=1"
+			. ( (($id !== NULL) || ($id > 0)) 
+				? " AND " . $this->iccCard_d->colId . "=" . $id : "");
 		// Execute sql.
 		$this->load->model('db_m');
 		$dataSet = $this->db_m->GetRow($sqlStr);
 
-    	return $dataSet;
+		return $dataSet;
 	}
 
 	// ---------------------------------------------------------------------------------------- Get For Combobox
@@ -69,28 +69,47 @@ class EventImage_m extends CI_Model {
 		$this->load->model("db_m");
 
 		$sqlStr = "SELECT " . $this->iccCard_d->colId
-				. ", " .$this->iccCard_d->colProjectName
-				. " FROM " . $this->iccCard_d->tableName
-				. ( (is_null($id) || ($id==0)) ? "" : " WHERE " . $this->iccCard_d->colId . "=" . $id)
-				. " ORDER BY " . $this->iccCard_d->colProjectName;
+			. ", " .$this->iccCard_d->colProjectName
+			. " FROM " . $this->iccCard_d->tableName
+			. ( (is_null($id) || ($id==0)) ? "" : " WHERE " . $this->iccCard_d->colId . "=" . $id)
+			. " ORDER BY " . $this->iccCard_d->colProjectName;
 		// Execute sql.
 		$this->load->model('db_m');
 		$dataSet = $this->db_m->GetRow($sqlStr);
-    
-    	return $dataSet;
+
+		return $dataSet;
 	}
 	// ---------------------------------------------------------------------------------------- End Get For Combobox
 // ******************************************************************************************** End Method
 
 
 // -------------------------------------------------------------------------------------------- Save
-public function AddNewImage($data) {
-	$this->load->model('db_m');
-	$this->load->model('dataclass/eventImage_d');
-	$this->db_m->tableName = $this->eventImage_d->tableName;
+	public function AddNewImage($data) {
+		$this->load->model('db_m');
+		$this->load->model('dataclass/eventImage_d');
+		$this->db_m->tableName = $this->eventImage_d->tableName;
 
-	$result = $this->db_m->CreateRow($data);
+		$result = $this->db_m->CreateRow($data);
 
-	return $result;
+		return $result;
+	}
+
+
+// -------------------------------------------------------------------------------------------- Delete
+	public function InactiveImage($eventImageId) {
+		$result = FALSE;
+		$this->load->model('db_m');
+		$this->load->model('dataclass/eventImage_d');
+
+		// Inactive Event_Image tbl.
+		$this->db_m->tableName = $this->eventImage_d->tableName;
+		$data = [
+			$this->eventImage_d->colActive => 0,
+			$this->eventImage_d->colDeleteBy => $this->session->userdata['id'],
+			$this->eventImage_d->colDeleteDate => date('Y-m-d H:i:s')
+		];
+		$result = $this->db_m->UpdateRow($eventImageId, $data);
+
+		return $result;
 	}
 }

@@ -25,15 +25,17 @@
 										<?php $i=1; ?>
 										<?php foreach($dsImage as $image) { ?>
 											<td>
-												<a title="" rel="prettyPhoto[pp_gal]"
-												href="<?=base_url().'uploads/Event_Images/'.$image['Image_URL'] ?>" >
-													<img src="<?=base_url().'uploads/Event_Images/thumbs/'.$image['Image_URL'] ?>" 
-													alt="<?=$image['Caption']?>">
-												</a>
+												<div class='content-img'>
+													<a title="" rel="prettyPhoto[pp_gal]"
+													href="<?=base_url().'uploads/Event_Images/'.$image[$this->eventImage_d->colImageUrl] ?>" >
+														<img src="<?=base_url().'uploads/Event_Images/thumbs/'.$image[$this->eventImage_d->colImageUrl] ?>" 
+														alt="<?=$image[$this->eventImage_d->colCaption]?>">
+													</a>
+												</div>
 											</td>
-											<?php if($i > 7) { ?>
-												</tr>
-												<tr>
+											<?php if($i > 5) { ?>
+									</tr>
+									<tr>
 												<?php $i = 0; ?>
 											<?php } ?>
 											<?php $i++; ?>

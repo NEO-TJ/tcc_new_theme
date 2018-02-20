@@ -4,4 +4,5 @@
     
     // My Java Script.
     echo js_asset('eventImage/galleryPluginCustomize.js');
+    echo js_asset('eventImage/galleryAdmin.js');
 ?>
