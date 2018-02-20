@@ -714,7 +714,7 @@
             }
 
             let o = {a:calendar[1][1].format(" YYYY"), b:543};          // koravit: add line
-            var dateHtml = this.locale.monthNames[calendar[1][1].month()] 
+            var dateHtml = this.locale.monthNames[calendar[1][1].month()] + " "
                 + Number(Number(o.a) + Number(o.b)); // koravit: edit and append
 
             if (this.showDropdowns) {
