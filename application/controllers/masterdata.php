@@ -197,8 +197,16 @@ class Masterdata extends MY_Controller {
 			$this->load->model('masterdata/masterdataOrganize_m', 'oMasterdata_m');
 		}
 
-		// Media Type.
+		// Ecology.
 		else if($dataType == '8') {		// ID & Name #.
+			$this->load->model('masterdata/masterdataCommonName_m', 'oMasterdata_m');
+			$this->load->model('dataclass/ecology_d');
+			$this->oMasterdata_m->tableName = $this->ecology_d->tableName;
+			$this->commonName = true;
+		}
+
+		// Media Type.
+		else if($dataType == '9') {		// ID & Name #.
 			$this->load->model('masterdata/masterdataCommonName_m', 'oMasterdata_m');
 			$this->load->model('dataclass/mediaType_d');
 			$this->oMasterdata_m->tableName = $this->mediaType_d->tableName;

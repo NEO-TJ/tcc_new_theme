@@ -217,8 +217,16 @@
                                         <li <?php if(($this->uri->segment(1) == 'masterdata')
                                         && ($this->uri->segment(3) == 1)){ echo 'class=nav-expanded'; }?> >
                                             <a href="<?php echo base_url('masterdata/view/1'); ?>"  >
-                                                <i class="fa fa-bullseye" aria-hidden="true"></i>
-                                                <span>บริเวณที่เก็บขยะ</span>
+                                                <i class="fa fa-map-pin" aria-hidden="true"></i>
+                                                <span>ลักษณะของพื้นที่เก็บขยะ</span>
+                                            </a>
+                                        </li>
+
+                                        <li <?php if(($this->uri->segment(1) == 'masterdata')
+                                        && ($this->uri->segment(3) == 8)){ echo 'class=nav-expanded'; }?> >
+                                            <a href="<?php echo base_url('masterdata/view/8'); ?>"  >
+                                                <i class="fa fa-spinner" aria-hidden="true"></i>
+                                                <span>พื้นที่ระบบนิเวศ</span>
                                             </a>
                                         </li>
                                         
