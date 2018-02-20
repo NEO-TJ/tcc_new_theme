@@ -1,5 +1,7 @@
 // -------------------------------------------------------------------------------------------- Init DatetimePicker.
 function initDaterange() {
+    moment.locale('th');
+
     let fiscalYear = getRangesArray();
     let start = fiscalYear.currentFiscalYear[0];
     let end = fiscalYear.currentFiscalYear[1];
@@ -12,6 +14,9 @@ function initDaterange() {
         startDate: start,
         endDate: end,
         ranges: fiscalYear.rRanges,
+        locale: {
+            format: 'MM/DD/YYYY h:mm A'
+        }
     }, cb);
 
     cb(start, end);
