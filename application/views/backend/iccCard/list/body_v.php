@@ -150,7 +150,7 @@
 							</a>
 							<a id="iccCardDownload" style="float: right;"
 							href="<?php echo base_url('/assets/files') . "/ICC_CARD.pdf"; ?>">
-								Download ICC_CARD
+								[ดาวน์โหลด แบบฟอร์มไอซีซี]
 							</a>
 						<?php echo form_close(); ?><!-- Close form choose -->
 					<!-- End Form Add new -->

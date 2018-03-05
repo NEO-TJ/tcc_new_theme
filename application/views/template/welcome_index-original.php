@@ -85,42 +85,10 @@
                         <a href="<?php echo base_url('report'); ?>">ข้อมูลขยะ</a>
                     </li>
                     <li class="dropdown<?php if($this->uri->segment(1) == 'publicRelations'){echo ' my-active';}?>">
-                        <a href="<?php echo base_url('publicRelations/content_list/'); ?>" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false">
                             ข่าวสาร<span class="caret"></span>
                         </a>
-                        
-                       
                         <ul class="dropdown-menu" role="menu">
-                            
-                            
-                            
-                            <?php 
-                            
-                            $sql="select * from article_category where Title NOT IN ('page')";
-        $rs=$this->db->query($sql);
-
-      
-
-       //	$data =$rs->result_array();
-        
-        //print_r($data);
-        //exit;
-        
-        foreach($rs->result_array() as $data){
-            
-            ?>
-                            
-                            <li <?php if(($this->uri->segment(1) == 'publicRelations') 
-                            && ($this->uri->segment(2) == 'content_list')
-                             && ($this->uri->segment(3) == $data['id'])        
-                                    ){echo 'class="my-active"';}?>>
-                                <a href="<?php echo base_url('publicRelations/content_list/'.$data['id']); ?>"><?php echo $data['Name']?></a>
-                            </li>
-                            <?php
-        }
-                            ?>
-                            
-                             <?php if(0){?>
                             <li <?php if(($this->uri->segment(1) == 'publicRelations') 
                             && ($this->uri->segment(2) == 'content_list')){echo 'class="my-active"';}?>>
                                 <a href="<?php echo base_url('publicRelations/content_list/'); ?>">ข่าวสาร</a>
@@ -137,12 +105,7 @@
                             && ($this->uri->segment(2) == 'content_list4')){echo 'class="my-active"';}?>>
                                 <a href="<?php echo base_url('publicRelations/content_list/'); ?>">ความรู้เกี่ยวกับที่มาของขยะทะเล</a>
                             </li>
-                            <?php }?>
-                            
-                            
                         </ul>
-                        
-                        
                     </li>
                     <li <?php if($this->uri->segment(1) == 'mapPlace'){echo 'class="my-active"';}?>>
                         <a href="<?php echo base_url('mapPlace'); ?>">แผนที่</a>
@@ -151,7 +114,7 @@
                         <a href="<?php echo base_url('eventImageGallery'); ?>">ภาพกิจกรรม</a>
                     </li>
                     <li <?php if($this->uri->segment(1) == 'aboutUs'){echo 'class="my-active"';}?>>
-                        <a href="<?php echo base_url('publicRelations/content/42'); ?>">เกี่ยวกับเรา</a>
+                        <a href="#">เกี่ยวกับเรา</a>
                     </li>
                     <li class="dropdown<?php if($this->uri->segment(1) == 'users'){echo ' my-active';}?>">
                         <?php if ( $this->session->userdata('isUserLoggedIn') ) : ?>
@@ -218,13 +181,8 @@
                                 <li><a href="<?php echo base_url('publicRelations/content_list/'); ?>">ข่าวสาร</a></li>
                                 <li><a href="<?php echo base_url('mapPlace'); ?>">แผนที่</a></li>
                                 <li><a href="<?php echo base_url('eventImageGallery'); ?>">รวมภาพกิจกรรม</a></li>
-                                <li><a href="<?php echo base_url('publicRelations/content/42'); ?>">เกี่ยวกับเรา </a></li>
+                                <li><a href="#">เกี่ยวกับเรา </a></li>
                                 <li><a href="#">ติดต่อเรา </a></li>
-                                <li>
-                                    <a id="iccCardDownload" href="<?php echo base_url('/assets/files') . "/ICC_CARD.pdf"; ?>">
-                                        แบบฟอร์มไอซีซี
-                                    </a>
-                                </li>
                             </ul>
                         </div>
                         <div class="col-md-4">
@@ -321,7 +279,7 @@
         $('#Date').html(dayNames[newDate.getDay()] + ", " + newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear());
     </script>
 
-     <?php if(isset($check_url) && $check_url == "map" && 0) : ?>
+     <?php if(isset($check_url) && $check_url == "map") : ?>
         <script type="text/javascript" charset="UTF-8" src="http://maps.googleapis.com/maps-api-v3/api/js/31/0/intl/th_ALL/common.js"></script>
         <script type="text/javascript" charset="UTF-8" src="http://maps.googleapis.com/maps-api-v3/api/js/31/0/intl/th_ALL/util.js"></script>
         <script type="text/javascript" charset="UTF-8" src="http://maps.googleapis.com/maps-api-v3/api/js/31/0/intl/th_ALL/infowindow.js"></script>
@@ -343,9 +301,6 @@
     <?php endif; ?>
 
 <?php $this->load->view('template/coreJs_v');; ?>
-<?php 
-if(isset($extendedJs)) echo $extendedJs;
-
-?>
+<?php if(isset($extendedJs)) echo $extendedJs; ?>
 </body>
 </html>
