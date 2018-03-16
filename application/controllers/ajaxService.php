@@ -175,6 +175,22 @@ class AjaxService extends MY_Controller {
 
 		echo ($result);
 	}
+
+
+	// ---------------------------------------------------------------------------------------- Valid User Id
+	public function ajaxValidUserId() {
+		$result = false;
+		if($this->session->userdata('isUserLoggedIn')) {
+			if ($this->input->server('REQUEST_METHOD') === 'POST') {
+				$userId = $this->input->post('userId');
+
+				$this->load->model('masterdata/masterdataUser_m');
+				$result = $this->masterdataUser_m->ValidUserId($userId);
+			}
+		}
+
+		echo (($result) ? 0 : 1);
+	}
 // End AJAX function.
 
 

@@ -37,14 +37,14 @@ class UserAuthentication_m extends CI_Model {
     }
 
     // ---------------------------------------------------------------------------------------- Validate
-    public function Validate($userName, $password) {
+    public function Validate($userId, $password) {
         $encryptPassword = md5($password);
 		$this->load->model('dataclass/users_d');
 		$this->load->model('db_m');
 
         $this->db_m->tableName = $this->users_d->tableName;
         $rWhere = array(
-            $this->users_d->colUserId   => $userName,
+            $this->users_d->colUserId   => $userId,
             $this->users_d->colPassword => $encryptPassword,
             $this->users_d->colStatus . ' !=' => userStatus::Deleted
         );

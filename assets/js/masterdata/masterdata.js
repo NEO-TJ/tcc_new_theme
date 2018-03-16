@@ -1,5 +1,9 @@
 // ************************************************ Event **********************************************
 //------------------------------------------------ Button ----------------------------------------------
+// Valid data.
+$(document).on('focusout', '#userID', function(e) { validUserId(); });
+
+
 // Submit & Reset
 $('form#formInputData').on('submit', function(e) {
     e.preventDefault();
@@ -153,8 +157,8 @@ function SaveInputData() {
         success: function(result) {
             if (result == 0) {
                 swal({
-                    title: "Success",
-                    text: "Save data to database has success",
+                    title: "สำเร็จ",
+                    text: "บันทึกข้อมูลในระบบเรียบร้อยแล้ว",
                     type: "success",
                     showCancelButton: false,
                     allowOutsideClick: false,
@@ -165,10 +169,43 @@ function SaveInputData() {
                 });
             } else {
                 swal({
-                    title: "Unsuccess!",
-                    text: "Can't save<span class='text-info'> data </span>to database" + result,
+                    title: "เกิดข้อผิดพลาด!",
+                    text: "การบันทึกข้อมูลในระบบเกิดปัญหา กรุณาตรวจสอบข้อมูลที่ป้อนเข้าระบบ" + result,
                     type: "error",
                     confirmButtonColor: "#DD6B55"
+                });
+            }
+        }
+    });
+}
+
+
+//----------------------------------------------- Validate ---------------------------------------------
+function validUserId() {
+    let baseUrl = window.location.origin + "/" + window.location.pathname.split('/')[1] + "/";
+    let dataType = $('input#dataType').val();
+    let data = { "userId" : $('#userID').val() };
+
+    // Ajax add or edit record.
+    $.ajax({
+        url: baseUrl + 'ajaxService/ajaxValidUserId',
+        type: 'post',
+        data: data,
+        beforeSend: function() {},
+        error: function(xhr, textStatus) {
+            swal("Error", textStatus, "error");
+        },
+        complete: function() {},
+        success: function(result) {
+            if (result == 0) {
+                swal({
+                    title: "แจ้งเตือน",
+                    text: "รหัสผู้ใช้งานนี้ มีอยู่แล้วในระบบ",
+                    type: "warning",
+                    allowOutsideClick: false,
+                    confirmButtonText: "ย้อนกลับ",
+                }).then((result) => {
+                    $('#userID').focus();
                 });
             }
         }

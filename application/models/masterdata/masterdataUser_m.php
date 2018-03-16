@@ -37,7 +37,7 @@ class MasterdataUser_m extends CI_Model {
 			. ", CASE WHEN u." . $this->users_d->colLevel . "=1 THEN 'ผู้ดูแลระบบ'"
 			. " WHEN u." . $this->users_d->colLevel . "=2 THEN 'ชำนาญการ'"
 			. " WHEN u." . $this->users_d->colLevel . "=3 THEN 'ปฏิบัติการ'"
-			. " ELSE 'อาสาสมัคร' END as ระดับสิทธิ์ในระบบ"
+			. " ELSE 'อาสาสมัคร' END as ระดับสิทธิ"
 
 			. ", o." . $this->org_d->colDepartment . " as ชื่อหน่วยงาน"
 
@@ -51,9 +51,9 @@ class MasterdataUser_m extends CI_Model {
 			. " ON u." . $this->users_d->colFkOrg . "=o." . $this->org_d->colId
 
 			. $criteria
-			. " ORDER BY u." . $this->users_d->colLevel
+			. " ORDER BY o." . $this->org_d->colDepartment
+			. ", u." . $this->users_d->colLevel
 			. ", u." . $this->users_d->colStatus
-			. ", o." . $this->org_d->colDepartment
 			. ", u." . $this->users_d->colUserId;
 
 		// Execute sql.
@@ -112,14 +112,18 @@ class MasterdataUser_m extends CI_Model {
 		$this->load->model('dataclass/users_d');
 		$this->load->model('db_m');
 
-		$rResult = $this->PrepareDataUserTable($dsData, $id);
-		$dsSave = $rResult["dsSave"];
-		$objCreateBy = $rResult["objCreateBy"];
-		$tableNameUser = $this->users_d->tableName;
-
-		// Check custom duplication.
-		$this->db_m->tableName = $tableNameUser;
-		$result = $this->db_m->Save($id, $dsSave, $objCreateBy);
+		if($this->ValidUserId($dsData[$this->users_d->colUserId])) {
+			$result = false;
+		} else {
+			$rResult = $this->PrepareDataUserTable($dsData, $id);
+			$dsSave = $rResult["dsSave"];
+			$objCreateBy = $rResult["objCreateBy"];
+			$tableNameUser = $this->users_d->tableName;
+	
+			// Check custom duplication.
+			$this->db_m->tableName = $tableNameUser;
+			$result = $this->db_m->Save($id, $dsSave, $objCreateBy);
+		}
 
 		return $result;
 	}
@@ -180,6 +184,7 @@ class MasterdataUser_m extends CI_Model {
 		return $dsData;
 	}
 
+	// ---------------------------------------------------------------------------------------- Validate
 	private function ValidChangePassword($newPassword, $id=0) {
 		$result = false;
 		if($id > 0) {
@@ -187,12 +192,28 @@ class MasterdataUser_m extends CI_Model {
 
 			$this->db_m->tableName = $this->users_d->tableName;
 			$rWhere = array(
-					$this->users_d->colId   					=> $id,
-					$this->users_d->colPassword 			=> $newPassword,
-					$this->users_d->colStatus . ' !=' => userStatus::Deleted
+				$this->users_d->colId   					=> $id,
+				$this->users_d->colPassword 			=> $newPassword,
+				$this->users_d->colStatus . ' !=' => userStatus::Deleted
 			);
 			$result = $this->db_m->Find($rWhere);
 		}
+
+		return $result;
+	}
+
+	// ---------------------------------------------------------------------------------------- Validate
+	public function ValidUserId($userId) {
+		$result = false;
+		$this->load->model('dataclass/users_d');
+		$this->load->model('db_m');
+
+		$this->db_m->tableName = $this->users_d->tableName;
+		$rWhere = array(
+			$this->users_d->colUserId   			=> $userId,
+			$this->users_d->colStatus . ' !=' => userStatus::Deleted
+		);
+		$result = $this->db_m->Find($rWhere);
 
 		return $result;
 	}
