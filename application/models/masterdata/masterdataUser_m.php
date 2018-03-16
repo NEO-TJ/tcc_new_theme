@@ -112,7 +112,7 @@ class MasterdataUser_m extends CI_Model {
 		$this->load->model('dataclass/users_d');
 		$this->load->model('db_m');
 
-		$rResult = $this->PrepareDataUserTable($dsData);
+		$rResult = $this->PrepareDataUserTable($dsData, $id);
 		$dsSave = $rResult["dsSave"];
 		$objCreateBy = $rResult["objCreateBy"];
 		$tableNameUser = $this->users_d->tableName;
@@ -155,12 +155,11 @@ class MasterdataUser_m extends CI_Model {
 
 
 // Private function.
-	private function PrepareDataUserTable($dsData) {
+	private function PrepareDataUserTable($dsData, $id=0) {
 		$this->load->model('dataclass/users_d');
 
 		$dsData["dsSave"] = [
 			$this->users_d->colUserId				=> $dsData[$this->users_d->colUserId],
-			$this->users_d->colPassword			=> $dsData[$this->users_d->colPassword],
 			$this->users_d->colEmail				=> $dsData[$this->users_d->colEmail],
 			$this->users_d->colLevel				=> $dsData[$this->users_d->colLevel],
 			$this->users_d->colFkOrg				=> $dsData[$this->users_d->colFkOrg],
@@ -172,9 +171,30 @@ class MasterdataUser_m extends CI_Model {
 			$this->users_d->colIdCardNumber	=> $dsData[$this->users_d->colIdCardNumber],
 			$this->users_d->colUpdateBy			=> $this->session->userdata['id'],
 		];
+		if(!$this->ValidChangePassword($dsData[$this->users_d->colPassword], $id)) {
+			$dsData["dsSave"][$this->users_d->colPassword] = md5($dsData[$this->users_d->colPassword]);
+		}
+
 		$dsData['objCreateBy'] = [$this->users_d->colCreateBy => $this->session->userdata['id']];
 
 		return $dsData;
+	}
+
+	private function ValidChangePassword($newPassword, $id=0) {
+		$result = false;
+		if($id > 0) {
+			$this->load->model('db_m');
+
+			$this->db_m->tableName = $this->users_d->tableName;
+			$rWhere = array(
+					$this->users_d->colId   					=> $id,
+					$this->users_d->colPassword 			=> $newPassword,
+					$this->users_d->colStatus . ' !=' => userStatus::Deleted
+			);
+			$result = $this->db_m->Find($rWhere);
+		}
+
+		return $result;
 	}
 
 
