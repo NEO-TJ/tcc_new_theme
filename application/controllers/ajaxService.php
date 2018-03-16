@@ -182,10 +182,11 @@ class AjaxService extends MY_Controller {
 		$result = false;
 		if($this->session->userdata('isUserLoggedIn')) {
 			if ($this->input->server('REQUEST_METHOD') === 'POST') {
+				$id = $this->input->post('rowId');
 				$userId = $this->input->post('userId');
 
 				$this->load->model('masterdata/masterdataUser_m');
-				$result = $this->masterdataUser_m->ValidUserId($userId);
+				$result = $this->masterdataUser_m->ValidUserId($id, $userId);
 			}
 		}
 

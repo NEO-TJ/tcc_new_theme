@@ -112,7 +112,7 @@ class MasterdataUser_m extends CI_Model {
 		$this->load->model('dataclass/users_d');
 		$this->load->model('db_m');
 
-		if($this->ValidUserId($dsData[$this->users_d->colUserId])) {
+		if($this->ValidUserId($id, $dsData[$this->users_d->colUserId])) {
 			$result = false;
 		} else {
 			$rResult = $this->PrepareDataUserTable($dsData, $id);
@@ -203,14 +203,17 @@ class MasterdataUser_m extends CI_Model {
 	}
 
 	// ---------------------------------------------------------------------------------------- Validate
-	public function ValidUserId($userId) {
+	public function ValidUserId($id, $userId) {
 		$result = false;
+
+		$id = (is_null($id) ? 0 : $id);
 		$this->load->model('dataclass/users_d');
 		$this->load->model('db_m');
 
 		$this->db_m->tableName = $this->users_d->tableName;
 		$rWhere = array(
 			$this->users_d->colUserId   			=> $userId,
+			$this->users_d->colId . ' !='			=> $id,
 			$this->users_d->colStatus . ' !=' => userStatus::Deleted
 		);
 		$result = $this->db_m->Find($rWhere);

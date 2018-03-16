@@ -1,7 +1,7 @@
 // ************************************************ Event **********************************************
 //------------------------------------------------ Button ----------------------------------------------
 // Valid data.
-$(document).on('focusout', '#userID', function(e) { validUserId(); });
+$(document).on('focusout', 'input#userID', function(e) { validUserId(); });
 
 
 // Submit & Reset
@@ -184,7 +184,10 @@ function SaveInputData() {
 function validUserId() {
     let baseUrl = window.location.origin + "/" + window.location.pathname.split('/')[1] + "/";
     let dataType = $('input#dataType').val();
-    let data = { "userId" : $('#userID').val() };
+    let data = {
+        "rowId"     : $('input#rowId').val(),
+        "userId"    : $('input#userID').val()
+    };
 
     // Ajax add or edit record.
     $.ajax({
@@ -205,7 +208,7 @@ function validUserId() {
                     allowOutsideClick: false,
                     confirmButtonText: "ย้อนกลับ",
                 }).then((result) => {
-                    $('#userID').focus();
+                    $('input#userID').focus();
                 });
             }
         }
