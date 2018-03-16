@@ -59,7 +59,7 @@
                 </button>
 
                 <!-- Branding Image  visible-sm visible-xs-->
-                <a class="navbar-brand" href="<?php echo base_url('/'); ?>">
+                <a class="navbar-brand" href="<?php echo base_url('/assets/files') . "/ICC_CARD.pdf"; ?>">
                     <img style="margin-top:-25px;" src="<?php echo base_url('assets/images/logo/logo.png'); ?>" height="55" title="logo">
                 </a>
                 <a href="<?php echo base_url('/'); ?>" style="font-size: 16px;" 
@@ -72,8 +72,11 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav hidden-sm hidden-xs">
                     <li><a href="<?php echo base_url('/'); ?>" class="site-title"> กรมทรัพยากรทางทะเลและชายฝั่ง</a></li>
-                    <li class="li-site-description"><a href="<?php echo base_url('/'); ?>" class="site-description">
-                     ฐานข้อมูลขยะทะเล</a></li>
+                    <li class="li-site-description">
+                        <a href="<?php echo base_url('/assets/files') . "/ICC_CARD.pdf"; ?>" class="site-description">
+                            ฐานข้อมูลขยะทะเล (และแบบฟอร์ม)
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

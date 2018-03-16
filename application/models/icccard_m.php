@@ -431,6 +431,7 @@ class IccCard_m extends CI_Model {
 		$result['dsProvince'] = $dsPlace['dsProvince'];
 		$result['dsAmphur'] = $dsPlace['dsAmphur'];
 		$result['dsProject'] = $dsPlace['dsProject'];
+		$result['dsOrg'] = $dsPlace['dsOrg'];
 
 		return $result;
 	}
@@ -442,6 +443,7 @@ class IccCard_m extends CI_Model {
 
 		$result['dsAmphur'] = $dsPlace['dsAmphur'];
 		$result['dsProject'] = $dsPlace['dsProject'];
+		$result['dsOrg'] = $dsPlace['dsOrg'];
 
 		return $result;
 	}
@@ -459,6 +461,7 @@ class IccCard_m extends CI_Model {
 		$dsPlace = $this->CreatePlaceComboBox($dsPlaceFull);
 
 		$result['dsProject'] = $dsPlace['dsProject'];
+		$result['dsOrg'] = $dsPlace['dsOrg'];
 
 		return $result;
 	}
@@ -907,6 +910,7 @@ class IccCard_m extends CI_Model {
 		$this->load->model('dataclass/iccCard_d');
 		$this->load->model('dataclass/province_d');
 		$this->load->model('dataclass/amphur_d');
+		$this->load->model('dataclass/org_d');
 		$this->load->model("db_m");
 
 		// Create sql string.
@@ -920,6 +924,8 @@ class IccCard_m extends CI_Model {
 				. ", p." . $this->province_d->colProvinceName
 				. ", a." . $this->amphur_d->colAmphurCode
 				. ", a." . $this->amphur_d->colAmphurName
+				. ", c." . $this->iccCard_d->colFkOrg
+				. ", o." . $this->org_d->colDepartment
 
 				. " FROM " . $this->iccCard_d->tableName . " AS c"
 				. " LEFT JOIN " . $this->province_d->tableName . " AS p"
@@ -928,6 +934,9 @@ class IccCard_m extends CI_Model {
 				. " LEFT JOIN " . $this->amphur_d->tableName . " AS a"
 				. " ON c." . $this->iccCard_d->colFkAmphurCode
 				. " = a." . $this->amphur_d->colAmphurCode
+				. " LEFT JOIN " . $this->org_d->tableName . " AS o"
+				. " ON c." . $this->iccCard_d->colFkOrg
+				. " = o." . $this->org_d->colId
 
 				. $sqlWhere
 				. " ORDER BY c." . $this->iccCard_d->colProjectName;
@@ -940,12 +949,15 @@ class IccCard_m extends CI_Model {
 	}
 
 	private function CreatePlaceComboBox($dsPlace) {
+		$this->load->model('dataclass/iccCard_d');
 		$this->load->model('dataclass/province_d');
 		$this->load->model('dataclass/amphur_d');
+		$this->load->model('dataclass/org_d');
 
 		// Splice Province and Amphur.
 		$rProvince = array();
 		$rAmphur = array();
+		$rOrg = array();
 		$dsProject = array();
 		foreach($dsPlace as $row) {
 			$rProvince[$row[$this->province_d->colProvinceCode]] = $row[$this->province_d->colProvinceName];
@@ -955,6 +967,10 @@ class IccCard_m extends CI_Model {
 			$rAmphur[$row[$this->amphur_d->colAmphurCode]] = $row[$this->amphur_d->colAmphurName];
 			unset($row[$this->amphur_d->colAmphurCode]);
 			unset($row[$this->amphur_d->colAmphurName]);
+
+			$rOrg[$row[$this->iccCard_d->colFkOrg]] = $row[$this->org_d->colDepartment];
+			unset($row[$this->iccCard_d->colFkOrg]);
+			unset($row[$this->org_d->colDepartment]);
 
 			array_push($dsProject, $row);
 		}
@@ -990,6 +1006,22 @@ class IccCard_m extends CI_Model {
 			}
 			$result['dsAmphur'] = $dsAmphur;
 		// End Create dsAmphur.
+
+		// Create dsOrg.
+			asort($rOrg);
+			$dsOrg = array();
+			foreach($rOrg as $key => $value) {
+				if($key > 0) {
+					array_push($dsOrg
+						, array(
+							$this->iccCard_d->colFkOrg => $key,
+							$this->org_d->colDepartment => $value
+						)
+					);
+				}
+			}
+			$result['dsOrg'] = $dsOrg;
+		// End Create dsOrg.
 
 		// Create dsProject.
 			$result['dsProject'] = $dsProject;

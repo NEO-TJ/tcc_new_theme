@@ -1,43 +1,21 @@
 // ******************************************************************************************** Event.
 // -------------------------------------------------------------------------------------------- Page Load.
 $(document).ready(function() {
+    // Multiselect element.
+    bindingMultiselectProvinceCode();
+    // Daterange element.
     initDaterange();
+
     initPageLoad();
 });
 
-// -------------------------------------------------------------------------------------------- Init DatetimePicker.
-function initDaterange() {
-    var start = moment().subtract(1, 'year').startOf('year');
-    var end = moment();
-
-    function cb(start, end) {
-        $('#daterange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-    }
-
-    $('#daterange').daterangepicker({
-        startDate: start,
-        endDate: end,
-        ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month')
-            , moment().subtract(1, 'month').endOf('month')],
-
-            'This Year': [moment().startOf('year'), moment().endOf('year')],
-            'Last Year': [moment().subtract(1, 'year').startOf('year')
-            , moment().subtract(1, 'year').endOf('year')],
-
-            '2 Year': [moment().subtract(1, 'year').startOf('year'), moment().endOf('year')],
-            '5 Year': [moment().subtract(5, 'year').startOf('year'), moment().endOf('year')],
-            '10 Year': [moment().subtract(10, 'year').startOf('year'), moment().endOf('year')]
-        }
-    }, cb);
-
-    cb(start, end);
+// ____________________________________________________________________________________________ Initial Page load.
+function initPageLoad() {
+    ChangeDaterange($('#daterange').data('daterangepicker'));
+    filterThenRenderMapPlace();
 }
+// ____________________________________________________________________________________________ End Initial Page load.
+
 
 // ____________________________________________________________________________________________ Force AJAX.
 // -------------------------------------------------------------------------------------------- Click Render main report
@@ -54,15 +32,17 @@ function filterThenRenderMapPlace() {
     let baseUrl = window.location.origin + "/" + window.location.pathname.split('/')[1] + "/";
     let strDateStart = picker.startDate.format('YYYY-MM-DD');
     let strDateEnd = picker.endDate.format('YYYY-MM-DD');
-    let provinceCode = $('select#provinceCode :selected').val();
     let iccCardId = $('select#projectName :selected').val();
     let orgId = $('select#orgId :selected').val();
+    let rProvinceCode = $('select#provinceCode').multiselect("getChecked").map(function() {
+        return this.value;
+    }).get();
     
     let data = {
         "rDataFilter" : {
             'strDateStart'  : strDateStart,
             'strDateEnd'    : strDateEnd,
-            'provinceCode'  : provinceCode,
+            'rProvinceCode' : rProvinceCode,
             'iccCardId'     : iccCardId,
             'orgId'         : orgId,
         },
@@ -91,14 +71,6 @@ function filterThenRenderMapPlace() {
 
 
 // ******************************************************************************************** Method.
-// ____________________________________________________________________________________________ Initial Page load.
-function initPageLoad() {
-    ChangeDaterange($('#daterange').data('daterangepicker'));
-    filterThenRenderMapPlace();
-}
-// ____________________________________________________________________________________________ End Initial Page load.
-
-
 // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& Render.
 // ____________________________________________________________________________________________ Map.
 function renderMarkerMapPlace(data) {

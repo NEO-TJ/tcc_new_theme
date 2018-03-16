@@ -52,7 +52,7 @@ class MapPlace extends MY_Controller {
 
 
 // Private function.
-    // ---------------------------------------------- Initial view mode --------------------------------
+  // ---------------------------------------------- Initial view mode --------------------------------
 	private function GetDataForRenderViewPage($rDataFilter=null) {
 		$this->load->model("iccCard_m");
 		$data = $this->iccCard_m->GetDataForComboBoxListView();		

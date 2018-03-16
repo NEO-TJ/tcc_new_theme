@@ -61,9 +61,13 @@ class MapPlace_m extends CI_Model
 			. " AND m." . $this->geoLocation_d->colActive . "=1";
 
 		if($rFilter !== NULL) {
-			$sqlWhere .= (isset($rFilter['provinceCode']) && ($rFilter['provinceCode'] > 0)
-					? " AND c." . $this->iccCard_d->colFkProvinceCode . "=" . $rFilter['provinceCode']
-					: NULL );
+			if(isset($rFilter['rProvinceCode']) && ($rFilter['rProvinceCode'] > 0)) {
+				// Prepare Criteria.
+				$this->load->model('helper_m');
+				$criteriaArrProvinceCode = $this->helper_m->GenSqlCriteriaIn('c.'.$this->iccCard_d->colFkProvinceCode
+					, $rFilter['rProvinceCode'], ' AND ');
+				$sqlWhere .= $criteriaArrProvinceCode;
+			}
 			$sqlWhere .= (isset($rFilter['iccCardId']) && ($rFilter['iccCardId'] != '0')
 					? " AND c." . $this->iccCard_d->colId . "=" . $rFilter['iccCardId']
 					: NULL );

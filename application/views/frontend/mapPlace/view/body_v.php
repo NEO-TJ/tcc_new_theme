@@ -24,18 +24,10 @@
 											</div>
 										<!-- Province Sub Section -->
 											<div class="col-xs-1 col-md-1 col-lg-1 text-left margin-input">
-												<div>จังหวัด : </div>
+													<div>จังหวัด : </div>
 											</div>
-											<div class="col-xs-5 col-md-5 col-lg-5 margin-input">
-												<select class="form-control input-require" 
-												id="provinceCode">
-													<option value="0" selected>เลือกทั้งหมด...</option>
-													<?php 
-														foreach($dsProvince as $row) {
-															echo '<option value=' . $row['ProvinceCode'] .'>'
-															. $row['ProvinceName'] . '</option>';
-														}
-													?>
+											<div class="col-xs-5 col-md-5 col-lg-5 margin-input" id="provinceCode">
+												<select class="form-control multi-select input-require" id="provinceCode" multiple="multiple">
 												</select>
 											</div>
 										<!-- Department Section -->
@@ -43,14 +35,7 @@
 												<div>หน่วยงาน</div>
 											</div>
 											<div class="col-xs-5 col-md-5 col-lg-5 margin-input">
-												<select class="form-control input-require" 
-												id="orgId">
-													<option value="0" selected>เลือกทั้งหมด...</option>
-													<?php 
-														foreach($dsOrg as $row) {
-															echo '<option value=' . $row['id'] .'>' . $row['department'] . '</option>';
-														}
-													?>
+												<select class="form-control input-require" id="orgId">
 												</select>
 											</div>
 										<!-- Project Name Sub Section -->
@@ -58,15 +43,7 @@
 												<div>โครงการ : </div>
 											</div>
 											<div class="col-xs-4 col-md-4 col-lg-4 margin-input">
-												<select class="form-control input-require" 
-												id="projectName">
-													<option value="0" selected>เลือกทั้งหมด...</option>
-													<?php 
-														foreach($dsProjectName as $row) {
-															echo '<option value=' . $row['id'] .'>'
-															. $row['Project_Name'] . '</option>';
-														}
-													?>
+												<select class="form-control input-require" id="projectName">
 												</select>
 											</div>
 										<!-- Button Section -->
