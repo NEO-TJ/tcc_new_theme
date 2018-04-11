@@ -33,6 +33,14 @@
 			return "$strDay $strMonthThai $strYear";
 		}
 	?>
+
+	.ul-bullet-img {
+		list-style-image: url('assets/images/main_index/bullet.jpg');
+	}
+	.li-font-org {
+		font-weight: bold;
+		font-size: 14px;
+	}
 </style>
 
 <div class="carousel fade-carousel slide" data-ride="carousel" data-interval="4000" id="bs-carousel">
@@ -145,7 +153,8 @@
 		<div class="row">
 			<div class="col-md-6 " >
 				<dir>
-					<img src="<?php echo base_url('assets/images/main_index/top-menu.png'); ?>" class="img-responsive" style="max-width: 280px;">
+					<img src="<?php echo base_url('assets/images/main_index/top-menu.png'); ?>" 
+					class="img-responsive" style="max-width: 280px;">
 				</dir>
 				<dir class="panel">
 					<div class="panel-body">
@@ -313,6 +322,34 @@
 			</div>
 
 			<div class="col-md-6 " >
+				<div>
+					<img src="<?php echo base_url('assets/images/main_index/org-place.png'); ?>" 
+					class="img-responsive" style="max-width: 280px;">
+				</div>
+				<div class="panel">
+					<div class="panel-body">
+						<ul class="ul-bullet-img">
+							<li class="li-font-org">กรมทรัพยากรทางทะเลและชายฝั่ง (กรุงเทพฯ)</li>
+							<li class="li-font-org">ศูนย์วิจัยและพัฒนาทรัพยากรทางทะเลและชายฝั่งอันดามัน (จ.ภูเก็ต)</li>
+							<li class="li-font-org">ศูนย์วิจัยและพัฒนาทรัพยากรทางทะเลและชายฝั่งอ่าวไทยตอนบน (จ.สมุทรสาคร)</li>
+							<li class="li-font-org">ศูนย์วิจัยและพัฒนาทรัพยากรทางทะเลและชายฝั่งอ่าวไทยฝั่งตะวันออก (จ.ระยอง)</li>
+							<li class="li-font-org">ศูนย์วิจัยและพัฒนาทรัพยากรทางทะเลและชายฝั่งอ่าวไทยตอนกลาง (จ.ชุมพร)</li>
+							<li class="li-font-org">ศูนย์วิจัยและพัฒนาทรัพยากรทางทะเลและชายฝั่งอ่าวไทยตอนล่าง (จ.สงขลา)</li>
+							<li class="li-font-org">สำนักงานบริการจัดการทรัพยากรทางทะเลและชายฝั่งที่ 1 (ระยอง)</li>
+							<li class="li-font-org">สำนักงานบริการจัดการทรัพยากรทางทะเลและชายฝั่งที่ 2 (ชลบุรี)</li>
+							<li class="li-font-org">สำนักงานบริการจัดการทรัพยากรทางทะเลและชายฝั่งที่ 3 (สมุทรสาคร)</li>
+							<li class="li-font-org">สำนักงานบริการจัดการทรัพยากรทางทะเลและชายฝั่งที่ 4 (เพชรบุรี)</li>
+							<li class="li-font-org">สำนักงานบริการจัดการทรัพยากรทางทะเลและชายฝั่งที่ 5 (สุราษฎร์ธานี)</li>
+							<li class="li-font-org">สำนักงานบริการจัดการทรัพยากรทางทะเลและชายฝั่งที่ 6 (สงขลา)</li>
+							<li class="li-font-org">สำนักงานบริการจัดการทรัพยากรทางทะเลและชายฝั่งที่ 7 (ปัตตานี)</li>
+							<li class="li-font-org">สำนักงานบริการจัดการทรัพยากรทางทะเลและชายฝั่งที่ 8 (พังงา)</li>
+							<li class="li-font-org">สำนักงานบริการจัดการทรัพยากรทางทะเลและชายฝั่งที่ 9 (ภูเก็ต)</li>
+							<li class="li-font-org">สำนักงานบริการจัดการทรัพยากรทางทะเลและชายฝั่งที่ 10 (ตรัง)</li>
+						</ul>
+					</div>
+				<div>
+			</div>
+			<!--
 				<dir class="body-project">
 					<img src="<?php echo base_url('assets/images/main_index/advance-footer-4.png'); ?>" class="img-responsive">
 				</dir>
@@ -322,6 +359,7 @@
 						<p class="panel-subtitle" style="text-indent: 2.5em;">ในอดีตการเปลี่ยนแปลงชายฝั่งทะเลประเทศไทย จะเกิดขึ้นอย่างค่อยเป็นค่อยไปตามกระบวนการเปลี่ยนแปลงตามธรรมชาติ และจะปรับสภาพชายฝั่งให้เข้าอยู่ในภาวะสมดุลอยู่ตลอดเวลาที่เรียกว่าสมดุลแบบพลวัต (Dynamic equilibrium) ตามรอบฤดูกาล ซึ่งเป็นความสมดุลบนความเคลื่อนไหวตามธรรมชาติ แต่ในในช่วง 3 ทศวรรษ ที่ผ่านมาชายฝั่งทะเลประเทศไทยเกิดการกัดเซาะอย่างรุนแรง ทั้งเกิดจากการเปลี่ยนแปลงสภาพทางธรรมชาติและสิ่งแวดล้อมในปัจจุบัน การขาดตะกอนสะสมตัวเพราะสิ่งก่อสร้างต่างๆ ที่ไปขวางกั้นทางน้ำโดยมนุษย์ เช่น สะพาน ถนน แนวกันคลื่น</p>
 					</header>
 				</div>
+			-->
 			</div>
 		</div>
 	</div>
