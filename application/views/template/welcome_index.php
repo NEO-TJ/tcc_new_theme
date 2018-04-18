@@ -59,7 +59,7 @@
                 </button>
 
                 <!-- Branding Image  visible-sm visible-xs-->
-                <a class="navbar-brand" href="<?php echo base_url('/assets/files') . "/ICC_CARD.pdf"; ?>">
+                <a class="navbar-brand" href="<?php echo base_url('/'); ?>">
                     <img style="margin-top:-25px;" src="<?php echo base_url('assets/images/logo/logo.png'); ?>" height="55" title="logo">
                 </a>
                 <a href="<?php echo base_url('/'); ?>" style="font-size: 16px;" 
@@ -73,11 +73,16 @@
                 <ul class="nav navbar-nav hidden-sm hidden-xs">
                     <li><a href="<?php echo base_url('/'); ?>" class="site-title"> กรมทรัพยากรทางทะเลและชายฝั่ง</a></li>
                     <li class="li-site-description">
-                        <a href="<?php echo base_url('/assets/files') . "/ICC_CARD.pdf"; ?>" class="site-description">
+                        <a href="<?php echo base_url('/'); ?>" class="site-description">
                             ฐานข้อมูลขยะทะเล (และแบบฟอร์ม)
                         </a>
                     </li>
                 </ul>
+
+                <a class="navbar-brand" href="<?php echo base_url('/assets/files') . "/ICC_CARD.pdf"; ?>">
+                    <img style="margin-top:-1px; margin-left:10px;" height="25" title="Download icc-card" 
+                    src="<?php echo base_url('assets/images/main_index/icc-card-form.png'); ?>">
+                </a>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right nav-custom-site">
