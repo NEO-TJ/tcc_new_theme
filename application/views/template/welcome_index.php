@@ -74,21 +74,25 @@
                     <li><a href="<?php echo base_url('/'); ?>" class="site-title"> กรมทรัพยากรทางทะเลและชายฝั่ง</a></li>
                     <li class="li-site-description">
                         <a href="<?php echo base_url('/'); ?>" class="site-description">
-                            ฐานข้อมูลขยะทะเล (และแบบฟอร์ม)
+                            ฐานข้อมูลขยะทะเล
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a class="navbar-brand" href="<?php echo base_url('/assets/files') . "/ICC_CARD.pdf"; ?>">
+                            <!--<img style="margin-top:-21px; margin-left:8px;" width="10" height="20" title="Download icc-card" -->
+                            <img style="margin-top:-23px;" width="35" height="50" title="Download icc-card" 
+                            src="<?php echo base_url('assets/images/main_index/icc-card-form.png'); ?>">
                         </a>
                     </li>
                 </ul>
 
-                <a class="navbar-brand" href="<?php echo base_url('/assets/files') . "/ICC_CARD.pdf"; ?>">
-                    <img style="margin-top:-1px; margin-left:10px;" height="25" title="Download icc-card" 
-                    src="<?php echo base_url('assets/images/main_index/icc-card-form.png'); ?>">
-                </a>
-
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right nav-custom-site">
                     <!-- Authentication Links -->
-                    <li><a class="go-related-website-link green" href="http://www.dmcr.go.th" target="_blank">กลับสู่เว็บหลัก ทช.</a></li>
-                    <li><a class="go-related-website-link red" href="http://marinegiscenter.dmcr.go.th" target="_blank">ระบบฐานข้อมูลกลาง</a></li>
+                    <li><a class="go-related-website-link green s-font" href="http://www.dmcr.go.th" target="_blank">กลับสู่เว็บหลัก ทช.</a></li>
+                    <li><a class="go-related-website-link red s-font" href="http://marinegiscenter.dmcr.go.th" target="_blank">ระบบฐานข้อมูลกลาง</a></li>
                     <li <?php if($this->uri->segment(1) == 'report'){echo 'class="my-active"';}?>>
                         <a href="<?php echo base_url('report'); ?>">ข้อมูลขยะ</a>
                     </li>
@@ -105,7 +109,7 @@
                             <?php 
                             
                             $sql="select * from article_category where Title NOT IN ('page')";
-        $rs=$this->db->query($sql);
+                            $rs=$this->db->query($sql);
 
       
 
